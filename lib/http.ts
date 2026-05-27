@@ -1,7 +1,7 @@
 import envConfig from "@/config";
 import { normalizePath } from "@/lib/utils";
 import { LoginResType } from "@/schemaValidations/auth.schema";
-import { redirect } from "next/dist/client/components/navigation";
+import { redirect } from "next/navigation";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type CustomOptions = Omit<RequestInit, "method"> & {
