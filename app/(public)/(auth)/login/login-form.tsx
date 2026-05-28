@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -14,8 +15,13 @@ import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useLoginMutation } from "@/queries/useAuth";
+import { toast } from "sonner";
+import { handleErrorApi } from "@/lib/utils";
 
 export default function LoginForm() {
+  const loginMutation = useLoginMutation();
+
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
     defaultValues: {
@@ -24,16 +30,24 @@ export default function LoginForm() {
     },
   });
 
-  const onSubmit = (data: LoginBodyType) => {
-    console.log(data);
-    // Xử lý logic đăng nhập tại đây
+  const onSubmit = async (data: LoginBodyType) => {
+    if (loginMutation.isPending) return;
+    try {
+      const result = await loginMutation.mutateAsync(data);
+      toast.success(result.payload.message);
+    } catch (error: any) {
+      handleErrorApi({
+        error,
+        setError: form.setError,
+      });
+    }
   };
 
   return (
     // Toàn bộ vùng chứa bọc ngoài giúp căn giữa form theo cả 2 chiều và tạo background sâu hơn
-    <div className="flex min-h-[calc(100vh-4rem)] w-full items-center justify-center p-4 md:p-6 bg-gradient-to-b from-background to-muted/20">
+    <div className="flex min-h-[calc(100vh-4rem)] w-full items-center justify-center p-4 md:p-6  from-background to-muted/20">
       <Card className="w-full max-w-md shadow-xl border-muted/40 backdrop-blur-sm bg-card/90">
-        <CardHeader className="space-y-1 text-center md:text-left">
+        <CardHeader className="space-y-1 text-center md:text-center">
           <CardTitle className="text-2xl font-bold tracking-tight">
             Đăng nhập
           </CardTitle>
@@ -44,12 +58,13 @@ export default function LoginForm() {
         <CardContent>
           <Form {...form}>
             <form
-              onSubmit={form.handleSubmit(onSubmit)}
+              onSubmit={form.handleSubmit(onSubmit, (err) => {
+                console.warn(err);
+              })}
               className="space-y-4"
               noValidate
             >
               <div className="grid gap-4">
-                {/* Field Email */}
                 <FormField
                   control={form.control}
                   name="email"
@@ -73,7 +88,6 @@ export default function LoginForm() {
                   )}
                 />
 
-                {/* Field Password */}
                 <FormField
                   control={form.control}
                   name="password"
@@ -108,7 +122,6 @@ export default function LoginForm() {
                   )}
                 />
 
-                {/* Nút hành động */}
                 <div className="space-y-2.5 pt-2">
                   <Button
                     type="submit"
@@ -130,7 +143,7 @@ export default function LoginForm() {
                     type="button"
                   >
                     <svg
-                      className="mr-2 h-4 w-full max-w-[16px]"
+                      className="mr-2 h-4 w-full max-w-4"
                       viewBox="0 0 24 24"
                     >
                       <path
