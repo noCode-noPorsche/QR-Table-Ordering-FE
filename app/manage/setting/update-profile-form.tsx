@@ -1,20 +1,22 @@
 "use client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Upload } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { handleErrorApi } from "@/lib/utils";
+import { useAccountMe, useUpdateMeMutation } from "@/queries/useAccount";
+import { useUploadMediaMutation } from "@/queries/useMedia";
 import {
   UpdateMeBody,
   UpdateMeBodyType,
 } from "@/schemaValidations/account.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useEffect, useRef, useState } from "react";
-import { useWatch } from "react-hook-form";
-import { useAccountProfile } from "@/queries/useAccount";
+import { Upload } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function UpdateProfileForm() {
   const avatarInputRef = useRef<HTMLInputElement>(null);
@@ -24,30 +26,59 @@ export default function UpdateProfileForm() {
     resolver: zodResolver(UpdateMeBody),
     defaultValues: {
       name: "",
-      avatar: "",
+      avatar: undefined,
     },
   });
 
-  const { data } = useAccountProfile();
+  const { data, refetch } = useAccountMe();
+  const updateMeMutation = useUpdateMeMutation();
+  const uploadMediaMutation = useUploadMediaMutation();
 
   useEffect(() => {
     if (data) {
       const { name, avatar } = data.payload.data;
       form.reset({
         name,
-        avatar: avatar ?? "",
+        avatar: avatar ?? undefined,
       });
     }
   }, [data, form]);
 
   const avatar = useWatch({ control: form.control, name: "avatar" });
   const name = useWatch({ control: form.control, name: "name" }) || "";
-  // Nếu các bạn dùng Next.js 15 React 19 thì ko cần dùng useMemo chỗ này
-  const previewAvatar = () => {
+  // Nếu dùng Next.js 15 React 19 thì ko cần dùng useMemo chỗ này
+  const previewAvatar = useMemo(() => {
     if (file) {
       return URL.createObjectURL(file);
     }
     return avatar;
+  }, [file, avatar]);
+
+  const reset = () => {
+    form.reset();
+    setFile(null);
+  };
+
+  const onSubmit = async (values: UpdateMeBodyType) => {
+    if (updateMeMutation.isPending) return;
+    try {
+      let body = values;
+      if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        const imageUrlResult = await uploadMediaMutation.mutateAsync(formData);
+        const imageUrl = imageUrlResult.payload.data;
+        body = {
+          ...values,
+          avatar: imageUrl,
+        };
+      }
+      const result = await updateMeMutation.mutateAsync(body);
+      toast.success(result.payload.message);
+      refetch();
+    } catch (error) {
+      handleErrorApi({ error, setError: form.setError });
+    }
   };
 
   return (
@@ -55,6 +86,10 @@ export default function UpdateProfileForm() {
       <form
         noValidate
         className="grid auto-rows-max items-start gap-4 md:gap-8"
+        onReset={reset}
+        onSubmit={form.handleSubmit(onSubmit, (e) => {
+          console.log(e);
+        })}
       >
         <Card x-chunk="dashboard-07-chunk-0">
           <CardHeader>
@@ -69,7 +104,7 @@ export default function UpdateProfileForm() {
                   <FormItem>
                     <div className="flex gap-2 items-start justify-start">
                       <Avatar className="aspect-square w-25 h-25 rounded-md object-cover">
-                        <AvatarImage src={previewAvatar()} />
+                        <AvatarImage src={previewAvatar} />
                         <AvatarFallback className="rounded-none">
                           {name.slice(0, 2)?.toUpperCase()}
                         </AvatarFallback>
@@ -81,10 +116,12 @@ export default function UpdateProfileForm() {
                         className="hidden"
                         ref={avatarInputRef}
                         onChange={(e) => {
-                          const selectedFile = e.target.files?.[0] ?? null;
+                          const selectedFile = e.target.files?.[0];
                           if (selectedFile) {
                             setFile(selectedFile);
-                            field.onChange(selectedFile);
+                            field.onChange(
+                              "http://localhost:3000/" + field.name,
+                            );
                           }
                         }}
                       />
