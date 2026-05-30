@@ -11,7 +11,11 @@ import {
 } from "@/schemaValidations/account.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { handleErrorApi } from "@/lib/utils";
+import {
+  handleErrorApi,
+  setAccessTokenToLocalStorage,
+  setRefreshTokenToLocalStorage,
+} from "@/lib/utils";
 import { toast } from "sonner";
 import { PasswordField } from "@/app/manage/setting/input-password";
 
@@ -30,6 +34,8 @@ export default function ChangePasswordForm() {
     if (changePasswordMutation.isPending) return;
     try {
       const result = await changePasswordMutation.mutateAsync(data);
+      setAccessTokenToLocalStorage(result.payload.data.accessToken);
+      setRefreshTokenToLocalStorage(result.payload.data.refreshToken);
       toast.success(result.payload.message);
       form.reset();
     } catch (error) {
