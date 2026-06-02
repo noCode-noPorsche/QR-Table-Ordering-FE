@@ -19,24 +19,23 @@ export default function LogoutPage() {
 
   useEffect(() => {
     if (
-      ref.current ||
-      !refreshTokenFromUrl ||
-      !accessTokenFromUrl ||
-      (refreshTokenFromUrl &&
-        refreshTokenFromUrl !== getRefreshTokenFromLocalStorage()) ||
-      (accessTokenFromUrl &&
-        accessTokenFromUrl !== getAccessTokenFromLocalStorage())
+      (!ref.current || !refreshTokenFromUrl || !accessTokenFromUrl) &&
+      ((refreshTokenFromUrl &&
+        refreshTokenFromUrl === getRefreshTokenFromLocalStorage()) ||
+        (accessTokenFromUrl &&
+          accessTokenFromUrl === getAccessTokenFromLocalStorage()))
     ) {
-      return; // Ngăn gọi lại nếu đã có ref
+      ref.current = mutateAsync;
+      mutateAsync().then((res) => {
+        setTimeout(() => {
+          ref.current = null;
+        }, 1000);
+        router.push("/login");
+        console.log(res);
+      });
+    } else {
+      router.push("/");
     }
-    ref.current = mutateAsync;
-    mutateAsync().then((res) => {
-      setTimeout(() => {
-        ref.current = null;
-      }, 1000);
-      router.push("/login");
-      console.log(res);
-    });
   }, [mutateAsync, router, refreshTokenFromUrl, accessTokenFromUrl]);
   return <div>page</div>;
 }

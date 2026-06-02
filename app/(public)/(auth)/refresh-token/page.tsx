@@ -24,10 +24,9 @@ export default function RefreshTokenPage() {
             router.push(redirectPathname || "/");
           }
         },
-        onError: () => {
-          router.push("/login");
-        },
       });
+    } else {
+      router.push("/");
     }
   }, [redirectPathname, router, refreshTokenFromUrl]);
   return <div>Refresh Token</div>;
