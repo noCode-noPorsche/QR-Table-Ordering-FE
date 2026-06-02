@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useAppContext } from "@/components/app-provider";
 import {
   getAccessTokenFromLocalStorage,
   getRefreshTokenFromLocalStorage,
@@ -16,6 +17,7 @@ export default function LogoutPage() {
   const searchParams = useSearchParams();
   const refreshTokenFromUrl = searchParams.get("refreshToken");
   const accessTokenFromUrl = searchParams.get("accessToken");
+  const { setIsAuth } = useAppContext();
 
   useEffect(() => {
     if (
@@ -32,10 +34,11 @@ export default function LogoutPage() {
         }, 1000);
         router.push("/login");
         console.log(res);
+        setIsAuth(false);
       });
     } else {
       router.push("/");
     }
-  }, [mutateAsync, router, refreshTokenFromUrl, accessTokenFromUrl]);
+  }, [mutateAsync, router, refreshTokenFromUrl, accessTokenFromUrl, setIsAuth]);
   return <div>page</div>;
 }
