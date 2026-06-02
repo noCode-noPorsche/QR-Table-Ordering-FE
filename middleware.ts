@@ -25,8 +25,9 @@ export function middleware(request: NextRequest) {
     !accessToken &&
     refreshToken
   ) {
-    const url = new URL("/logout", request.nextUrl);
+    const url = new URL("/refresh-token", request.nextUrl);
     url.searchParams.set("refreshToken", String(refreshToken ?? ""));
+    url.searchParams.set("redirectPath", pathname);
     return NextResponse.redirect(url);
   }
 
