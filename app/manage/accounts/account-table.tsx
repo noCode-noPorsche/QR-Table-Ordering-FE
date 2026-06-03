@@ -53,6 +53,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useSearchParams } from "next/navigation";
 import AutoPagination from "@/components/auto-pagination";
+import { useGetAccountList } from "@/queries/useAccount";
 
 type AccountItem = AccountListResType["data"][0];
 
@@ -69,6 +70,13 @@ const AccountTableContext = createContext<{
 });
 
 export const columns: ColumnDef<AccountType>[] = [
+  {
+    id: "stt",
+    header: "STT",
+    cell: ({ row }) => {
+      return <div>{row.index + 1}</div>;
+    },
+  },
   {
     accessorKey: "id",
     header: "ID",
@@ -105,7 +113,7 @@ export const columns: ColumnDef<AccountType>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
+    // cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
   },
   {
     id: "actions",
@@ -113,6 +121,7 @@ export const columns: ColumnDef<AccountType>[] = [
     cell: function Actions({ row }) {
       const { setEmployeeIdEdit, setEmployeeDelete } =
         useContext(AccountTableContext);
+
       const openEditEmployee = () => {
         setEmployeeIdEdit(row.original.id);
       };
@@ -129,7 +138,7 @@ export const columns: ColumnDef<AccountType>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={openEditEmployee}>Sửa</DropdownMenuItem>
             <DropdownMenuItem onClick={openDeleteEmployee}>
@@ -188,13 +197,16 @@ export default function AccountTable() {
   const [employeeDelete, setEmployeeDelete] = useState<AccountItem | null>(
     null,
   );
-  const data: any[] = [];
+
+  const accountListQuery = useGetAccountList();
+  const data = accountListQuery.data?.payload.data || [];
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [pagination, setPagination] = useState({
-    pageIndex, // Gía trị mặc định ban đầu, không có ý nghĩa khi data được fetch bất đồng bộ
+    pageIndex, // Giá trị mặc định ban đầu, không có ý nghĩa khi data được fetch bất đồng bộ
     pageSize: PAGE_SIZE, //default page size
   });
 
@@ -248,7 +260,7 @@ export default function AccountTable() {
         />
         <div className="flex items-center py-4">
           <Input
-            placeholder="Filter emails..."
+            placeholder="Tìm kiếm email..."
             value={(table.getColumn("email")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
               table.getColumn("email")?.setFilterValue(event.target.value)
