@@ -1,4 +1,4 @@
-import accountApiRequest from "@/app/apiRequest/account";
+import accountApiRequest from "@/apiRequest/account";
 import { HttpError } from "@/lib/http";
 import { ChangePasswordV2BodyType } from "@/schemaValidations/account.schema";
 import jwt from "jsonwebtoken";

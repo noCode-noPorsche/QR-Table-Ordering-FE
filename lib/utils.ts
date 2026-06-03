@@ -5,7 +5,7 @@ import { UseFormSetError } from "react-hook-form";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 import jwt from "jsonwebtoken";
-import authApiRequest from "@/app/apiRequest/auth";
+import authApiRequest from "@/apiRequest/auth";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

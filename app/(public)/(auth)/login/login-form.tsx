@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useAppContext } from "@/components/app-provider";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,18 +10,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { handleErrorApi } from "@/lib/utils";
+import { useLoginMutation } from "@/queries/useAuth";
 import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLoginMutation } from "@/queries/useAuth";
-import { toast } from "sonner";
-import { handleErrorApi, removeTokensFromLocalStorage } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { useAppContext } from "@/components/app-provider";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function LoginForm() {
   const loginMutation = useLoginMutation();

@@ -1,4 +1,4 @@
-import accountApiRequest from "@/app/apiRequest/account";
+import accountApiRequest from "@/apiRequest/account";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useAccountMe = () => {

@@ -1,4 +1,4 @@
-import authApiRequest from "@/app/apiRequest/auth";
+import authApiRequest from "@/apiRequest/auth";
 import { HttpError } from "@/lib/http";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";

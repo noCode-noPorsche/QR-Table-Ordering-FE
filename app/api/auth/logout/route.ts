@@ -1,4 +1,4 @@
-import authApiRequest from "@/app/apiRequest/auth";
+import authApiRequest from "@/apiRequest/auth";
 import { cookies } from "next/headers";
 
 export async function POST() {
