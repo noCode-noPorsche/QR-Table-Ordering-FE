@@ -47,12 +47,17 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getTableLink, getVietnameseTableStatus } from "@/lib/utils";
+import {
+  getTableLink,
+  getVietnameseTableStatus,
+  handleErrorApi,
+} from "@/lib/utils";
 import { TableListResType } from "@/schemaValidations/table.schema";
 import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useGetTableList } from "@/queries/useTable";
+import { useDeleteTableMutation, useGetTableList } from "@/queries/useTable";
 import QRCodeTable from "@/components/qrcode-table";
+import { toast } from "sonner";
 
 type TableItem = TableListResType["data"][0];
 
@@ -82,6 +87,11 @@ export const columns: ColumnDef<TableItem>[] = [
     cell: ({ row }) => (
       <div className="capitalize">{row.getValue("number")}</div>
     ),
+    filterFn: (rows, columnId, filterValue) => {
+      if (!filterValue) return true;
+
+      return String(filterValue) === String(rows.getValue("number"));
+    },
   },
   {
     accessorKey: "capacity",
@@ -148,6 +158,19 @@ function AlertDialogDeleteTable({
   tableDelete: TableItem | null;
   setTableDelete: (value: TableItem | null) => void;
 }) {
+  const { mutateAsync } = useDeleteTableMutation();
+  const deleteTable = async () => {
+    if (tableDelete) {
+      try {
+        const result = await mutateAsync(tableDelete.number);
+        setTableDelete(null);
+        toast(result.payload.message);
+      } catch (error) {
+        handleErrorApi({ error });
+      }
+    }
+  };
+
   return (
     <AlertDialog
       open={Boolean(tableDelete)}
@@ -170,7 +193,7 @@ function AlertDialogDeleteTable({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Hủy</AlertDialogCancel>
-          <AlertDialogAction>Tiếp tục</AlertDialogAction>
+          <AlertDialogAction onClick={deleteTable}>Tiếp tục</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
