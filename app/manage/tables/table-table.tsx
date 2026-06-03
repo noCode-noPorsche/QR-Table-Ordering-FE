@@ -47,10 +47,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getVietnameseTableStatus } from "@/lib/utils";
+import { getTableLink, getVietnameseTableStatus } from "@/lib/utils";
 import { TableListResType } from "@/schemaValidations/table.schema";
 import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
+import { useGetTableList } from "@/queries/useTable";
+import QRCodeTable from "@/components/qrcode-table";
 
 type TableItem = TableListResType["data"][0];
 
@@ -67,6 +69,13 @@ const TableTableContext = createContext<{
 });
 
 export const columns: ColumnDef<TableItem>[] = [
+  {
+    id: "stt",
+    header: "STT",
+    cell: ({ row }) => {
+      return <div>{row.index + 1}</div>;
+    },
+  },
   {
     accessorKey: "number",
     header: "Số bàn",
@@ -91,7 +100,14 @@ export const columns: ColumnDef<TableItem>[] = [
   {
     accessorKey: "token",
     header: "QR Code",
-    cell: ({ row }) => <div>{row.getValue("number")}</div>,
+    cell: ({ row }) => (
+      <div>
+        <QRCodeTable
+          tableNumber={row.getValue("number")}
+          token={row.getValue("token")}
+        />
+      </div>
+    ),
   },
   {
     id: "actions",
@@ -109,12 +125,12 @@ export const columns: ColumnDef<TableItem>[] = [
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">Mở menu</span>
               <DotsHorizontalIcon className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={openEditTable}>Sửa</DropdownMenuItem>
             <DropdownMenuItem onClick={openDeleteTable}>Xóa</DropdownMenuItem>
@@ -169,7 +185,10 @@ export default function TableTable() {
   // const params = Object.fromEntries(searchParam.entries())
   const [tableIdEdit, setTableIdEdit] = useState<number | undefined>();
   const [tableDelete, setTableDelete] = useState<TableItem | null>(null);
-  const data: any[] = [];
+
+  const tableListQuery = useGetTableList();
+  const data = tableListQuery.data?.payload.data ?? [];
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
