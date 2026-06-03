@@ -1,5 +1,6 @@
 "use client";
 
+import { PasswordField } from "@/app/manage/setting/input-password";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -244,11 +245,12 @@ export default function EditEmployee({
                       <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                         <Label htmlFor="password">Mật khẩu mới</Label>
                         <div className="col-span-3 w-full space-y-2">
-                          <Input
+                          <PasswordField
                             id="password"
                             className="w-full"
                             type="password"
                             {...field}
+                            placeholder="********"
                           />
                           <FormMessage />
                         </div>
@@ -268,11 +270,12 @@ export default function EditEmployee({
                           Xác nhận mật khẩu mới
                         </Label>
                         <div className="col-span-3 w-full space-y-2">
-                          <Input
+                          <PasswordField
                             id="confirmPassword"
                             className="w-full"
                             type="password"
                             {...field}
+                            placeholder="********"
                           />
                           <FormMessage />
                         </div>

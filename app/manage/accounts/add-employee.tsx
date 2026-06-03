@@ -26,6 +26,7 @@ import { useAddAccountMutation } from "@/queries/useAccount";
 import { useUploadMediaMutation } from "@/queries/useMedia";
 import { toast } from "sonner";
 import { handleErrorApi } from "@/lib/utils";
+import { PasswordField } from "@/app/manage/setting/input-password";
 
 export default function AddEmployee() {
   const [file, setFile] = useState<File | null>(null);
@@ -200,7 +201,7 @@ export default function AddEmployee() {
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                       <Label htmlFor="password">Mật khẩu</Label>
                       <div className="col-span-3 w-full space-y-2">
-                        <Input
+                        <PasswordField
                           id="password"
                           className="w-full"
                           type="password"
@@ -221,7 +222,7 @@ export default function AddEmployee() {
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                       <Label htmlFor="confirmPassword">Xác nhận mật khẩu</Label>
                       <div className="col-span-3 w-full space-y-2">
-                        <Input
+                        <PasswordField
                           id="confirmPassword"
                           className="w-full"
                           type="password"

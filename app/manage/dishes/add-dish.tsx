@@ -178,7 +178,12 @@ export default function AddDish() {
                     <div className="grid grid-cols-4 items-center justify-items-start gap-4">
                       <Label htmlFor="name">Tên món ăn</Label>
                       <div className="col-span-3 w-full space-y-2">
-                        <Input id="name" className="w-full" {...field} />
+                        <Input
+                          id="name"
+                          className="w-full"
+                          {...field}
+                          placeholder="Ví dụ: Cơm tấm "
+                        />
                         <FormMessage />
                       </div>
                     </div>
@@ -217,6 +222,7 @@ export default function AddDish() {
                           id="description"
                           className="w-full"
                           {...field}
+                          placeholder="..."
                         />
                         <FormMessage />
                       </div>
