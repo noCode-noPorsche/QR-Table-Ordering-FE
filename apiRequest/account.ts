@@ -41,7 +41,8 @@ const accountApiRequest = {
     http.put<AccountResType>(`${prefix}/detail/${id}`, body),
   getEmployee: (id: number) =>
     http.get<AccountResType>(`${prefix}/detail/${id}`),
-  deleteEmployee: (id: number) => http.delete(`${prefix}/detail/${id}`),
+  deleteEmployee: (id: number) =>
+    http.delete<AccountResType>(`${prefix}/detail/${id}`),
 };
 
 export default accountApiRequest;
