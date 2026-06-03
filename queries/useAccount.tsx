@@ -1,7 +1,6 @@
 import accountApiRequest from "@/apiRequest/account";
 import { UpdateEmployeeAccountBodyType } from "@/schemaValidations/account.schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import id from "zod/v4/locales/id.js";
 
 export const useAccountMe = () => {
   return useQuery({
@@ -29,10 +28,17 @@ export const useGetAccountList = () => {
   });
 };
 
-export const useGetAccount = ({ id }: { id: number }) => {
+export const useGetAccount = ({
+  id,
+  enabled,
+}: {
+  id: number;
+  enabled: boolean;
+}) => {
   return useQuery({
     queryKey: ["account-detail", id],
     queryFn: () => accountApiRequest.getEmployee(id),
+    enabled,
   });
 };
 
@@ -56,7 +62,6 @@ export const useUpdateAccountMutation = () => {
       accountApiRequest.updateEmployee(id, body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["account-list"] });
-      queryClient.invalidateQueries({ queryKey: ["account-detail", id] });
     },
   });
 };

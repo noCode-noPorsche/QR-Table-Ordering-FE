@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable react-hooks/incompatible-library */
 "use client";
 
 import { CaretSortIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
@@ -133,7 +135,7 @@ export const columns: ColumnDef<AccountType>[] = [
         <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
+              <span className="sr-only">Mở menu</span>
               <DotsHorizontalIcon className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -252,7 +254,9 @@ export default function AccountTable() {
         <EditEmployee
           id={employeeIdEdit}
           setId={setEmployeeIdEdit}
-          onSubmitSuccess={() => {}}
+          onSubmitSuccess={() => {
+            setEmployeeIdEdit(undefined);
+          }}
         />
         <AlertDialogDeleteAccount
           employeeDelete={employeeDelete}

@@ -34,6 +34,7 @@ export default function Home() {
                     title="Bánh mì"
                     src="https://ik.imagekit.io/freeflo/production/6b91c700-92c4-4601-8e96-37d84ac3c28c.png?tr=w-2048,q-75&alt=media&pr-true"
                     className="object-cover w-37.5 h-37.5 rounded-md"
+                    alt="Bánh mì"
                   />
                 </div>
                 <div className="space-y-1">
