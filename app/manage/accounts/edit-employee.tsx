@@ -143,6 +143,7 @@ export default function EditEmployee({
             onSubmit={form.handleSubmit(onSubmit, (e) => {
               console.log(e);
             })}
+            onReset={reset}
           >
             <div className="grid gap-4 py-4">
               <FormField
