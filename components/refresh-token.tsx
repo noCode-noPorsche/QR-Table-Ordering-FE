@@ -10,6 +10,7 @@ const UNAUTHORIZED_PATHS = ["/login", "/logout", "/refresh-token", "/register"];
 export default function RefreshToken() {
   const pathname = usePathname();
   const router = useRouter();
+
   useEffect(() => {
     if (UNAUTHORIZED_PATHS.some((p) => pathname.startsWith(p))) {
       return;

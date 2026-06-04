@@ -1,6 +1,7 @@
 import authApiRequest from "@/apiRequest/auth";
+import guestApiRequest from "@/apiRequest/guest";
 import envConfig from "@/config";
-import { DishStatus, OrderStatus, TableStatus } from "@/constants/type";
+import { DishStatus, OrderStatus, Role, TableStatus } from "@/constants/type";
 import { EntityError } from "@/lib/http";
 import { TokenPayload } from "@/types/jwt.types";
 import { clsx, type ClassValue } from "clsx";
@@ -73,17 +74,12 @@ export const checkAndRefreshToken = async (params?: {
   // Không nên đưa logic lấy access và refresh token ra khỏi cái function checkAndRefreshToken
   // Vì để mỗi lần mà checkAndRefreshToken được gọi thì nó sẽ lấy access và refresh token mới nhất
   // Tránh hiện tượng bug nó lấy access và refresh token cũ ở lần đầu rồi gọi cho các lần tiếp theo
-  const accessToken = localStorage.getItem("accessToken");
-  const refreshToken = localStorage.getItem("refreshToken");
+  const accessToken = getAccessTokenFromLocalStorage();
+  const refreshToken = getRefreshTokenFromLocalStorage();
+
   if (!accessToken || !refreshToken) return;
-  const decodedAccessToken = decodeToken(accessToken) as {
-    exp: number;
-    iat: number;
-  };
-  const decodedRefreshToken = decodeToken(refreshToken) as {
-    exp: number;
-    iat: number;
-  };
+  const decodedAccessToken = decodeToken(accessToken);
+  const decodedRefreshToken = decodeToken(refreshToken);
 
   // Thời điểm hết hạn của token là tính theo epoch time (tính bằng giây)
   // Còn khi dùng cú pháp new Date().getTime() thì nó sẽ trả về epoch time tính bằng mili giây
@@ -103,7 +99,11 @@ export const checkAndRefreshToken = async (params?: {
   ) {
     // Gọi API refresh token để lấy access token mới
     try {
-      const res = await authApiRequest.refreshToken();
+      const role = decodedRefreshToken.role;
+      const res =
+        role === Role.Guest
+          ? await guestApiRequest.refreshToken()
+          : await authApiRequest.refreshToken();
       setAccessTokenToLocalStorage(res.payload.data.accessToken);
       setRefreshTokenToLocalStorage(res.payload.data.refreshToken);
       params?.onSuccess?.();
