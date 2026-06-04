@@ -26,7 +26,7 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const clearToken = searchParams.get("clearToken");
-  const { setIsAuth } = useAppContext();
+  const { setRole } = useAppContext();
 
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
@@ -42,7 +42,7 @@ export default function LoginForm() {
       const result = await loginMutation.mutateAsync(data);
       toast.success(result.payload.message);
       router.push("/manage/dashboard");
-      setIsAuth(true);
+      setRole(result.payload.data.account.role);
     } catch (error: any) {
       handleErrorApi({
         error,
@@ -53,9 +53,9 @@ export default function LoginForm() {
 
   useEffect(() => {
     if (clearToken) {
-      setIsAuth(false);
+      setRole(undefined);
     }
-  }, [router, setIsAuth, clearToken]);
+  }, [router, setRole, clearToken]);
 
   return (
     // Toàn bộ vùng chứa bọc ngoài giúp căn giữa form theo cả 2 chiều và tạo background sâu hơn

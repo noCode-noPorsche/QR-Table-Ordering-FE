@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+import authApiRequest from "@/apiRequest/auth";
+import envConfig from "@/config";
+import { DishStatus, OrderStatus, TableStatus } from "@/constants/type";
 import { EntityError } from "@/lib/http";
+import { TokenPayload } from "@/types/jwt.types";
 import { clsx, type ClassValue } from "clsx";
+import jwt from "jsonwebtoken";
 import { UseFormSetError } from "react-hook-form";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
-import jwt from "jsonwebtoken";
-import authApiRequest from "@/apiRequest/auth";
-import { DishStatus, OrderStatus, TableStatus } from "@/constants/type";
-import envConfig from "@/config";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -76,11 +76,11 @@ export const checkAndRefreshToken = async (params?: {
   const accessToken = localStorage.getItem("accessToken");
   const refreshToken = localStorage.getItem("refreshToken");
   if (!accessToken || !refreshToken) return;
-  const decodedAccessToken = jwt.decode(accessToken) as {
+  const decodedAccessToken = decodeToken(accessToken) as {
     exp: number;
     iat: number;
   };
-  const decodedRefreshToken = jwt.decode(refreshToken) as {
+  const decodedRefreshToken = decodeToken(refreshToken) as {
     exp: number;
     iat: number;
   };
@@ -174,4 +174,8 @@ export const getTableLink = ({
   return (
     envConfig.NEXT_PUBLIC_URL + "/tables/" + tableNumber + "?token=" + token
   );
+};
+
+export const decodeToken = (token: string) => {
+  return jwt.decode(token) as TokenPayload;
 };

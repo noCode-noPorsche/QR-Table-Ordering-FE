@@ -16,7 +16,7 @@ function Logout() {
   const searchParams = useSearchParams();
   const refreshTokenFromUrl = searchParams.get("refreshToken");
   const accessTokenFromUrl = searchParams.get("accessToken");
-  const { setIsAuth } = useAppContext();
+  const { setRole } = useAppContext();
 
   useEffect(() => {
     if (
@@ -27,18 +27,17 @@ function Logout() {
           accessTokenFromUrl === getAccessTokenFromLocalStorage()))
     ) {
       ref.current = mutateAsync;
-      mutateAsync().then((res) => {
+      mutateAsync().then(() => {
         setTimeout(() => {
           ref.current = null;
         }, 1000);
         router.push("/login");
-        console.log(res);
-        setIsAuth(false);
+        setRole(undefined);
       });
     } else {
       router.push("/");
     }
-  }, [mutateAsync, router, refreshTokenFromUrl, accessTokenFromUrl, setIsAuth]);
+  }, [mutateAsync, router, refreshTokenFromUrl, accessTokenFromUrl, setRole]);
   return <div>page</div>;
 }
 

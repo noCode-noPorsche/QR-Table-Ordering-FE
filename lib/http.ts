@@ -1,9 +1,14 @@
 import envConfig from "@/config";
-import { normalizePath } from "@/lib/utils";
+import {
+  getAccessTokenFromLocalStorage,
+  normalizePath,
+  removeTokensFromLocalStorage,
+  setAccessTokenToLocalStorage,
+  setRefreshTokenToLocalStorage,
+} from "@/lib/utils";
 import { LoginResType } from "@/schemaValidations/auth.schema";
 import { redirect } from "next/navigation";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 type CustomOptions = Omit<RequestInit, "method"> & {
   baseURL?: string | undefined;
 };
@@ -79,7 +84,7 @@ const request = async <Response>(
           "Content-Type": "application/json",
         };
   if (isClient) {
-    const accessToken = localStorage.getItem("accessToken");
+    const accessToken = getAccessTokenFromLocalStorage();
     if (accessToken) {
       baseHeaders.Authorization = `Bearer ${accessToken}`;
     }
@@ -133,8 +138,7 @@ const request = async <Response>(
             console.log(error);
           } finally {
             clientLogoutRequest = null;
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
+            removeTokensFromLocalStorage();
             // Redirect về trang login có thể dẫn đến loop vô hạn nếu không bị xử lý đúng cách
             // Vì nếu rơi vào trường hợp tại trang Login, chúng ta gọi các API cần access token
             // Mà access token đã bị xóa thì nó lại nhảy vào đây, và cứ thế sẽ bị lặp
@@ -155,13 +159,17 @@ const request = async <Response>(
   // Đảm bảo logic dưới đây chỉ chạy ở phía client (browser)
   if (isClient) {
     const normalizeUrl = normalizePath(url);
-    if (normalizeUrl === "api/auth/login" || normalizeUrl === "auth/register") {
+    if (
+      ["api/auth/login", "api/guest/auth/login"].includes(normalizeUrl) ||
+      normalizeUrl === "auth/register"
+    ) {
       const { accessToken, refreshToken } = (payload as LoginResType).data;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
-    } else if (normalizeUrl === "api/auth/logout") {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      setAccessTokenToLocalStorage(accessToken);
+      setRefreshTokenToLocalStorage(refreshToken);
+    } else if (
+      ["api/auth/logout", "api/guest/auth/logout"].includes(normalizeUrl)
+    ) {
+      removeTokensFromLocalStorage();
     }
   }
   return data;

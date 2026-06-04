@@ -1,4 +1,5 @@
 "use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -10,25 +11,65 @@ import {
   GuestLoginBody,
   GuestLoginBodyType,
 } from "@/schemaValidations/guest.schema";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useGuestLoginMutation } from "@/queries/useGuest";
+import { useAppContext } from "@/components/app-provider";
+import { handleErrorApi } from "@/lib/utils";
 
 export default function GuestLoginForm() {
+  const searchParams = useSearchParams();
+  const params = useParams();
+  const router = useRouter();
+  const guestLoginMutation = useGuestLoginMutation();
+  const { setRole } = useAppContext();
+
+  const tableNumber = Number(params.number);
+  const token = searchParams.get("token");
+
   const form = useForm<GuestLoginBodyType>({
     resolver: zodResolver(GuestLoginBody),
     defaultValues: {
       name: "",
-      token: "",
-      tableNumber: 1,
+      token: token ?? "",
+      tableNumber,
     },
   });
 
+  useEffect(() => {
+    if (!token) {
+      router.push("/");
+    }
+  }, [token, router]);
+
+  const onSubmit = async (values: GuestLoginBodyType) => {
+    if (guestLoginMutation.isPending) return;
+    try {
+      const result = await guestLoginMutation.mutateAsync(values);
+      setRole(result.payload.data.guest.role);
+      router.push("/guest/menu");
+    } catch (error) {
+      handleErrorApi({
+        error,
+        setError: form.setError,
+      });
+    }
+  };
+
   return (
-    <Card className="mx-auto  max-w-sm">
+    <Card className="mx-auto max-w-sm">
       <CardHeader>
         <CardTitle className="text-2xl">Đăng nhập gọi món</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form className="space-y-2 max-w-150 shrink-0 w-full" noValidate>
+          <form
+            className="space-y-2 max-w-150 shrink-0 w-full"
+            onSubmit={form.handleSubmit(onSubmit, (e) => {
+              console.log(e);
+            })}
+            noValidate
+          >
             <div className="grid gap-4">
               <FormField
                 control={form.control}
