@@ -1,43 +1,86 @@
 "use client";
-import { useAppContext } from "@/components/app-provider";
-import Link from "next/link";
 
-const menuItems = [
+import { useAppContext } from "@/components/app-provider";
+import { Role } from "@/constants/type";
+import { cn, handleErrorApi } from "@/lib/utils";
+import { useLogoutMutation } from "@/queries/useAuth";
+import { useGuestLogoutMutation } from "@/queries/useGuest";
+import { RoleType } from "@/types/jwt.types";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+
+const menuItems: {
+  title: string;
+  href: string;
+  role?: RoleType[];
+  hideWhenLogin?: boolean;
+}[] = [
   {
-    title: "Món ăn",
-    href: "/menu", // authRequired: undefined nghĩa là đăng nhập hay chưa vẫn hiển thị
+    title: "Trang chủ",
+    href: "/",
   },
   {
-    title: "Đơn hàng",
-    href: "/orders",
-    authRequired: true, // Chỉ hiển thị khi đã đăng nhập
+    title: "Menu",
+    href: "/guest/menu",
+    role: [Role.Guest],
   },
   {
     title: "Đăng nhập",
     href: "/login",
-    authRequired: false, // Chỉ hiển thị khi chưa đăng nhập
+    hideWhenLogin: true,
   },
   {
     title: "Quản lý",
     href: "/manage/dashboard",
-    authRequired: true, // Chỉ hiển thị khi đã đăng nhập
+    role: [Role.Owner, Role.Employee],
   },
 ];
 
 export default function NavItems({ className }: { className?: string }) {
-  const { isAuth } = useAppContext();
+  const { role, setRole } = useAppContext();
+  const router = useRouter();
 
-  return menuItems.map((item) => {
-    if (
-      (item.authRequired === true && !isAuth) ||
-      (item.authRequired === false && isAuth)
-    ) {
-      return null; // Nếu cần đăng nhập mà chưa có token, hoặc không cần đăng nhập mà đã có token, không hiển thị
+  const authLogout = useLogoutMutation();
+  const guestLogout = useGuestLogoutMutation();
+
+  const logoutMutation = role !== Role.Guest ? authLogout : guestLogout;
+
+  const logout = async () => {
+    if (logoutMutation.isPending) return;
+    try {
+      await logoutMutation.mutateAsync();
+      setRole(undefined);
+      router.push("/");
+    } catch (error) {
+      handleErrorApi({ error });
     }
-    return (
-      <Link href={item.href} key={item.href} className={className}>
-        {item.title}
-      </Link>
-    );
-  });
+  };
+  return (
+    <>
+      {menuItems.map((item) => {
+        // Trường hợp đăng nhập thì chỉ hiển thị menu đăng nhập
+        const isAuth = item.role && role && item.role.includes(role);
+
+        // Trường hợp menu có thể hiển thị dù cho đã đăng nhập hay chưa
+        const canShow =
+          (item.role === undefined && !item.hideWhenLogin) ||
+          (!role && item.hideWhenLogin);
+
+        if (isAuth || canShow) {
+          return (
+            <Link href={item.href} key={item.href} className={className}>
+              {item.title}
+            </Link>
+          );
+        }
+        return null;
+      })}
+
+      {role && (
+        <div className={cn(className, "cursor-pointer")} onClick={logout}>
+          Đăng xuất
+        </div>
+      )}
+    </>
+  );
 }
