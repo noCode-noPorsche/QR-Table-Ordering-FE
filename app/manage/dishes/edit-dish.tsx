@@ -1,5 +1,6 @@
 "use client";
 
+import revalidateApiRequest from "@/apiRequest/revalidate";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -111,6 +112,7 @@ export default function EditDish({
         };
       }
       const result = await updateDishMutation.mutateAsync(body);
+      await revalidateApiRequest("dishes");
       toast.success(result.payload.message);
       if (onSubmitSuccess) {
         onSubmitSuccess();
