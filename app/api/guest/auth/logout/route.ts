@@ -1,4 +1,4 @@
-import authApiRequest from "@/apiRequest/auth";
+import guestApiRequest from "@/apiRequest/guest";
 import { cookies } from "next/headers";
 
 export async function POST() {
@@ -18,7 +18,7 @@ export async function POST() {
   }
 
   try {
-    const result = await authApiRequest.sLogout({
+    const result = await guestApiRequest.sLogout({
       accessToken,
       refreshToken,
     });
@@ -26,6 +26,7 @@ export async function POST() {
     return Response.json(result.payload);
   } catch (error) {
     console.log(error);
+
     return Response.json(
       { message: "Lỗi khi gọi API server BE" },
       { status: 200 },

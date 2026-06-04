@@ -1,4 +1,4 @@
-import authApiRequest from "@/apiRequest/auth";
+import guestApiRequest from "@/apiRequest/guest";
 import { HttpError } from "@/lib/http";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
@@ -15,7 +15,7 @@ export async function POST() {
   }
 
   try {
-    const { payload } = await authApiRequest.sRefreshToken({ refreshToken });
+    const { payload } = await guestApiRequest.sRefreshToken({ refreshToken });
 
     const decodedAccessToken = jwt.decode(payload.data.accessToken) as {
       exp: number;
@@ -44,6 +44,7 @@ export async function POST() {
     if (error instanceof HttpError) {
       return Response.json(error.payload, { status: error.status });
     }
+
     return Response.json({ message: "Đã có lỗi xảy ra" }, { status: 401 });
   }
 }
