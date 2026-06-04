@@ -9,7 +9,8 @@ import {
 const prefix = "/dishes";
 
 const dishApiRequest = {
-  list: () => http.get<DishListResType>(`${prefix}`),
+  list: () =>
+    http.get<DishListResType>(`${prefix}`, { next: { tags: ["dishes"] } }),
   addDish: (body: CreateDishBodyType) =>
     http.post<DishResType>(`${prefix}`, body),
   getDish: (id: number) => http.get<DishResType>(`${prefix}/${id}`),
