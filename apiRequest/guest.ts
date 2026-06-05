@@ -5,9 +5,14 @@ import {
   RefreshTokenResType,
 } from "@/schemaValidations/auth.schema";
 import {
+  GuestCreateOrdersBodyType,
+  GuestCreateOrdersResType,
+  GuestGetOrdersResType,
   GuestLoginBodyType,
   GuestLoginResType,
 } from "@/schemaValidations/guest.schema";
+
+const prefix = "/guest";
 
 const guestApiRequest = {
   refreshTokenRequest: null as Promise<{
@@ -15,28 +20,28 @@ const guestApiRequest = {
     payload: RefreshTokenResType;
   }> | null,
   sLogin: (body: GuestLoginBodyType) =>
-    http.post<GuestLoginResType>("guest/auth/login", body),
+    http.post<GuestLoginResType>(`${prefix}/auth/login`, body),
   login: (body: GuestLoginBodyType) =>
-    http.post<GuestLoginResType>("/api/guest/auth/login", body, {
+    http.post<GuestLoginResType>(`/api/${prefix}/auth/login`, body, {
       baseURL: "",
     }),
   sLogout: (body: LogoutBodyType & { accessToken: string }) =>
     http.post(
-      "/auth/guest/logout",
+      `/auth/${prefix}/logout`,
       { refreshToken: body.refreshToken },
       {
         headers: { Authorization: `Bearer ${body.accessToken}` },
       },
     ),
-  logout: () => http.post("/api/guest/auth/logout", null, { baseURL: "" }),
+  logout: () => http.post(`/api/${prefix}/auth/logout`, null, { baseURL: "" }),
   sRefreshToken: (body: RefreshTokenBodyType) =>
-    http.post<RefreshTokenResType>("guest/auth/refresh-token", body),
+    http.post<RefreshTokenResType>(`${prefix}/auth/refresh-token`, body),
   async refreshToken() {
     if (this.refreshTokenRequest) {
       return this.refreshTokenRequest;
     }
     this.refreshTokenRequest = http.post<RefreshTokenResType>(
-      "/api/guest/auth/refresh-token",
+      `/api/${prefix}/auth/refresh-token`,
       null,
       {
         baseURL: "",
@@ -46,6 +51,9 @@ const guestApiRequest = {
     this.refreshTokenRequest = null;
     return result;
   },
+  createOrder: (body: GuestCreateOrdersBodyType) =>
+    http.post<GuestCreateOrdersResType>(`${prefix}/orders`, body),
+  getOrderList: () => http.get<GuestGetOrdersResType>(`${prefix}/orders`),
 };
 
 export default guestApiRequest;

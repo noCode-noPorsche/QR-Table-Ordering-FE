@@ -34,7 +34,7 @@ const accountApiRequest = {
     http.put<ChangePasswordV2ResType>(`${prefix}/change-password-v2`, body, {
       baseURL: "",
     }),
-  list: () => http.get<AccountListResType>(`${prefix}`),
+  getEmployeeList: () => http.get<AccountListResType>(`${prefix}`),
   addEmployee: (body: CreateEmployeeAccountBodyType) =>
     http.post<AccountResType>(`${prefix}`, body),
   updateEmployee: (id: number, body: UpdateEmployeeAccountBodyType) =>

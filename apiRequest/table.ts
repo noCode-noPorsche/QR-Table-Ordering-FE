@@ -9,7 +9,7 @@ import {
 const prefix = "/tables";
 
 const tableApiRequest = {
-  list: () => http.get<TableListResType>(`${prefix}`),
+  getTableList: () => http.get<TableListResType>(`${prefix}`),
   addTable: (body: CreateTableBodyType) =>
     http.post<TableResType>(`${prefix}`, body),
   getTable: (id: number) => http.get<TableResType>(`${prefix}/${id}`),

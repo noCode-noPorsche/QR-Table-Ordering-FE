@@ -6,7 +6,7 @@ import Image from "next/image";
 export default async function Home() {
   let dishList: DishListResType["data"] = [];
   try {
-    const result = await dishApiRequest.list();
+    const result = await dishApiRequest.getDishList();
     const {
       payload: { data },
     } = result;
