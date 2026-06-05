@@ -5,12 +5,12 @@ import {
   UpdateOrderResType,
 } from "@/schemaValidations/order.schema";
 
-const prefix = "/orders";
+const prefix = "orders";
 
 const orderApiRequest = {
-  getOrderList: () => http.get<GetOrderDetailResType>(`${prefix}`),
+  getOrderList: () => http.get<GetOrderDetailResType>(`/${prefix}`),
   updateOrder: (orderId: number, body: UpdateOrderBodyType) =>
-    http.put<UpdateOrderResType>(`${prefix}/${orderId}`, body),
+    http.put<UpdateOrderResType>(`/${prefix}/${orderId}`, body),
 };
 
 export default orderApiRequest;

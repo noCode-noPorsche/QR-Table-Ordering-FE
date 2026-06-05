@@ -12,7 +12,7 @@ import {
   GuestLoginResType,
 } from "@/schemaValidations/guest.schema";
 
-const prefix = "/guest";
+const prefix = "guest";
 
 const guestApiRequest = {
   refreshTokenRequest: null as Promise<{
@@ -20,7 +20,7 @@ const guestApiRequest = {
     payload: RefreshTokenResType;
   }> | null,
   sLogin: (body: GuestLoginBodyType) =>
-    http.post<GuestLoginResType>(`${prefix}/auth/login`, body),
+    http.post<GuestLoginResType>(`/${prefix}/auth/login`, body),
   login: (body: GuestLoginBodyType) =>
     http.post<GuestLoginResType>(`/api/${prefix}/auth/login`, body, {
       baseURL: "",
@@ -35,7 +35,7 @@ const guestApiRequest = {
     ),
   logout: () => http.post(`/api/${prefix}/auth/logout`, null, { baseURL: "" }),
   sRefreshToken: (body: RefreshTokenBodyType) =>
-    http.post<RefreshTokenResType>(`${prefix}/auth/refresh-token`, body),
+    http.post<RefreshTokenResType>(`/${prefix}/auth/refresh-token`, body),
   async refreshToken() {
     if (this.refreshTokenRequest) {
       return this.refreshTokenRequest;
@@ -52,8 +52,8 @@ const guestApiRequest = {
     return result;
   },
   createOrder: (body: GuestCreateOrdersBodyType) =>
-    http.post<GuestCreateOrdersResType>(`${prefix}/orders`, body),
-  getOrderList: () => http.get<GuestGetOrdersResType>(`${prefix}/orders`),
+    http.post<GuestCreateOrdersResType>(`/${prefix}/orders`, body),
+  getOrderList: () => http.get<GuestGetOrdersResType>(`/${prefix}/orders`),
 };
 
 export default guestApiRequest;

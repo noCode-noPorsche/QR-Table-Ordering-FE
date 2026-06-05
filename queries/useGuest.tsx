@@ -15,7 +15,7 @@ export const useGuestLogoutMutation = () => {
 
 export const useGuestOrderMutation = () => {
   return useMutation({
-    mutationFn: guestApiRequest.getOrderList,
+    mutationFn: guestApiRequest.createOrder,
   });
 };
 

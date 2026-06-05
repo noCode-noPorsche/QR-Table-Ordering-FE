@@ -6,16 +6,16 @@ import {
   UpdateTableBodyType,
 } from "@/schemaValidations/table.schema";
 
-const prefix = "/tables";
+const prefix = "tables";
 
 const tableApiRequest = {
-  getTableList: () => http.get<TableListResType>(`${prefix}`),
+  getTableList: () => http.get<TableListResType>(`/${prefix}`),
   addTable: (body: CreateTableBodyType) =>
-    http.post<TableResType>(`${prefix}`, body),
-  getTable: (id: number) => http.get<TableResType>(`${prefix}/${id}`),
+    http.post<TableResType>(`/${prefix}`, body),
+  getTable: (id: number) => http.get<TableResType>(`/${prefix}/${id}`),
   updateTable: (id: number, body: UpdateTableBodyType) =>
-    http.put<TableResType>(`${prefix}/${id}`, body),
-  deleteTable: (id: number) => http.delete<TableResType>(`${prefix}/${id}`),
+    http.put<TableResType>(`/${prefix}/${id}`, body),
+  deleteTable: (id: number) => http.delete<TableResType>(`/${prefix}/${id}`),
 };
 
 export default tableApiRequest;
