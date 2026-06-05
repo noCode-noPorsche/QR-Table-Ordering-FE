@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        hostname: "via.placeholder.com",
+        pathname: "/**",
+      },
     ],
   },
 };

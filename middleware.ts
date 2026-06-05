@@ -2,7 +2,6 @@ import { Role } from "@/constants/type";
 import { decodeToken } from "@/lib/utils";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { startsWith } from "zod";
 
 const managePaths = ["/manage"];
 const guestPaths = ["/guest"];
@@ -47,7 +46,8 @@ export function middleware(request: NextRequest) {
       managePaths.some((path) => pathname.startsWith(path));
     // Không phải Guest nhưng cố vào route guest
     const isNotGuestToGuestPath =
-      role !== Role.Guest && guestPaths.some((path) => startsWith(path));
+      role !== Role.Guest &&
+      guestPaths.some((path) => pathname.startsWith(path));
 
     if (isGuestGoToManagePath || isNotGuestToGuestPath) {
       return NextResponse.redirect(new URL("/", request.nextUrl));
