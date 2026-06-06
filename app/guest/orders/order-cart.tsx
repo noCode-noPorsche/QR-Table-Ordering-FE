@@ -7,6 +7,7 @@ import { useGuestGetOrderList } from "@/queries/useGuest";
 import { UpdateOrderResType } from "@/schemaValidations/order.schema";
 import Image from "next/image";
 import { useEffect } from "react";
+import { toast } from "sonner";
 
 export default function OrdersCart() {
   const { data, refetch } = useGuestGetOrderList();
@@ -30,6 +31,15 @@ export default function OrdersCart() {
     }
 
     function onUpdateOrder(data: UpdateOrderResType["data"]) {
+      console.log(data);
+      const {
+        dishSnapshot: { name },
+        status,
+        quantity,
+      } = data;
+      toast(
+        `Món ăn ${name} (SL: ${quantity}) vừa được cập nhật sang trạng thái ${getVietnameseOrderStatus(status)}`,
+      );
       refetch();
     }
 
