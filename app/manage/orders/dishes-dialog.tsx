@@ -79,6 +79,7 @@ export const columns: ColumnDef<DishItem>[] = [
 ];
 
 const PAGE_SIZE = 10;
+
 export function DishesDialog({
   onChoose,
 }: {
@@ -137,7 +138,7 @@ export function DishesDialog({
       <DialogTrigger asChild>
         <Button variant="outline">Thay đổi</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-150">
+      <DialogContent className="sm:max-w-150 max-h-full overflow-auto">
         <DialogHeader>
           <DialogTitle>Chọn món ăn</DialogTitle>
         </DialogHeader>

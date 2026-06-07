@@ -17,8 +17,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { OrderStatusValues } from "@/constants/type";
-import { getVietnameseOrderStatus } from "@/lib/utils";
-import { GetOrdersResType } from "@/schemaValidations/order.schema";
+import { getVietnameseOrderStatus, handleErrorApi } from "@/lib/utils";
+import {
+  GetOrdersResType,
+  UpdateOrderResType,
+} from "@/schemaValidations/order.schema";
 import {
   ColumnFiltersState,
   SortingState,
@@ -48,19 +51,26 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { endOfDay, format, startOfDay } from "date-fns";
-import { useGetOrderList } from "@/queries/useOrder";
+import { useGetOrderList, useUpdateOrderMutation } from "@/queries/useOrder";
 import { useGetTableList } from "@/queries/useTable";
 import TableSkeleton from "@/app/manage/orders/table-skeleton";
+import socket from "@/lib/socket";
+import { toast } from "sonner";
+import { GuestCreateOrdersResType } from "@/schemaValidations/guest.schema";
 
 export const OrderTableContext = createContext({
-  setOrderIdEdit: (value: number | undefined) => {},
+  setOrderIdEdit: (value: number | undefined) => {
+    void value;
+  },
   orderIdEdit: undefined as number | undefined,
   changeStatus: (payload: {
     orderId: number;
     dishId: number;
     status: (typeof OrderStatusValues)[number];
     quantity: number;
-  }) => {},
+  }) => {
+    void payload;
+  },
   orderObjectByGuestId: {} as OrderObjectByGuestID,
 });
 
@@ -92,6 +102,7 @@ export default function OrderTable() {
     fromDate,
     toDate,
   });
+  const refetchOrderList = orderListQuery.refetch;
   const orderList = orderListQuery.data?.payload.data ?? [];
 
   const tableListQuery = useGetTableList();
@@ -107,6 +118,7 @@ export default function OrderTable() {
     pageIndex, // Gía trị mặc định ban đầu, không có ý nghĩa khi data được fetch bất đồng bộ
     pageSize: PAGE_SIZE, //default page size
   });
+  const updateOrderMutation = useUpdateOrderMutation();
 
   const { statics, orderObjectByGuestId, servingGuestByTableNumber } =
     useOrderService(orderList as GetOrdersResType["data"]);
@@ -116,7 +128,13 @@ export default function OrderTable() {
     dishId: number;
     status: (typeof OrderStatusValues)[number];
     quantity: number;
-  }) => {};
+  }) => {
+    try {
+      await updateOrderMutation.mutateAsync(body);
+    } catch (error) {
+      handleErrorApi({ error });
+    }
+  };
 
   const table = useReactTable({
     data: orderList as GetOrdersResType["data"],
@@ -151,6 +169,60 @@ export default function OrderTable() {
     setFromDate(initFromDate);
     setToDate(initToDate);
   };
+
+  useEffect(() => {
+    if (socket.connected) {
+      onConnect();
+    }
+
+    function onConnect() {
+      console.log("onConnect", socket.id);
+    }
+
+    function onDisconnect() {
+      console.log("onDisconnect", socket.id);
+    }
+
+    function refetch() {
+      const now = new Date();
+      if (now >= fromDate && now <= toDate) {
+        refetchOrderList();
+      }
+    }
+
+    function onUpdateOrder(data: UpdateOrderResType["data"]) {
+      console.log(data);
+      const {
+        dishSnapshot: { name },
+        status,
+        quantity,
+      } = data;
+      toast(
+        `Món ăn ${name} (SL: ${quantity}) vừa được cập nhật sang trạng thái ${getVietnameseOrderStatus(status)}`,
+      );
+      refetch();
+    }
+
+    function onNewOrder(data: GuestCreateOrdersResType["data"]) {
+      const { guest } = data[0];
+      toast(
+        `${guest?.name} tại bàn ${guest?.tableNumber} vừa đặt ${data.length} đơn`,
+      );
+      refetch();
+    }
+
+    socket.on("update-order", onUpdateOrder);
+    socket.on("new-order", onNewOrder);
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+      socket.off("update-order", onUpdateOrder);
+      socket.off("new-order", onNewOrder);
+    };
+  }, [fromDate, toDate, refetchOrderList]);
 
   return (
     <OrderTableContext.Provider

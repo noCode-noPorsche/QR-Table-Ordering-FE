@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { getVietnameseOrderStatus } from "@/lib/utils";
+import { getVietnameseOrderStatus, handleErrorApi } from "@/lib/utils";
 import { OrderStatus, OrderStatusValues } from "@/constants/type";
 import {
   Select,
@@ -34,61 +35,30 @@ import {
 } from "@/components/ui/select";
 import { DishesDialog } from "@/app/manage/orders/dishes-dialog";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DishListResType } from "@/schemaValidations/dish.schema";
-
-const fakeOrderDetail = {
-  id: 30,
-  guestId: 70,
-  guest: {
-    id: 70,
-    name: "An",
-    tableNumber: 2,
-    createdAt: "2024-07-11T04:30:32.728Z",
-    updatedAt: "2024-07-11T05:00:34.131Z",
-  },
-  tableNumber: 2,
-  dishSnapshotId: 36,
-  dishSnapshot: {
-    id: 36,
-    name: "Spaghetti 5",
-    price: 50000,
-    image: "http://localhost:4000/static/e0001b7e08604e0dbabf0d8f95e6174a.jpg",
-    description: "Mỳ ý",
-    status: "Available",
-    dishId: 2,
-    createdAt: "2024-07-11T04:30:57.450Z",
-    updatedAt: "2024-07-11T04:30:57.450Z",
-  },
-  quantity: 1,
-  orderHandlerId: null,
-  orderHandler: null,
-  status: "Paid",
-  createdAt: "2024-07-11T04:30:57.450Z",
-  updatedAt: "2024-07-11T04:31:38.806Z",
-  table: {
-    number: 2,
-    capacity: 10,
-    status: "Reserved",
-    token: "667f3b1ce5e4429990dacea1809d20e7",
-    createdAt: "2024-06-21T06:52:26.847Z",
-    updatedAt: "2024-07-03T04:36:51.130Z",
-  },
-};
+import { useGetOrderDetail, useUpdateOrderMutation } from "@/queries/useOrder";
+import { toast } from "sonner";
 
 export default function EditOrder({
   id,
   setId,
-  // onSubmitSuccess,
+  onSubmitSuccess,
 }: {
   id?: number | undefined;
   setId: (value: number | undefined) => void;
   onSubmitSuccess?: () => void;
 }) {
-  const [selectedDish, setSelectedDish] = useState<DishListResType["data"][0]>(
-    fakeOrderDetail.dishSnapshot as any,
-  );
-  const orderDetail = fakeOrderDetail;
+  const [selectedDish, setSelectedDish] = useState<
+    DishListResType["data"][0] | null
+  >(null);
+  const updateOrderMutation = useUpdateOrderMutation();
+
+  const { data } = useGetOrderDetail({
+    id: id as number,
+    enabled: Boolean(id),
+  });
+
   const form = useForm<UpdateOrderBodyType>({
     resolver: zodResolver(UpdateOrderBody),
     defaultValues: {
@@ -99,12 +69,42 @@ export default function EditOrder({
   });
 
   const onSubmit = async (values: UpdateOrderBodyType) => {
-    console.log(values);
+    if (updateOrderMutation.isPending) return;
+    try {
+      const body: UpdateOrderBodyType & { orderId: number } = {
+        orderId: id as number,
+        ...values,
+      };
+      const result = await updateOrderMutation.mutateAsync(body);
+      toast(result.payload.message);
+      reset();
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
+    } catch (error) {
+      handleErrorApi({ error });
+    }
   };
 
   const reset = () => {
     setId(undefined);
   };
+
+  useEffect(() => {
+    if (data) {
+      const {
+        status,
+        dishSnapshot: { dishId },
+        quantity,
+      } = data.payload.data;
+      form.reset({
+        status,
+        dishId: dishId ?? 0,
+        quantity,
+      });
+      setSelectedDish(data.payload.data.dishSnapshot);
+    }
+  }, [data, form]);
 
   return (
     <Dialog
@@ -124,7 +124,8 @@ export default function EditOrder({
             noValidate
             className="grid auto-rows-max items-start gap-4 md:gap-8"
             id="edit-order-form"
-            onSubmit={form.handleSubmit(onSubmit, console.log)}
+            onSubmit={form.handleSubmit(onSubmit, (e) => console.log(e))}
+            onReset={reset}
           >
             <div className="grid gap-4 py-4">
               <FormField
