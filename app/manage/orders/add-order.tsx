@@ -1,5 +1,9 @@
 "use client";
 
+import Quantity from "@/app/guest/menu/quantity";
+import GuestsDialog from "@/app/manage/orders/guests-dialog";
+import { TablesDialog } from "@/app/manage/orders/tables-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,28 +12,27 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { PlusCircle } from "lucide-react";
-import { useMemo, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { DishStatus } from "@/constants/type";
+import { cn, formatCurrency, handleErrorApi } from "@/lib/utils";
+import { useCreateGuestMutation } from "@/queries/useAccount";
+import { useGetDishList } from "@/queries/useDish";
+import { useCreateOrderMutation } from "@/queries/useOrder";
+import { GetListGuestsResType } from "@/schemaValidations/account.schema";
 import {
   GuestLoginBody,
   GuestLoginBodyType,
 } from "@/schemaValidations/guest.schema";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { TablesDialog } from "@/app/manage/orders/tables-dialog";
-import { GetListGuestsResType } from "@/schemaValidations/account.schema";
-import { Switch } from "@/components/ui/switch";
-import GuestsDialog from "@/app/manage/orders/guests-dialog";
 import { CreateOrdersBodyType } from "@/schemaValidations/order.schema";
-import Quantity from "@/app/guest/menu/quantity";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PlusCircle } from "lucide-react";
 import Image from "next/image";
-import { cn, formatCurrency } from "@/lib/utils";
-import { DishStatus } from "@/constants/type";
-import { DishListResType } from "@/schemaValidations/dish.schema";
+import { useMemo, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function AddOrder() {
   const [open, setOpen] = useState(false);
@@ -38,7 +41,9 @@ export default function AddOrder() {
   >(null);
   const [isNewGuest, setIsNewGuest] = useState(true);
   const [orders, setOrders] = useState<CreateOrdersBodyType["orders"]>([]);
-  const dishes: DishListResType["data"] = [];
+
+  const { data } = useGetDishList();
+  const dishes = useMemo(() => data?.payload.data ?? [], [data]);
 
   const totalPrice = useMemo(() => {
     return dishes.reduce((result, dish) => {
@@ -47,6 +52,9 @@ export default function AddOrder() {
       return result + order.quantity * dish.price;
     }, 0);
   }, [dishes, orders]);
+
+  const createOrderMutation = useCreateOrderMutation();
+  const createGuestMutation = useCreateGuestMutation();
 
   const form = useForm<GuestLoginBodyType>({
     resolver: zodResolver(GuestLoginBody),
@@ -58,7 +66,6 @@ export default function AddOrder() {
 
   const name = useWatch({ control: form.control, name: "name" });
   const tableNumber = useWatch({ control: form.control, name: "tableNumber" });
-  console.log(name, tableNumber);
 
   const handleQuantityChange = (dishId: number, quantity: number) => {
     setOrders((prevOrders) => {
@@ -75,10 +82,48 @@ export default function AddOrder() {
     });
   };
 
-  const handleOrder = async () => {};
+  const handleOrder = async () => {
+    try {
+      let guestId = selectedGuest?.id;
+      if (isNewGuest) {
+        const resultGuest = await createGuestMutation.mutateAsync({
+          name,
+          tableNumber,
+        });
+        guestId = resultGuest.payload.data.id;
+      }
+      if (!guestId) {
+        toast("Hãy chọn 1 khách hàng");
+        return;
+      }
+      await createOrderMutation.mutateAsync({
+        guestId,
+        orders,
+      });
+      reset();
+    } catch (error) {
+      handleErrorApi({ error, setError: form.setError });
+    }
+  };
+
+  const reset = () => {
+    form.reset();
+    setSelectedGuest(null);
+    setIsNewGuest(true);
+    setOrders([]);
+    setOpen(false);
+  };
 
   return (
-    <Dialog onOpenChange={setOpen} open={open}>
+    <Dialog
+      onOpenChange={(value) => {
+        if (!value) {
+          reset();
+        }
+        setOpen(value);
+      }}
+      open={open}
+    >
       <DialogTrigger asChild>
         <Button size="sm" className="h-7 gap-1">
           <PlusCircle className="h-3.5 w-3.5" />

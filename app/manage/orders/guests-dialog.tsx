@@ -33,6 +33,7 @@ import { formatDateTimeToLocaleString, simpleMatchText } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
 import { GetListGuestsResType } from "@/schemaValidations/account.schema";
 import { endOfDay, format, startOfDay } from "date-fns";
+import { useGetGuestList } from "@/queries/useAccount";
 
 type GuestItem = GetListGuestsResType["data"][0];
 
@@ -90,7 +91,6 @@ export default function GuestsDialog({
   const [open, setOpen] = useState(false);
   const [fromDate, setFromDate] = useState(initFromDate);
   const [toDate, setToDate] = useState(initToDate);
-  const data: GetListGuestsResType["data"] = [];
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -99,6 +99,12 @@ export default function GuestsDialog({
     pageIndex: 0, // Gía trị mặc định ban đầu, không có ý nghĩa khi data được fetch bất đồng bộ
     pageSize: PAGE_SIZE, //default page size
   });
+
+  const getListQuery = useGetGuestList({
+    fromDate,
+    toDate,
+  });
+  const data = getListQuery.data?.payload.data ?? [];
 
   const table = useReactTable({
     data,
