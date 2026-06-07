@@ -1,6 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import { OrderStatus } from "@/constants/type";
 import socket from "@/lib/socket";
 import { formatCurrency, getVietnameseOrderStatus } from "@/lib/utils";
 import { useGuestGetOrderList } from "@/queries/useGuest";
@@ -13,9 +14,48 @@ export default function OrdersCart() {
   const { data, refetch } = useGuestGetOrderList();
   const orders = data?.payload.data ?? [];
 
-  const totalPrice = orders.reduce((result, order) => {
-    return result + order.dishSnapshot.price * order.quantity;
-  }, 0);
+  const { waitingForPaying, paid } = orders.reduce(
+    (result, order) => {
+      if (
+        order.status === OrderStatus.Pending ||
+        order.status === OrderStatus.Delivered ||
+        order.status === OrderStatus.Processing
+      ) {
+        return {
+          ...result,
+          waitingForPaying: {
+            price:
+              result.waitingForPaying.price +
+              order.dishSnapshot.price * order.quantity,
+            quantity: result.waitingForPaying.quantity + order.quantity,
+          },
+        };
+      }
+
+      if (order.status === OrderStatus.Paid) {
+        return {
+          ...result,
+          paid: {
+            price:
+              result.paid.price + order.dishSnapshot.price * order.quantity,
+            quantity: result.paid.quantity + order.quantity,
+          },
+        };
+      }
+
+      return result;
+    },
+    {
+      waitingForPaying: {
+        quantity: 0,
+        price: 0,
+      },
+      paid: {
+        quantity: 0,
+        price: 0,
+      },
+    },
+  );
 
   useEffect(() => {
     if (socket.connected) {
@@ -83,10 +123,19 @@ export default function OrdersCart() {
           </div>
         </div>
       ))}
+      {paid.quantity !== 0 && (
+        <div className="sticky bottom-0 flex">
+          <div className="w-full flex space-x-4 justify-between text-xl font-semibold">
+            <span>Đơn đã thanh toán: {paid.quantity} món</span>
+            <span>{formatCurrency(paid.price)}</span>
+          </div>
+        </div>
+      )}
+
       <div className="sticky bottom-0 flex">
         <div className="w-full flex space-x-4 justify-between text-xl font-semibold">
-          <span>Tổng cộng: {orders.length} món</span>
-          <span>{formatCurrency(totalPrice)}</span>
+          <span>Đơn chưa thanh toán: {waitingForPaying.quantity} món</span>
+          <span>{formatCurrency(waitingForPaying.price)}</span>
         </div>
       </div>
     </>
