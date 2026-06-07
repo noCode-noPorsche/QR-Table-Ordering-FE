@@ -220,7 +220,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Hành động</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={openEditOrder}>Sửa</DropdownMenuItem>
           </DropdownMenuContent>

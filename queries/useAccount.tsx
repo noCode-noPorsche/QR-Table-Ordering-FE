@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useAccountMe = () => {
   return useQuery({
-    queryKey: ["account-profile"],
+    queryKey: ["profile"],
     queryFn: accountApiRequest.me,
   });
 };
@@ -36,7 +36,7 @@ export const useGetAccount = ({
   enabled: boolean;
 }) => {
   return useQuery({
-    queryKey: ["account-detail", id],
+    queryKey: ["accounts-detail", id],
     queryFn: () => accountApiRequest.getEmployee(id),
     enabled,
   });
@@ -47,7 +47,7 @@ export const useAddAccountMutation = () => {
   return useMutation({
     mutationFn: accountApiRequest.addEmployee,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["account-list"] });
+      queryClient.invalidateQueries({ queryKey: ["accounts-list"] });
     },
   });
 };
@@ -61,7 +61,7 @@ export const useUpdateAccountMutation = () => {
     }: UpdateEmployeeAccountBodyType & { id: number }) =>
       accountApiRequest.updateEmployee(id, body),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["account-list"] });
+      queryClient.invalidateQueries({ queryKey: ["accounts-list"] });
     },
   });
 };
@@ -71,7 +71,7 @@ export const useDeleteAccountMutation = () => {
   return useMutation({
     mutationFn: accountApiRequest.deleteEmployee,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["account-list"] });
+      queryClient.invalidateQueries({ queryKey: ["accounts-list"] });
     },
   });
 };

@@ -48,6 +48,9 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { endOfDay, format, startOfDay } from "date-fns";
+import { useGetOrderList } from "@/queries/useOrder";
+import { useGetTableList } from "@/queries/useTable";
+import TableSkeleton from "@/app/manage/orders/table-skeleton";
 
 export const OrderTableContext = createContext({
   setOrderIdEdit: (value: number | undefined) => {},
@@ -75,6 +78,7 @@ export type ServingGuestByTableNumber = Record<number, OrderObjectByGuestID>;
 const PAGE_SIZE = 10;
 const initFromDate = startOfDay(new Date());
 const initToDate = endOfDay(new Date());
+
 export default function OrderTable() {
   const searchParam = useSearchParams();
   const [openStatusFilter, setOpenStatusFilter] = useState(false);
@@ -83,11 +87,18 @@ export default function OrderTable() {
   const page = searchParam.get("page") ? Number(searchParam.get("page")) : 1;
   const pageIndex = page - 1;
   const [orderIdEdit, setOrderIdEdit] = useState<number | undefined>();
-  const orderList: any = [];
-  const tableList: any = [];
-  const tableListSortedByNumber = tableList.sort(
-    (a: any, b: any) => a.number - b.number,
-  );
+
+  const orderListQuery = useGetOrderList({
+    fromDate,
+    toDate,
+  });
+  const orderList = orderListQuery.data?.payload.data ?? [];
+
+  const tableListQuery = useGetTableList();
+  const tableList = tableListQuery.data?.payload.data ?? [];
+
+  const tableListSortedByNumber = tableList.sort((a, b) => a.number - b.number);
+
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -98,7 +109,7 @@ export default function OrderTable() {
   });
 
   const { statics, orderObjectByGuestId, servingGuestByTableNumber } =
-    useOrderService(orderList);
+    useOrderService(orderList as GetOrdersResType["data"]);
 
   const changeStatus = async (body: {
     orderId: number;
@@ -108,7 +119,7 @@ export default function OrderTable() {
   }) => {};
 
   const table = useReactTable({
-    data: orderList,
+    data: orderList as GetOrdersResType["data"],
     columns: orderTableColumns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -267,62 +278,68 @@ export default function OrderTable() {
           tableList={tableListSortedByNumber}
           servingGuestByTableNumber={servingGuestByTableNumber}
         />
-        {/* <TableSkeleton /> */}
-        <div className="rounded-md border">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
+
+        {orderListQuery.isPending ? (
+          <TableSkeleton />
+        ) : (
+          <div className="rounded-md border">
+            <Table>
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      return (
+                        <TableHead key={header.id}>
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext(),
+                              )}
+                        </TableHead>
+                      );
+                    })}
                   </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={orderTableColumns.length}
-                    className="h-24 text-center"
-                  >
-                    Không có dữ liệu.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
+                ))}
+              </TableHeader>
+              <TableBody>
+                {table.getRowModel().rows?.length ? (
+                  table.getRowModel().rows.map((row) => (
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && "selected"}
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <TableCell key={cell.id}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          )}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell
+                      colSpan={orderTableColumns.length}
+                      className="h-24 text-center"
+                    >
+                      Không có dữ liệu.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        )}
+
         <div className="flex items-center justify-end space-x-2 py-4">
           <div className="text-xs text-muted-foreground py-4 flex-1 ">
             Hiển thị{" "}
             <strong>{table.getPaginationRowModel().rows.length}</strong> trong{" "}
-            <strong>{orderList.length}</strong> kết quả
+            <strong>{(orderList as GetOrdersResType["data"]).length}</strong>{" "}
+            kết quả
           </div>
           <div>
             <AutoPagination

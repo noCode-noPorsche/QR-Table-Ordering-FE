@@ -17,7 +17,7 @@ export const useGetTable = ({
   enabled: boolean;
 }) => {
   return useQuery({
-    queryKey: ["table-detail", id],
+    queryKey: ["tables-detail", id],
     queryFn: () => tableApiRequest.getTable(id),
     enabled,
   });
@@ -28,7 +28,7 @@ export const useAddTableMutation = () => {
   return useMutation({
     mutationFn: tableApiRequest.addTable,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["table-list"] });
+      queryClient.invalidateQueries({ queryKey: ["tables-list"] });
     },
   });
 };
@@ -39,7 +39,7 @@ export const useUpdateTableMutation = () => {
     mutationFn: ({ id, ...body }: UpdateTableBodyType & { id: number }) =>
       tableApiRequest.updateTable(id, body),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["table-list"] });
+      queryClient.invalidateQueries({ queryKey: ["tables-list"] });
     },
   });
 };
@@ -49,7 +49,7 @@ export const useDeleteTableMutation = () => {
   return useMutation({
     mutationFn: tableApiRequest.deleteTable,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["table-list"] });
+      queryClient.invalidateQueries({ queryKey: ["tables-list"] });
     },
   });
 };
