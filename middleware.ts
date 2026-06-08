@@ -5,6 +5,7 @@ import type { NextRequest } from "next/server";
 
 const managePaths = ["/manage"];
 const guestPaths = ["/guest"];
+const onlyOwnerPaths = ["/manage/accounts"];
 const privatePaths = [...managePaths, ...guestPaths];
 const unAuthPaths = ["/login"];
 
@@ -48,8 +49,16 @@ export function middleware(request: NextRequest) {
     const isNotGuestToGuestPath =
       role !== Role.Guest &&
       guestPaths.some((path) => pathname.startsWith(path));
+    // Không phải Owner nhưng cố vào route owner
+    const isNotOwnerToOwnerPath =
+      role !== Role.Owner &&
+      onlyOwnerPaths.some((path) => pathname.startsWith(path));
 
-    if (isGuestGoToManagePath || isNotGuestToGuestPath) {
+    if (
+      isGuestGoToManagePath ||
+      isNotGuestToGuestPath ||
+      isNotOwnerToOwnerPath
+    ) {
       return NextResponse.redirect(new URL("/", request.nextUrl));
     }
   }
