@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
+import ListenLogoutSocket from "@/components/listen-logout-socket";
 import RefreshToken from "@/components/refresh-token";
 import { Role } from "@/constants/type";
 import {
@@ -92,6 +93,7 @@ export default function AppProvider({
       <QueryClientProvider client={queryClient}>
         {children}
         <RefreshToken />
+        <ListenLogoutSocket />
         <ReactQueryDevtools />
       </QueryClientProvider>
     </AppContext>

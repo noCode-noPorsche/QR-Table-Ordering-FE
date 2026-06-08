@@ -27,7 +27,7 @@ export const useChangePasswordMutation = () => {
 
 export const useGetAccountList = () => {
   return useQuery({
-    queryKey: ["account-list"],
+    queryKey: ["accounts-list"],
     queryFn: accountApiRequest.getEmployeeList,
   });
 };
