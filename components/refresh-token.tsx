@@ -1,6 +1,6 @@
 "use client";
 
-import socket from "@/lib/socket";
+import { useAppContext } from "@/components/app-provider";
 import { checkAndRefreshToken } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
@@ -11,6 +11,7 @@ const UNAUTHORIZED_PATHS = ["/login", "/logout", "/refresh-token", "/register"];
 export default function RefreshToken() {
   const pathname = usePathname();
   const router = useRouter();
+  const { socket, disconnectSocket } = useAppContext();
 
   useEffect(() => {
     if (UNAUTHORIZED_PATHS.some((p) => pathname.startsWith(p))) {
@@ -23,6 +24,7 @@ export default function RefreshToken() {
       checkAndRefreshToken({
         onError: () => {
           clearInterval(interval);
+          disconnectSocket();
           router.push("/login");
         },
         force,
@@ -35,34 +37,34 @@ export default function RefreshToken() {
       onRefreshToken();
     }, TIMEOUT);
 
-    if (socket.connected) {
+    if (socket?.connected) {
       onConnect();
     }
 
     function onConnect() {
-      console.log("onConnect", socket.id);
+      console.log("onConnect", socket?.id);
     }
 
     function onDisconnect() {
-      console.log("onDisconnect", socket.id);
+      console.log("onDisconnect", socket?.id);
     }
 
     function onRefreshTokenSocket() {
       onRefreshToken(true);
     }
 
-    socket.on("connect", onConnect);
-    socket.on("disconnect", onDisconnect);
-    socket.on("refresh-token", onRefreshTokenSocket);
+    socket?.on("connect", onConnect);
+    socket?.on("disconnect", onDisconnect);
+    socket?.on("refresh-token", onRefreshTokenSocket);
 
     return () => {
       if (interval) {
         clearInterval(interval);
       }
-      socket.off("connect", onConnect);
-      socket.off("disconnect", onDisconnect);
-      socket.off("refresh-token", onRefreshTokenSocket);
+      socket?.off("connect", onConnect);
+      socket?.off("disconnect", onDisconnect);
+      socket?.off("refresh-token", onRefreshTokenSocket);
     };
-  }, [pathname, router]);
+  }, [pathname, router, socket, disconnectSocket]);
   return null;
 }

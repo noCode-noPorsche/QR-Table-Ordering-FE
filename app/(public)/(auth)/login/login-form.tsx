@@ -12,7 +12,7 @@ import {
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { handleErrorApi } from "@/lib/utils";
+import { generateSocketInstance, handleErrorApi } from "@/lib/utils";
 import { useLoginMutation } from "@/queries/useAuth";
 import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -26,7 +26,7 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const clearToken = searchParams.get("clearToken");
-  const { setRole } = useAppContext();
+  const { setRole, setSocket } = useAppContext();
 
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
@@ -43,6 +43,7 @@ export default function LoginForm() {
       toast.success(result.payload.message);
       router.push("/manage/dashboard");
       setRole(result.payload.data.account.role);
+      setSocket(generateSocketInstance(result.payload.data.accessToken));
     } catch (error: any) {
       handleErrorApi({
         error,

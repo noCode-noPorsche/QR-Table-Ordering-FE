@@ -3,12 +3,12 @@ import guestApiRequest from "@/apiRequest/guest";
 import envConfig from "@/config";
 import { DishStatus, OrderStatus, Role, TableStatus } from "@/constants/type";
 import { EntityError } from "@/lib/http";
-import { TokenPayload } from "@/types/jwt.types";
+import { decodeToken } from "@/middleware";
 import { clsx, type ClassValue } from "clsx";
 import { format } from "date-fns";
-import jwt from "jsonwebtoken";
 import { BookX, CookingPot, HandCoins, Loader, Truck } from "lucide-react";
 import { UseFormSetError } from "react-hook-form";
+import { io } from "socket.io-client";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
@@ -180,10 +180,6 @@ export const getTableLink = ({
   );
 };
 
-export const decodeToken = (token: string) => {
-  return jwt.decode(token) as TokenPayload;
-};
-
 export function removeAccents(str: string) {
   return str
     .normalize("NFD")
@@ -207,6 +203,14 @@ export const formatDateTimeToLocaleString = (date: string | Date) => {
 
 export const formatDateTimeToTimeString = (date: string | Date) => {
   return format(date instanceof Date ? date : new Date(date), "HH:mm:ss");
+};
+
+export const generateSocketInstance = (accessToken: string) => {
+  return io(envConfig.NEXT_PUBLIC_API_ENDPOINT, {
+    auth: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
 };
 
 export const OrderStatusIcon = {
