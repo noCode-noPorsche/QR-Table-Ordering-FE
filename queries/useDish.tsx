@@ -28,7 +28,7 @@ export const useAddDishMutation = () => {
   return useMutation({
     mutationFn: dishApiRequest.addDish,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["dish-list"] });
+      queryClient.invalidateQueries({ queryKey: ["dishes-list"] });
     },
   });
 };
