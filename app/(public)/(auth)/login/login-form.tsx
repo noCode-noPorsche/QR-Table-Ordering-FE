@@ -1,6 +1,6 @@
 "use client";
 
-import { useAppContext } from "@/components/app-provider";
+import { useAppStore } from "@/components/app-provider";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -28,7 +28,8 @@ export default function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const clearToken = searchParams.get("clearToken");
-  const { setRole, setSocket } = useAppContext();
+  const setRole = useAppStore((state) => state.setRole);
+  const setSocket = useAppStore((state) => state.setSocket);
 
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),

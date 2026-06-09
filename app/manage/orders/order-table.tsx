@@ -57,7 +57,7 @@ import { useGetTableList } from "@/queries/useTable";
 import TableSkeleton from "@/app/manage/orders/table-skeleton";
 import { toast } from "sonner";
 import { GuestCreateOrdersResType } from "@/schemaValidations/guest.schema";
-import { useAppContext } from "@/components/app-provider";
+import { useAppStore } from "@/components/app-provider";
 
 export const OrderTableContext = createContext({
   setOrderIdEdit: (value: number | undefined) => {
@@ -171,7 +171,8 @@ export default function OrderTable() {
     setToDate(initToDate);
   };
 
-  const { socket, disconnectSocket } = useAppContext();
+  const disconnectSocket = useAppStore((state) => state.disconnectSocket);
+  const socket = useAppStore((state) => state.socket);
 
   useEffect(() => {
     if (socket?.connected) {
