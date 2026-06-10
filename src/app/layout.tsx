@@ -1,0 +1,52 @@
+import type { Metadata } from "next";
+import { Inter as FontSans } from "next/font/google";
+import "./globals.css";
+import { cn } from "@/src/lib/utils";
+import { Toaster } from "@/src/components/ui/sonner";
+import { ThemeProvider } from "@/src/components/theme-provider";
+import AppProvider from "@/src/components/app-provider";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
+
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+export const metadata: Metadata = {
+  title: "Big Boy Restaurant",
+  description: "The best restaurant in the world",
+};
+
+export default async function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  const locale = await getLocale();
+  const message = await getMessages();
+
+  return (
+    <html lang={locale} suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased",
+          fontSans.variable,
+        )}
+      >
+        <NextIntlClientProvider messages={message}>
+          <AppProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              {children}
+              <Toaster position="top-right" />
+            </ThemeProvider>
+          </AppProvider>
+        </NextIntlClientProvider>
+      </body>
+    </html>
+  );
+}

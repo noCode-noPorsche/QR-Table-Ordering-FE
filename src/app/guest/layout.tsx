@@ -1,0 +1,8 @@
+import Layout from "@/src/app/(public)/layout";
+import React from "react";
+
+export default function GuestLayout({
+  children,
+}: Readonly<{ children: React.ReactNode }>) {
+  return <Layout modal={null}>{children}</Layout>;
+}
