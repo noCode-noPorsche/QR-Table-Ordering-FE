@@ -2,6 +2,7 @@ import dishApiRequest from "@/apiRequest/dish";
 import { formatCurrency } from "@/lib/utils";
 import { DishListResType } from "@/schemaValidations/dish.schema";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Home() {
   let dishList: DishListResType["data"] = [];
@@ -41,24 +42,26 @@ export default async function Home() {
         <h2 className="text-center text-2xl font-bold">Đa dạng các món ăn</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
           {dishList.map((dish) => (
-            <div className="flex gap-4" key={dish.id}>
-              <div className="shrink-0">
-                <Image
-                  title={dish.name}
-                  src={dish.image}
-                  width={150}
-                  height={150}
-                  quality={100}
-                  className="object-cover w-37.5 h-37.5 rounded-md"
-                  alt={dish.name}
-                />
+            <Link key={dish.id} href={`/dishes/${dish.id}`}>
+              <div className="flex gap-4" key={dish.id}>
+                <div className="shrink-0">
+                  <Image
+                    title={dish.name}
+                    src={dish.image}
+                    width={150}
+                    height={150}
+                    quality={100}
+                    className="object-cover w-37.5 h-37.5 rounded-md"
+                    alt={dish.name}
+                  />
+                </div>
+                <div className="space-y-1">
+                  <h3 className="text-xl font-semibold">{dish.name}</h3>
+                  <p className="">{dish.description}</p>
+                  <p className="font-semibold">{formatCurrency(dish.price)}</p>
+                </div>
               </div>
-              <div className="space-y-1">
-                <h3 className="text-xl font-semibold">{dish.name}</h3>
-                <p className="">{dish.description}</p>
-                <p className="font-semibold">{formatCurrency(dish.price)}</p>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
