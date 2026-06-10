@@ -1,4 +1,5 @@
 import dishApiRequest from "@/apiRequest/dish";
+import Modal from "@/app/(public)/@modal/(.)dishes/[id]/modal";
 import DishDetailPage from "@/app/(public)/dishes/[id]/dish-detail";
 import { wrapServerApi } from "@/lib/utils";
 
@@ -15,6 +16,9 @@ export default async function DishPage({ params }: DishPageProps) {
   const data = await wrapServerApi(() => dishApiRequest.getDish(Number(id)));
   const dish = data?.payload.data;
 
-  if (!dish) return <div>Món ăn không tồn tại</div>;
-  return <DishDetailPage params={Promise.resolve({ dish })} />;
+  return (
+    <Modal>
+      <DishDetailPage params={Promise.resolve({ dish })} />
+    </Modal>
+  );
 }
