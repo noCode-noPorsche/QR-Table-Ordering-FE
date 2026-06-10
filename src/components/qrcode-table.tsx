@@ -1,6 +1,6 @@
 "use client";
 
-import { getTableLink } from "@/src/lib/utils";
+import { getTableLink } from "@/lib/utils";
 import QRCode from "qrcode";
 import { useEffect, useRef } from "react";
 

@@ -1,26 +1,21 @@
 "use client";
 
-import { useAppStore } from "@/src/components/app-provider";
-import { Button } from "@/src/components/ui/button";
+import { useAppStore } from "@/components/app-provider";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/src/components/ui/form";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import envConfig from "@/src/config";
-import { generateSocketInstance, handleErrorApi } from "@/src/lib/utils";
-import { useLoginMutation } from "@/src/queries/useAuth";
-import { LoginBody, LoginBodyType } from "@/src/schemaValidations/auth.schema";
+} from "@/components/ui/card";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import envConfig from "@/config";
+import { generateSocketInstance, handleErrorApi } from "@/lib/utils";
+import { useLoginMutation } from "@/queries/useAuth";
+import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";

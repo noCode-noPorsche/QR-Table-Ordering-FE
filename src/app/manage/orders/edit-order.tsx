@@ -1,19 +1,19 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/src/components/ui/dialog";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   UpdateOrderBody,
   UpdateOrderBodyType,
-} from "@/src/schemaValidations/order.schema";
+} from "@/schemaValidations/order.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -23,28 +23,21 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/src/components/ui/form";
-import { getVietnameseOrderStatus, handleErrorApi } from "@/src/lib/utils";
-import { OrderStatus, OrderStatusValues } from "@/src/constants/type";
+} from "@/components/ui/form";
+import { getVietnameseOrderStatus, handleErrorApi } from "@/lib/utils";
+import { OrderStatus, OrderStatusValues } from "@/constants/type";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
-import { DishesDialog } from "@/src/app/manage/orders/dishes-dialog";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
+} from "@/components/ui/select";
+import { DishesDialog } from "@/app/manage/orders/dishes-dialog";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useEffect, useState } from "react";
-import { DishListResType } from "@/src/schemaValidations/dish.schema";
-import {
-  useGetOrderDetail,
-  useUpdateOrderMutation,
-} from "@/src/queries/useOrder";
+import { DishListResType } from "@/schemaValidations/dish.schema";
+import { useGetOrderDetail, useUpdateOrderMutation } from "@/queries/useOrder";
 import { toast } from "sonner";
 
 export default function EditOrder({

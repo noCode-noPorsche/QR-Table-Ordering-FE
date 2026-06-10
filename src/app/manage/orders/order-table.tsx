@@ -1,13 +1,13 @@
 /* eslint-disable react-hooks/incompatible-library */
 "use client";
 
-import AddOrder from "@/src/app/manage/orders/add-order";
-import EditOrder from "@/src/app/manage/orders/edit-order";
-import OrderStatics from "@/src/app/manage/orders/order-statics";
-import orderTableColumns from "@/src/app/manage/orders/order-table-columns";
-import { useOrderService } from "@/src/app/manage/orders/order.service";
-import AutoPagination from "@/src/components/auto-pagination";
-import { Input } from "@/src/components/ui/input";
+import AddOrder from "@/app/manage/orders/add-order";
+import EditOrder from "@/app/manage/orders/edit-order";
+import OrderStatics from "@/app/manage/orders/order-statics";
+import orderTableColumns from "@/app/manage/orders/order-table-columns";
+import { useOrderService } from "@/app/manage/orders/order.service";
+import AutoPagination from "@/components/auto-pagination";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -15,14 +15,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
-import { OrderStatusValues } from "@/src/constants/type";
-import { getVietnameseOrderStatus, handleErrorApi } from "@/src/lib/utils";
+} from "@/components/ui/table";
+import { OrderStatusValues } from "@/constants/type";
+import { getVietnameseOrderStatus, handleErrorApi } from "@/lib/utils";
 import {
   GetOrdersResType,
   PayGuestOrdersResType,
   UpdateOrderResType,
-} from "@/src/schemaValidations/order.schema";
+} from "@/schemaValidations/order.schema";
 import {
   ColumnFiltersState,
   SortingState,
@@ -38,29 +38,26 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { createContext, useEffect, useState } from "react";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Command,
   CommandGroup,
   CommandItem,
   CommandList,
-} from "@/src/components/ui/command";
+} from "@/components/ui/command";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/src/components/ui/popover";
-import { cn } from "@/src/lib/utils";
+} from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
 import { endOfDay, format, startOfDay } from "date-fns";
-import {
-  useGetOrderList,
-  useUpdateOrderMutation,
-} from "@/src/queries/useOrder";
-import { useGetTableList } from "@/src/queries/useTable";
-import TableSkeleton from "@/src/app/manage/orders/table-skeleton";
+import { useGetOrderList, useUpdateOrderMutation } from "@/queries/useOrder";
+import { useGetTableList } from "@/queries/useTable";
+import TableSkeleton from "@/app/manage/orders/table-skeleton";
 import { toast } from "sonner";
-import { GuestCreateOrdersResType } from "@/src/schemaValidations/guest.schema";
-import { useAppStore } from "@/src/components/app-provider";
+import { GuestCreateOrdersResType } from "@/schemaValidations/guest.schema";
+import { useAppStore } from "@/components/app-provider";
 
 export const OrderTableContext = createContext({
   setOrderIdEdit: (value: number | undefined) => {

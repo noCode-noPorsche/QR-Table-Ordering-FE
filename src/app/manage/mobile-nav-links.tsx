@@ -1,9 +1,9 @@
 "use client";
-import menuItems from "@/src/app/manage/menuItems";
-import { useAppStore } from "@/src/components/app-provider";
-import { Button } from "@/src/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/src/components/ui/sheet";
-import { cn } from "@/src/lib/utils";
+import menuItems from "@/app/manage/menuItems";
+import { useAppStore } from "@/components/app-provider";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 import { Package2, PanelLeft } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

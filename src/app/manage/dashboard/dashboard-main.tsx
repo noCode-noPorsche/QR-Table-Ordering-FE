@@ -1,17 +1,12 @@
 "use client";
 
-import { DishBarChart } from "@/src/app/manage/dashboard/dish-bar-chart";
-import { RevenueLineChart } from "@/src/app/manage/dashboard/revenue-line-chart";
-import { Button } from "@/src/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { formatCurrency } from "@/src/lib/utils";
-import { useGetDashboardIndicator } from "@/src/queries/useIndicator";
+import { DishBarChart } from "@/app/manage/dashboard/dish-bar-chart";
+import { RevenueLineChart } from "@/app/manage/dashboard/revenue-line-chart";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { formatCurrency } from "@/lib/utils";
+import { useGetDashboardIndicator } from "@/queries/useIndicator";
 import { endOfDay, format, startOfDay } from "date-fns";
 import { useState } from "react";
 

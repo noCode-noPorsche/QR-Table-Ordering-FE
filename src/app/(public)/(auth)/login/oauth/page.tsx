@@ -1,9 +1,9 @@
 "use client";
 
-import { useAppStore } from "@/src/components/app-provider";
-import { generateSocketInstance } from "@/src/lib/utils";
-import { decodeToken } from "@/src/middleware";
-import { useSetTokenToCookieMutation } from "@/src/queries/useAuth";
+import { useAppStore } from "@/components/app-provider";
+import { generateSocketInstance } from "@/lib/utils";
+import { decodeToken } from "@/middleware";
+import { useSetTokenToCookieMutation } from "@/queries/useAuth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { toast } from "sonner";

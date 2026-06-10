@@ -1,6 +1,6 @@
-import dishApiRequest from "@/src/apiRequest/dish";
-import { formatCurrency } from "@/src/lib/utils";
-import { DishListResType } from "@/src/schemaValidations/dish.schema";
+import dishApiRequest from "@/apiRequest/dish";
+import { formatCurrency } from "@/lib/utils";
+import { DishListResType } from "@/schemaValidations/dish.schema";
 import Image from "next/image";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";

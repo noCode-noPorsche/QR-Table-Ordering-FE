@@ -1,11 +1,11 @@
-import TableTable from "@/src/app/manage/tables/table-table";
+import TableTable from "@/app/manage/tables/table-table";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import { Suspense } from "react";
 
 export default function TablesPage() {

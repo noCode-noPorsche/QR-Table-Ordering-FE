@@ -3,7 +3,7 @@
 import {
   checkAndRefreshToken,
   getRefreshTokenFromLocalStorage,
-} from "@/src/lib/utils";
+} from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 

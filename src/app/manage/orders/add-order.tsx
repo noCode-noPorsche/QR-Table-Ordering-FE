@@ -1,9 +1,9 @@
 "use client";
 
-import Quantity from "@/src/app/guest/menu/quantity";
-import GuestsDialog from "@/src/app/manage/orders/guests-dialog";
-import { TablesDialog } from "@/src/app/manage/orders/tables-dialog";
-import { Button } from "@/src/components/ui/button";
+import Quantity from "@/app/guest/menu/quantity";
+import GuestsDialog from "@/app/manage/orders/guests-dialog";
+import { TablesDialog } from "@/app/manage/orders/tables-dialog";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,27 +11,22 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/src/components/ui/dialog";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/src/components/ui/form";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import { Switch } from "@/src/components/ui/switch";
-import { DishStatus } from "@/src/constants/type";
-import { cn, formatCurrency, handleErrorApi } from "@/src/lib/utils";
-import { useCreateGuestMutation } from "@/src/queries/useAccount";
-import { useGetDishList } from "@/src/queries/useDish";
-import { useCreateOrderMutation } from "@/src/queries/useOrder";
-import { GetListGuestsResType } from "@/src/schemaValidations/account.schema";
+} from "@/components/ui/dialog";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import { DishStatus } from "@/constants/type";
+import { cn, formatCurrency, handleErrorApi } from "@/lib/utils";
+import { useCreateGuestMutation } from "@/queries/useAccount";
+import { useGetDishList } from "@/queries/useDish";
+import { useCreateOrderMutation } from "@/queries/useOrder";
+import { GetListGuestsResType } from "@/schemaValidations/account.schema";
 import {
   GuestLoginBody,
   GuestLoginBodyType,
-} from "@/src/schemaValidations/guest.schema";
-import { CreateOrdersBodyType } from "@/src/schemaValidations/order.schema";
+} from "@/schemaValidations/guest.schema";
+import { CreateOrdersBodyType } from "@/schemaValidations/order.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircle } from "lucide-react";
 import Image from "next/image";

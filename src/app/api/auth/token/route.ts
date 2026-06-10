@@ -1,4 +1,4 @@
-import { HttpError } from "@/src/lib/http";
+import { HttpError } from "@/lib/http";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 

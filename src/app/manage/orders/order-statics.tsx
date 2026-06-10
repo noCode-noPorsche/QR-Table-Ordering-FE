@@ -1,26 +1,26 @@
-import OrderGuestDetail from "@/src/app/manage/orders/order-guest-detail";
+import OrderGuestDetail from "@/app/manage/orders/order-guest-detail";
 import {
   ServingGuestByTableNumber,
   Statics,
   StatusCountObject,
-} from "@/src/app/manage/orders/order-table";
-import { Badge } from "@/src/components/ui/badge";
+} from "@/app/manage/orders/order-table";
+import { Badge } from "@/components/ui/badge";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/src/components/ui/dialog";
-import { Separator } from "@/src/components/ui/separator";
+} from "@/components/ui/dialog";
+import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/src/components/ui/tooltip";
-import { OrderStatus, OrderStatusValues } from "@/src/constants/type";
-import { OrderStatusIcon, cn, getVietnameseOrderStatus } from "@/src/lib/utils";
-import { TableListResType } from "@/src/schemaValidations/table.schema";
+} from "@/components/ui/tooltip";
+import { OrderStatus, OrderStatusValues } from "@/constants/type";
+import { OrderStatusIcon, cn, getVietnameseOrderStatus } from "@/lib/utils";
+import { TableListResType } from "@/schemaValidations/table.schema";
 import { Users } from "lucide-react";
 import { Fragment, useState } from "react";
 

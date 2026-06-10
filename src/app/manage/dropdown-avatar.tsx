@@ -1,11 +1,7 @@
 "use client";
-import { useAppStore } from "@/src/components/app-provider";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import { Button } from "@/src/components/ui/button";
+import { useAppStore } from "@/components/app-provider";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,10 +9,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu";
-import { handleErrorApi } from "@/src/lib/utils";
-import { useAccountMe } from "@/src/queries/useAccount";
-import { useLogoutMutation } from "@/src/queries/useAuth";
+} from "@/components/ui/dropdown-menu";
+import { handleErrorApi } from "@/lib/utils";
+import { useAccountMe } from "@/queries/useAccount";
+import { useLogoutMutation } from "@/queries/useAuth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

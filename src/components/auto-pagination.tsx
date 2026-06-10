@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Pagination,
   PaginationContent,
@@ -8,8 +8,8 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/src/components/ui/pagination";
-import { cn } from "@/src/lib/utils";
+} from "@/components/ui/pagination";
+import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 interface Props {
   page: number;

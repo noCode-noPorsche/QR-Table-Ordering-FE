@@ -9,14 +9,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/src/components/ui/chart";
-import { DashboardIndicatorResType } from "@/src/schemaValidations/indicator.schema";
+} from "@/components/ui/chart";
+import { DashboardIndicatorResType } from "@/schemaValidations/indicator.schema";
 
 const colors = [
   "#e11d48", // Màu 1 (Đỏ hồng thanh lịch)

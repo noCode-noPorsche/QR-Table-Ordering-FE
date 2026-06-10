@@ -1,5 +1,5 @@
-import { Role } from "@/src/constants/type";
-import { TokenPayload } from "@/src/types/jwt.types";
+import { Role } from "@/constants/type";
+import { TokenPayload } from "@/types/jwt.types";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";

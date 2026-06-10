@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/src/lib/utils";
-import { Toaster } from "@/src/components/ui/sonner";
-import { ThemeProvider } from "@/src/components/theme-provider";
-import AppProvider from "@/src/components/app-provider";
+import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
+import { ThemeProvider } from "@/components/theme-provider";
+import AppProvider from "@/components/app-provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 

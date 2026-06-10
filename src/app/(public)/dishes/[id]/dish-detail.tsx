@@ -1,5 +1,5 @@
-import { formatCurrency } from "@/src/lib/utils";
-import { DishResType } from "@/src/schemaValidations/dish.schema";
+import { formatCurrency } from "@/lib/utils";
+import { DishResType } from "@/schemaValidations/dish.schema";
 import Image from "next/image";
 
 type DishPageProps = {

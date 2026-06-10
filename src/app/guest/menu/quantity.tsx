@@ -1,5 +1,5 @@
-import { Button } from "@/src/components/ui/button";
-import { Input } from "@/src/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Minus, Plus } from "lucide-react";
 
 export default function Quantity({

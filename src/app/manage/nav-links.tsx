@@ -1,13 +1,13 @@
 "use client";
-import menuItems from "@/src/app/manage/menuItems";
-import { useAppStore } from "@/src/components/app-provider";
+import menuItems from "@/app/manage/menuItems";
+import { useAppStore } from "@/components/app-provider";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/src/components/ui/tooltip";
-import { cn } from "@/src/lib/utils";
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 import { Package2, Settings } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

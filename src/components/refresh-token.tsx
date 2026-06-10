@@ -1,7 +1,7 @@
 "use client";
 
-import { useAppStore } from "@/src/components/app-provider";
-import { checkAndRefreshToken } from "@/src/lib/utils";
+import { useAppStore } from "@/components/app-provider";
+import { checkAndRefreshToken } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 

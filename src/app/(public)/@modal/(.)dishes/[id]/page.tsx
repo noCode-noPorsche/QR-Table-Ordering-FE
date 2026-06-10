@@ -1,7 +1,7 @@
-import dishApiRequest from "@/src/apiRequest/dish";
-import Modal from "@/src/app/(public)/@modal/(.)dishes/[id]/modal";
-import DishDetailPage from "@/src/app/(public)/dishes/[id]/dish-detail";
-import { wrapServerApi } from "@/src/lib/utils";
+import dishApiRequest from "@/apiRequest/dish";
+import Modal from "@/app/(public)/@modal/(.)dishes/[id]/modal";
+import DishDetailPage from "@/app/(public)/dishes/[id]/dish-detail";
+import { wrapServerApi } from "@/lib/utils";
 
 type DishPageProps = {
   params: Promise<{

@@ -2,9 +2,9 @@ import {
   OrderObjectByGuestID,
   ServingGuestByTableNumber,
   Statics,
-} from "@/src/app/manage/orders/order-table";
-import { OrderStatus } from "@/src/constants/type";
-import { GetOrdersResType } from "@/src/schemaValidations/order.schema";
+} from "@/app/manage/orders/order-table";
+import { OrderStatus } from "@/constants/type";
+import { GetOrdersResType } from "@/schemaValidations/order.schema";
 import { useMemo } from "react";
 
 export const useOrderService = (orderList: GetOrdersResType["data"]) => {

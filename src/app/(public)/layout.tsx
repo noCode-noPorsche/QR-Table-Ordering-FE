@@ -3,10 +3,10 @@
 
 import Link from "next/link";
 import { Menu, Package2 } from "lucide-react";
-import { Button } from "@/src/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/src/components/ui/sheet";
-import DarkModeToggle from "@/src/components/dark-mode-toggle";
-import NavItems from "@/src/app/(public)/nav-items";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import DarkModeToggle from "@/components/dark-mode-toggle";
+import NavItems from "@/app/(public)/nav-items";
 import { useEffect, useState } from "react";
 
 export default function Layout({

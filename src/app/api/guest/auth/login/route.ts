@@ -1,6 +1,6 @@
-import guestApiRequest from "@/src/apiRequest/guest";
-import { HttpError } from "@/src/lib/http";
-import { GuestLoginBodyType } from "@/src/schemaValidations/guest.schema";
+import guestApiRequest from "@/apiRequest/guest";
+import { HttpError } from "@/lib/http";
+import { GuestLoginBodyType } from "@/schemaValidations/guest.schema";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 

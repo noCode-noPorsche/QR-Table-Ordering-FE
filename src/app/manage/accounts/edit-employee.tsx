@@ -1,12 +1,8 @@
 "use client";
 
-import { PasswordField } from "@/src/app/manage/setting/input-password";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import { Button } from "@/src/components/ui/button";
+import { PasswordField } from "@/app/manage/setting/input-password";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,35 +10,32 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/src/components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/src/components/ui/form";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
-import { Switch } from "@/src/components/ui/switch";
-import { Role, RoleValues } from "@/src/constants/type";
-import { handleErrorApi } from "@/src/lib/utils";
-import {
-  useGetAccount,
-  useUpdateAccountMutation,
-} from "@/src/queries/useAccount";
-import { useUploadMediaMutation } from "@/src/queries/useMedia";
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { Role, RoleValues } from "@/constants/type";
+import { handleErrorApi } from "@/lib/utils";
+import { useGetAccount, useUpdateAccountMutation } from "@/queries/useAccount";
+import { useUploadMediaMutation } from "@/queries/useMedia";
 import {
   UpdateEmployeeAccountBody,
   UpdateEmployeeAccountBodyType,
-} from "@/src/schemaValidations/account.schema";
+} from "@/schemaValidations/account.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";

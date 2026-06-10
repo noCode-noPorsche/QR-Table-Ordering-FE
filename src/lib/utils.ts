@@ -1,14 +1,9 @@
-import authApiRequest from "@/src/apiRequest/auth";
-import guestApiRequest from "@/src/apiRequest/guest";
-import envConfig from "@/src/config";
-import {
-  DishStatus,
-  OrderStatus,
-  Role,
-  TableStatus,
-} from "@/src/constants/type";
-import { EntityError } from "@/src/lib/http";
-import { decodeToken } from "@/src/middleware";
+import authApiRequest from "@/apiRequest/auth";
+import guestApiRequest from "@/apiRequest/guest";
+import envConfig from "@/config";
+import { DishStatus, OrderStatus, Role, TableStatus } from "@/constants/type";
+import { EntityError } from "@/lib/http";
+import { decodeToken } from "@/middleware";
 import { clsx, type ClassValue } from "clsx";
 import { format } from "date-fns";
 import { BookX, CookingPot, HandCoins, Loader, Truck } from "lucide-react";

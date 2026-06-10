@@ -1,12 +1,12 @@
 "use client";
 
-import Quantity from "@/src/app/guest/menu/quantity";
-import { Button } from "@/src/components/ui/button";
-import { DishStatus } from "@/src/constants/type";
-import { cn, formatCurrency, handleErrorApi } from "@/src/lib/utils";
-import { useGetDishList } from "@/src/queries/useDish";
-import { useGuestOrderMutation } from "@/src/queries/useGuest";
-import { GuestCreateOrdersBodyType } from "@/src/schemaValidations/guest.schema";
+import Quantity from "@/app/guest/menu/quantity";
+import { Button } from "@/components/ui/button";
+import { DishStatus } from "@/constants/type";
+import { cn, formatCurrency, handleErrorApi } from "@/lib/utils";
+import { useGetDishList } from "@/queries/useDish";
+import { useGuestOrderMutation } from "@/queries/useGuest";
+import { GuestCreateOrdersBodyType } from "@/schemaValidations/guest.schema";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

@@ -1,8 +1,8 @@
-import http from "@/src/lib/http";
+import http from "@/lib/http";
 import {
   DashboardIndicatorQueryParamsType,
   DashboardIndicatorResType,
-} from "@/src/schemaValidations/indicator.schema";
+} from "@/schemaValidations/indicator.schema";
 import queryString from "query-string";
 
 const indicatorApiRequest = {

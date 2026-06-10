@@ -1,7 +1,7 @@
-import DarkModeToggle from "@/src/components/dark-mode-toggle";
-import DropdownAvatar from "@/src/app/manage/dropdown-avatar";
-import NavLinks from "@/src/app/manage/nav-links";
-import MobileNavLinks from "@/src/app/manage/mobile-nav-links";
+import DarkModeToggle from "@/components/dark-mode-toggle";
+import DropdownAvatar from "@/app/manage/dropdown-avatar";
+import NavLinks from "@/app/manage/nav-links";
+import MobileNavLinks from "@/app/manage/mobile-nav-links";
 
 export default function Layout({
   children,

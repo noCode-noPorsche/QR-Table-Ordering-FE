@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -8,9 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/src/components/ui/dialog";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircle, Upload } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
@@ -21,30 +21,26 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/src/components/ui/form";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import { getVietnameseDishStatus, handleErrorApi } from "@/src/lib/utils";
+} from "@/components/ui/form";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { getVietnameseDishStatus, handleErrorApi } from "@/lib/utils";
 import {
   CreateDishBody,
   CreateDishBodyType,
-} from "@/src/schemaValidations/dish.schema";
-import { DishStatus, DishStatusValues } from "@/src/constants/type";
+} from "@/schemaValidations/dish.schema";
+import { DishStatus, DishStatusValues } from "@/constants/type";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
-import { Textarea } from "@/src/components/ui/textarea";
-import { useUploadMediaMutation } from "@/src/queries/useMedia";
-import { useAddDishMutation } from "@/src/queries/useDish";
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { useUploadMediaMutation } from "@/queries/useMedia";
+import { useAddDishMutation } from "@/queries/useDish";
 import { toast } from "sonner";
-import revalidateApiRequest from "@/src/apiRequest/revalidate";
+import revalidateApiRequest from "@/apiRequest/revalidate";
 
 export default function AddDish() {
   const [file, setFile] = useState<File | null>(null);

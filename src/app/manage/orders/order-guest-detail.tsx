@@ -1,6 +1,6 @@
-import { Badge } from "@/src/components/ui/badge";
-import { Button } from "@/src/components/ui/button";
-import { OrderStatus } from "@/src/constants/type";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { OrderStatus } from "@/constants/type";
 import {
   OrderStatusIcon,
   formatCurrency,
@@ -8,12 +8,12 @@ import {
   formatDateTimeToTimeString,
   getVietnameseOrderStatus,
   handleErrorApi,
-} from "@/src/lib/utils";
-import { usePayOrderForGuestMutation } from "@/src/queries/useOrder";
+} from "@/lib/utils";
+import { usePayOrderForGuestMutation } from "@/queries/useOrder";
 import {
   GetOrdersResType,
   PayGuestOrdersResType,
-} from "@/src/schemaValidations/order.schema";
+} from "@/schemaValidations/order.schema";
 import Image from "next/image";
 import { Fragment } from "react";
 

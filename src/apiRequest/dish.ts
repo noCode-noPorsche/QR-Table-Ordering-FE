@@ -1,10 +1,10 @@
-import http from "@/src/lib/http";
+import http from "@/lib/http";
 import {
   CreateDishBodyType,
   DishListResType,
   DishResType,
   UpdateDishBodyType,
-} from "@/src/schemaValidations/dish.schema";
+} from "@/schemaValidations/dish.schema";
 
 const prefix = "dishes";
 

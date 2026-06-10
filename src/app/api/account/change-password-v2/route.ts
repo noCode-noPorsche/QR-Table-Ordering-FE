@@ -1,6 +1,6 @@
-import accountApiRequest from "@/src/apiRequest/account";
-import { HttpError } from "@/src/lib/http";
-import { ChangePasswordV2BodyType } from "@/src/schemaValidations/account.schema";
+import accountApiRequest from "@/apiRequest/account";
+import { HttpError } from "@/lib/http";
+import { ChangePasswordV2BodyType } from "@/schemaValidations/account.schema";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 

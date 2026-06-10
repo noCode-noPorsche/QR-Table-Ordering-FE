@@ -1,5 +1,5 @@
-import guestApiRequest from "@/src/apiRequest/guest";
-import { HttpError } from "@/src/lib/http";
+import guestApiRequest from "@/apiRequest/guest";
+import { HttpError } from "@/lib/http";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 

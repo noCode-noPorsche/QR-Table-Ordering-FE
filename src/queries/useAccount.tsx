@@ -1,9 +1,9 @@
-import accountApiRequest from "@/src/apiRequest/account";
+import accountApiRequest from "@/apiRequest/account";
 import {
   CreateGuestBodyType,
   GetGuestListQueryParamsType,
   UpdateEmployeeAccountBodyType,
-} from "@/src/schemaValidations/account.schema";
+} from "@/schemaValidations/account.schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useAccountMe = () => {

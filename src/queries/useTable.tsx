@@ -1,5 +1,5 @@
-import tableApiRequest from "@/src/apiRequest/table";
-import { UpdateTableBodyType } from "@/src/schemaValidations/table.schema";
+import tableApiRequest from "@/apiRequest/table";
+import { UpdateTableBodyType } from "@/schemaValidations/table.schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useGetTableList = () => {

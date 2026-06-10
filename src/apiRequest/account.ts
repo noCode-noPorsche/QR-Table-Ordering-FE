@@ -1,4 +1,4 @@
-import http from "@/src/lib/http";
+import http from "@/lib/http";
 import {
   AccountListResType,
   AccountResType,
@@ -12,7 +12,7 @@ import {
   GetListGuestsResType,
   UpdateEmployeeAccountBodyType,
   UpdateMeBodyType,
-} from "@/src/schemaValidations/account.schema";
+} from "@/schemaValidations/account.schema";
 import queryString from "query-string";
 
 const prefix = "accounts";

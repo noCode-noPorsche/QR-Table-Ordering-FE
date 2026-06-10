@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/incompatible-library */
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/src/components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -14,9 +14,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
-import AutoPagination from "@/src/components/auto-pagination";
-import { DishListResType } from "@/src/schemaValidations/dish.schema";
+} from "@/components/ui/table";
+import AutoPagination from "@/components/auto-pagination";
+import { DishListResType } from "@/schemaValidations/dish.schema";
 import { useEffect, useState } from "react";
 import {
   ColumnDef,
@@ -34,10 +34,10 @@ import {
   formatCurrency,
   getVietnameseDishStatus,
   simpleMatchText,
-} from "@/src/lib/utils";
-import { Input } from "@/src/components/ui/input";
+} from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import { useGetDishList } from "@/src/queries/useDish";
+import { useGetDishList } from "@/queries/useDish";
 
 type DishItem = DishListResType["data"][0];
 

@@ -1,31 +1,21 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/src/components/ui/form";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   GuestLoginBody,
   GuestLoginBodyType,
-} from "@/src/schemaValidations/guest.schema";
+} from "@/schemaValidations/guest.schema";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import { useGuestLoginMutation } from "@/src/queries/useGuest";
-import { useAppStore } from "@/src/components/app-provider";
-import { generateSocketInstance, handleErrorApi } from "@/src/lib/utils";
+import { useGuestLoginMutation } from "@/queries/useGuest";
+import { useAppStore } from "@/components/app-provider";
+import { generateSocketInstance, handleErrorApi } from "@/lib/utils";
 
 export default function GuestLoginForm() {
   const searchParams = useSearchParams();

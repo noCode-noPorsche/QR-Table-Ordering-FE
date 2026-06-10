@@ -1,11 +1,11 @@
 "use client";
 
-import { useAppStore } from "@/src/components/app-provider";
+import { useAppStore } from "@/components/app-provider";
 import {
   getAccessTokenFromLocalStorage,
   getRefreshTokenFromLocalStorage,
-} from "@/src/lib/utils";
-import { useLogoutMutation } from "@/src/queries/useAuth";
+} from "@/lib/utils";
+import { useLogoutMutation } from "@/queries/useAuth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useRef } from "react";
 

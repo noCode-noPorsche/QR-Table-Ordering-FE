@@ -1,14 +1,14 @@
 "use client";
 
-import { useAppStore } from "@/src/components/app-provider";
-import { Badge } from "@/src/components/ui/badge";
-import { OrderStatus } from "@/src/constants/type";
-import { formatCurrency, getVietnameseOrderStatus } from "@/src/lib/utils";
-import { useGuestGetOrderList } from "@/src/queries/useGuest";
+import { useAppStore } from "@/components/app-provider";
+import { Badge } from "@/components/ui/badge";
+import { OrderStatus } from "@/constants/type";
+import { formatCurrency, getVietnameseOrderStatus } from "@/lib/utils";
+import { useGuestGetOrderList } from "@/queries/useGuest";
 import {
   PayGuestOrdersResType,
   UpdateOrderResType,
-} from "@/src/schemaValidations/order.schema";
+} from "@/schemaValidations/order.schema";
 import Image from "next/image";
 import { useEffect } from "react";
 import { toast } from "sonner";

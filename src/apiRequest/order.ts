@@ -1,4 +1,4 @@
-import http from "@/src/lib/http";
+import http from "@/lib/http";
 import {
   CreateOrdersBodyType,
   CreateOrdersResType,
@@ -8,7 +8,7 @@ import {
   PayGuestOrdersResType,
   UpdateOrderBodyType,
   UpdateOrderResType,
-} from "@/src/schemaValidations/order.schema";
+} from "@/schemaValidations/order.schema";
 import queryString from "query-string";
 
 const prefix = "orders";

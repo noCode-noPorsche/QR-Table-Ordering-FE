@@ -1,12 +1,12 @@
-import envConfig from "@/src/config";
+import envConfig from "@/config";
 import {
   getAccessTokenFromLocalStorage,
   normalizePath,
   removeTokensFromLocalStorage,
   setAccessTokenToLocalStorage,
   setRefreshTokenToLocalStorage,
-} from "@/src/lib/utils";
-import { LoginResType } from "@/src/schemaValidations/auth.schema";
+} from "@/lib/utils";
+import { LoginResType } from "@/schemaValidations/auth.schema";
 import { redirect } from "next/navigation";
 
 type CustomOptions = Omit<RequestInit, "method"> & {

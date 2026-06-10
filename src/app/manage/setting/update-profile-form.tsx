@@ -1,31 +1,17 @@
 "use client";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import { Button } from "@/src/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/src/components/ui/form";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import { handleErrorApi } from "@/src/lib/utils";
-import { useAccountMe, useUpdateMeMutation } from "@/src/queries/useAccount";
-import { useUploadMediaMutation } from "@/src/queries/useMedia";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { handleErrorApi } from "@/lib/utils";
+import { useAccountMe, useUpdateMeMutation } from "@/queries/useAccount";
+import { useUploadMediaMutation } from "@/queries/useMedia";
 import {
   UpdateMeBody,
   UpdateMeBodyType,
-} from "@/src/schemaValidations/account.schema";
+} from "@/schemaValidations/account.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";

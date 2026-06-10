@@ -1,10 +1,10 @@
-import http from "@/src/lib/http";
+import http from "@/lib/http";
 import {
   CreateTableBodyType,
   TableListResType,
   TableResType,
   UpdateTableBodyType,
-} from "@/src/schemaValidations/table.schema";
+} from "@/schemaValidations/table.schema";
 
 const prefix = "tables";
 

@@ -4,9 +4,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 
-import AccountTable from "@/src/app/manage/accounts/account-table";
+import AccountTable from "@/app/manage/accounts/account-table";
 import { Suspense } from "react";
 
 export default function Dashboard() {

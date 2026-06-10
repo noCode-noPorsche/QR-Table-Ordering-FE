@@ -15,7 +15,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import DOMPurify from "dompurify";
 
 import {
@@ -25,8 +25,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu";
-import { Input } from "@/src/components/ui/input";
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -34,12 +34,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
+} from "@/components/ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createContext, useContext, useEffect, useState } from "react";
 import {
   AlertDialog,
@@ -50,18 +46,18 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/src/components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import {
   formatCurrency,
   getVietnameseDishStatus,
   handleErrorApi,
-} from "@/src/lib/utils";
+} from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
-import AutoPagination from "@/src/components/auto-pagination";
-import { DishListResType } from "@/src/schemaValidations/dish.schema";
-import EditDish from "@/src/app/manage/dishes/edit-dish";
-import AddDish from "@/src/app/manage/dishes/add-dish";
-import { useDeleteDishMutation, useGetDishList } from "@/src/queries/useDish";
+import AutoPagination from "@/components/auto-pagination";
+import { DishListResType } from "@/schemaValidations/dish.schema";
+import EditDish from "@/app/manage/dishes/edit-dish";
+import AddDish from "@/app/manage/dishes/add-dish";
+import { useDeleteDishMutation, useGetDishList } from "@/queries/useDish";
 import { toast } from "sonner";
 
 type DishItem = DishListResType["data"][0];

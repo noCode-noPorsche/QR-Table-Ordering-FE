@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/incompatible-library */
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/src/components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Table,
   TableBody,
@@ -14,8 +14,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
-import AutoPagination from "@/src/components/auto-pagination";
+} from "@/components/ui/table";
+import AutoPagination from "@/components/auto-pagination";
 import { useEffect, useState } from "react";
 import {
   ColumnDef,
@@ -29,11 +29,11 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { cn, getVietnameseTableStatus, simpleMatchText } from "@/src/lib/utils";
-import { Input } from "@/src/components/ui/input";
-import { TableListResType } from "@/src/schemaValidations/table.schema";
-import { TableStatus } from "@/src/constants/type";
-import { useGetTableList } from "@/src/queries/useTable";
+import { cn, getVietnameseTableStatus, simpleMatchText } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
+import { TableListResType } from "@/schemaValidations/table.schema";
+import { TableStatus } from "@/constants/type";
+import { useGetTableList } from "@/queries/useTable";
 
 type TableItem = TableListResType["data"][0];
 

@@ -1,4 +1,4 @@
-import Layout from "@/src/app/(public)/layout";
+import Layout from "@/app/(public)/layout";
 import React from "react";
 
 export default function GuestLayout({

@@ -1,33 +1,23 @@
 "use client";
-import { Button } from "@/src/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/src/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 // import { Input } from "@/components/ui/input";
-import { Label } from "@/src/components/ui/label";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/src/components/ui/form";
-import { useChangePasswordMutation } from "@/src/queries/useAccount";
+import { Label } from "@/components/ui/label";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { useChangePasswordMutation } from "@/queries/useAccount";
 import {
   ChangePasswordBody,
   ChangePasswordBodyType,
-} from "@/src/schemaValidations/account.schema";
+} from "@/schemaValidations/account.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
   handleErrorApi,
   setAccessTokenToLocalStorage,
   setRefreshTokenToLocalStorage,
-} from "@/src/lib/utils";
+} from "@/lib/utils";
 import { toast } from "sonner";
-import { PasswordField } from "@/src/app/manage/setting/input-password";
+import { PasswordField } from "@/app/manage/setting/input-password";
 
 export default function ChangePasswordForm() {
   const changePasswordMutation = useChangePasswordMutation();

@@ -1,4 +1,4 @@
-import guestApiRequest from "@/src/apiRequest/guest";
+import guestApiRequest from "@/apiRequest/guest";
 import { cookies } from "next/headers";
 
 export async function POST() {

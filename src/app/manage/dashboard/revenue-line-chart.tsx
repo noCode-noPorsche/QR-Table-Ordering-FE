@@ -6,14 +6,14 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/src/components/ui/chart";
-import { DashboardIndicatorResType } from "@/src/schemaValidations/indicator.schema";
+} from "@/components/ui/chart";
+import { DashboardIndicatorResType } from "@/schemaValidations/indicator.schema";
 import { format, parse } from "date-fns";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 const chartConfig = {

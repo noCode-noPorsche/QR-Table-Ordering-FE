@@ -16,7 +16,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 
 import {
   DropdownMenu,
@@ -25,8 +25,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu";
-import { Input } from "@/src/components/ui/input";
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -34,18 +34,14 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
+} from "@/components/ui/table";
 import {
   AccountListResType,
   AccountType,
-} from "@/src/schemaValidations/account.schema";
-import AddEmployee from "@/src/app/manage/accounts/add-employee";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import EditEmployee from "@/src/app/manage/accounts/edit-employee";
+} from "@/schemaValidations/account.schema";
+import AddEmployee from "@/app/manage/accounts/add-employee";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import EditEmployee from "@/app/manage/accounts/edit-employee";
 import { createContext, useContext, useEffect, useState } from "react";
 import {
   AlertDialog,
@@ -56,15 +52,15 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/src/components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import { useSearchParams } from "next/navigation";
-import AutoPagination from "@/src/components/auto-pagination";
+import AutoPagination from "@/components/auto-pagination";
 import {
   useDeleteAccountMutation,
   useGetAccountList,
-} from "@/src/queries/useAccount";
+} from "@/queries/useAccount";
 import { toast } from "sonner";
-import { handleErrorApi } from "@/src/lib/utils";
+import { handleErrorApi } from "@/lib/utils";
 
 type AccountItem = AccountListResType["data"][0];
 

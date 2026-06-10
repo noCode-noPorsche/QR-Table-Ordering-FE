@@ -1,14 +1,14 @@
 "use client";
 
-import ListenLogoutSocket from "@/src/components/listen-logout-socket";
-import RefreshToken from "@/src/components/refresh-token";
+import ListenLogoutSocket from "@/components/listen-logout-socket";
+import RefreshToken from "@/components/refresh-token";
 import {
   generateSocketInstance,
   getAccessTokenFromLocalStorage,
   removeTokensFromLocalStorage,
-} from "@/src/lib/utils";
-import { decodeToken } from "@/src/middleware";
-import { RoleType } from "@/src/types/jwt.types";
+} from "@/lib/utils";
+import { decodeToken } from "@/middleware";
+import { RoleType } from "@/types/jwt.types";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useEffect, useRef } from "react";

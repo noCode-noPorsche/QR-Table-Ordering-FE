@@ -1,16 +1,16 @@
-import http from "@/src/lib/http";
+import http from "@/lib/http";
 import {
   LogoutBodyType,
   RefreshTokenBodyType,
   RefreshTokenResType,
-} from "@/src/schemaValidations/auth.schema";
+} from "@/schemaValidations/auth.schema";
 import {
   GuestCreateOrdersBodyType,
   GuestCreateOrdersResType,
   GuestGetOrdersResType,
   GuestLoginBodyType,
   GuestLoginResType,
-} from "@/src/schemaValidations/guest.schema";
+} from "@/schemaValidations/guest.schema";
 
 const prefix = "guest";
 

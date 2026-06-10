@@ -4,8 +4,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
-import DishTable from "@/src/app/manage/dishes/dish-table";
+} from "@/components/ui/card";
+import DishTable from "@/app/manage/dishes/dish-table";
 import { Suspense } from "react";
 
 export default function DishesPage() {

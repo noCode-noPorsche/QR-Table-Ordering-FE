@@ -1,9 +1,9 @@
 "use client";
 
-import OrderGuestDetail from "@/src/app/manage/orders/order-guest-detail";
-import { OrderTableContext } from "@/src/app/manage/orders/order-table";
-import { Badge } from "@/src/components/ui/badge";
-import { Button } from "@/src/components/ui/button";
+import OrderGuestDetail from "@/app/manage/orders/order-guest-detail";
+import { OrderTableContext } from "@/app/manage/orders/order-table";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,27 +11,27 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/src/components/ui/popover";
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
-import { OrderStatus, OrderStatusValues } from "@/src/constants/type";
+} from "@/components/ui/select";
+import { OrderStatus, OrderStatusValues } from "@/constants/type";
 import {
   formatCurrency,
   formatDateTimeToLocaleString,
   getVietnameseOrderStatus,
   simpleMatchText,
-} from "@/src/lib/utils";
-import { GetOrdersResType } from "@/src/schemaValidations/order.schema";
+} from "@/lib/utils";
+import { GetOrdersResType } from "@/schemaValidations/order.schema";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";

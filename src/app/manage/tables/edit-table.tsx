@@ -1,15 +1,15 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/src/components/ui/dialog";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import {
@@ -18,30 +18,30 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/src/components/ui/form";
+} from "@/components/ui/form";
 import {
   getTableLink,
   getVietnameseTableStatus,
   handleErrorApi,
-} from "@/src/lib/utils";
+} from "@/lib/utils";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
+} from "@/components/ui/select";
 import {
   UpdateTableBody,
   UpdateTableBodyType,
-} from "@/src/schemaValidations/table.schema";
-import { TableStatus, TableStatusValues } from "@/src/constants/type";
-import { Switch } from "@/src/components/ui/switch";
+} from "@/schemaValidations/table.schema";
+import { TableStatus, TableStatusValues } from "@/constants/type";
+import { Switch } from "@/components/ui/switch";
 import Link from "next/link";
 import { useEffect } from "react";
-import { useGetTable, useUpdateTableMutation } from "@/src/queries/useTable";
+import { useGetTable, useUpdateTableMutation } from "@/queries/useTable";
 import { toast } from "sonner";
-import QRCodeTable from "@/src/components/qrcode-table";
+import QRCodeTable from "@/components/qrcode-table";
 
 export default function EditTable({
   id,

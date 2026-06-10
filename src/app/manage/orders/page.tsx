@@ -1,11 +1,11 @@
-import OrderTable from "@/src/app/manage/orders/order-table";
+import OrderTable from "@/app/manage/orders/order-table";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/src/components/ui/card";
+} from "@/components/ui/card";
 
 import { Suspense } from "react";
 

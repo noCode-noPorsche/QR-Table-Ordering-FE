@@ -1,6 +1,6 @@
 "use client";
 
-import { useAppStore } from "@/src/components/app-provider";
+import { useAppStore } from "@/components/app-provider";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -11,12 +11,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/src/components/ui/alert-dialog";
-import { Role } from "@/src/constants/type";
-import { cn, handleErrorApi } from "@/src/lib/utils";
-import { useLogoutMutation } from "@/src/queries/useAuth";
-import { useGuestLogoutMutation } from "@/src/queries/useGuest";
-import { RoleType } from "@/src/types/jwt.types";
+} from "@/components/ui/alert-dialog";
+import { Role } from "@/constants/type";
+import { cn, handleErrorApi } from "@/lib/utils";
+import { useLogoutMutation } from "@/queries/useAuth";
+import { useGuestLogoutMutation } from "@/queries/useGuest";
+import { RoleType } from "@/types/jwt.types";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 

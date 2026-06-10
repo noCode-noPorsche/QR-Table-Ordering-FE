@@ -1,6 +1,6 @@
-import { useAppStore } from "@/src/components/app-provider";
-import { handleErrorApi } from "@/src/lib/utils";
-import { useLogoutMutation } from "@/src/queries/useAuth";
+import { useAppStore } from "@/components/app-provider";
+import { handleErrorApi } from "@/lib/utils";
+import { useLogoutMutation } from "@/queries/useAuth";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 

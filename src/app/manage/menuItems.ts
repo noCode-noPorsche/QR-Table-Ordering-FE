@@ -1,4 +1,4 @@
-import { Role } from "@/src/constants/type";
+import { Role } from "@/constants/type";
 import { Home, Salad, ShoppingCart, Table, Users2 } from "lucide-react";
 
 const menuItems = [

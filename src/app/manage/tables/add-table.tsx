@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -7,9 +7,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/src/components/ui/dialog";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircle } from "lucide-react";
 import { useState } from "react";
@@ -20,21 +20,21 @@ import {
   FormField,
   FormItem,
   FormMessage,
-} from "@/src/components/ui/form";
-import { getVietnameseTableStatus, handleErrorApi } from "@/src/lib/utils";
+} from "@/components/ui/form";
+import { getVietnameseTableStatus, handleErrorApi } from "@/lib/utils";
 import {
   CreateTableBody,
   CreateTableBodyType,
-} from "@/src/schemaValidations/table.schema";
-import { TableStatus, TableStatusValues } from "@/src/constants/type";
+} from "@/schemaValidations/table.schema";
+import { TableStatus, TableStatusValues } from "@/constants/type";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
-import { useAddTableMutation } from "@/src/queries/useTable";
+} from "@/components/ui/select";
+import { useAddTableMutation } from "@/queries/useTable";
 import { toast } from "sonner";
 
 export default function AddTable() {

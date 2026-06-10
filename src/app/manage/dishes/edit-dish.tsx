@@ -1,12 +1,8 @@
 "use client";
 
-import revalidateApiRequest from "@/src/apiRequest/revalidate";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import { Button } from "@/src/components/ui/button";
+import revalidateApiRequest from "@/apiRequest/revalidate";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,32 +10,32 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@/src/components/ui/dialog";
+} from "@/components/ui/dialog";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from "@/src/components/ui/form";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/src/components/ui/select";
-import { Textarea } from "@/src/components/ui/textarea";
-import { DishStatus, DishStatusValues } from "@/src/constants/type";
-import { getVietnameseDishStatus, handleErrorApi } from "@/src/lib/utils";
-import { useGetDish, useUpdateDishMutation } from "@/src/queries/useDish";
-import { useUploadMediaMutation } from "@/src/queries/useMedia";
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { DishStatus, DishStatusValues } from "@/constants/type";
+import { getVietnameseDishStatus, handleErrorApi } from "@/lib/utils";
+import { useGetDish, useUpdateDishMutation } from "@/queries/useDish";
+import { useUploadMediaMutation } from "@/queries/useMedia";
 import {
   UpdateDishBody,
   UpdateDishBodyType,
-} from "@/src/schemaValidations/dish.schema";
+} from "@/schemaValidations/dish.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Upload } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";

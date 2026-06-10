@@ -1,4 +1,4 @@
-import guestApiRequest from "@/src/apiRequest/guest";
+import guestApiRequest from "@/apiRequest/guest";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useGuestLoginMutation = () => {

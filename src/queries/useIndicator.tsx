@@ -1,5 +1,5 @@
-import indicatorApiRequest from "@/src/apiRequest/indicator";
-import { DashboardIndicatorQueryParamsType } from "@/src/schemaValidations/indicator.schema";
+import indicatorApiRequest from "@/apiRequest/indicator";
+import { DashboardIndicatorQueryParamsType } from "@/schemaValidations/indicator.schema";
 import { useQuery } from "@tanstack/react-query";
 
 export const useGetDashboardIndicator = (

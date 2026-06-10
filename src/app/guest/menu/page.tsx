@@ -1,4 +1,4 @@
-import MenuOrder from "@/src/app/guest/menu/menu-order";
+import MenuOrder from "@/app/guest/menu/menu-order";
 
 export default async function MenuPage() {
   return (

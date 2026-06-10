@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/incompatible-library */
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
@@ -17,9 +17,9 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 
-import AddTable from "@/src/app/manage/tables/add-table";
-import EditTable from "@/src/app/manage/tables/edit-table";
-import AutoPagination from "@/src/components/auto-pagination";
+import AddTable from "@/app/manage/tables/add-table";
+import EditTable from "@/app/manage/tables/edit-table";
+import AutoPagination from "@/components/auto-pagination";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -29,7 +29,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/src/components/ui/alert-dialog";
+} from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -37,8 +37,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/src/components/ui/dropdown-menu";
-import { Input } from "@/src/components/ui/input";
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -46,20 +46,17 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/src/components/ui/table";
+} from "@/components/ui/table";
 import {
   getTableLink,
   getVietnameseTableStatus,
   handleErrorApi,
-} from "@/src/lib/utils";
-import { TableListResType } from "@/src/schemaValidations/table.schema";
+} from "@/lib/utils";
+import { TableListResType } from "@/schemaValidations/table.schema";
 import { useSearchParams } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-  useDeleteTableMutation,
-  useGetTableList,
-} from "@/src/queries/useTable";
-import QRCodeTable from "@/src/components/qrcode-table";
+import { useDeleteTableMutation, useGetTableList } from "@/queries/useTable";
+import QRCodeTable from "@/components/qrcode-table";
 import { toast } from "sonner";
 
 type TableItem = TableListResType["data"][0];

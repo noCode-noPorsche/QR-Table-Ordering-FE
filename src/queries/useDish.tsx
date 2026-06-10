@@ -1,5 +1,5 @@
-import dishApiRequest from "@/src/apiRequest/dish";
-import { UpdateDishBodyType } from "@/src/schemaValidations/dish.schema";
+import dishApiRequest from "@/apiRequest/dish";
+import { UpdateDishBodyType } from "@/schemaValidations/dish.schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useGetDishList = () => {

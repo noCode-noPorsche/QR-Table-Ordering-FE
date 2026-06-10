@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/src/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -9,33 +9,24 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/src/components/ui/dialog";
-import { Input } from "@/src/components/ui/input";
-import { Label } from "@/src/components/ui/label";
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   CreateEmployeeAccountBody,
   CreateEmployeeAccountBodyType,
-} from "@/src/schemaValidations/account.schema";
+} from "@/schemaValidations/account.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PlusCircle, Upload } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/src/components/ui/form";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/src/components/ui/avatar";
-import { useAddAccountMutation } from "@/src/queries/useAccount";
-import { useUploadMediaMutation } from "@/src/queries/useMedia";
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useAddAccountMutation } from "@/queries/useAccount";
+import { useUploadMediaMutation } from "@/queries/useMedia";
 import { toast } from "sonner";
-import { handleErrorApi } from "@/src/lib/utils";
-import { PasswordField } from "@/src/app/manage/setting/input-password";
+import { handleErrorApi } from "@/lib/utils";
+import { PasswordField } from "@/app/manage/setting/input-password";
 
 export default function AddEmployee() {
   const [file, setFile] = useState<File | null>(null);

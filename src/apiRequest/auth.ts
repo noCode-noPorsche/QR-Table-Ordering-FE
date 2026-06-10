@@ -1,11 +1,11 @@
-import http from "@/src/lib/http";
+import http from "@/lib/http";
 import {
   LoginBodyType,
   LoginResType,
   LogoutBodyType,
   RefreshTokenBodyType,
   RefreshTokenResType,
-} from "@/src/schemaValidations/auth.schema";
+} from "@/schemaValidations/auth.schema";
 
 const authApiRequest = {
   refreshTokenRequest: null as Promise<{
