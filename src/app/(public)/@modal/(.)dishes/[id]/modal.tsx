@@ -25,7 +25,7 @@ export default function Modal({ children }: { children: React.ReactNode }) {
         className="
           /* 1. Kích thước và giới hạn diện tích hiển thị */
           w-[calc(100%-2rem)] max-w-2xl md:max-w-3xl lg:max-w-4xl
-          max-h-[90vh] md:max-h-[85vh]
+          max-h-[90vh] md:max-h-[85vh] flex flex-col
           
           /* 2. Thiết kế viền, bo góc và đổ bóng cao cấp */
           p-0 overflow-hidden rounded-2xl border border-slate-100 dark:border-slate-800
@@ -45,7 +45,7 @@ export default function Modal({ children }: { children: React.ReactNode }) {
           </DialogTitle>
         </div>
         {/* Box chứa nội dung có scroll tự động và giấu thanh scroll gốc */}
-        <div className="w-full h-full max-h-[90vh] md:max-h-[85vh] overflow-y-auto p-5 md:p-6 lg:p-8 scrollbar-thin">
+        <div className="w-full h-full max-h-[90vh] md:max-h-[85vh] overflow-auto p-5 md:p-6 lg:p-8 scrollbar-thin">
           {children}
         </div>
       </DialogContent>
