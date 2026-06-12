@@ -25,10 +25,13 @@ import { toast } from "sonner";
 import SearchParamsLoader, {
   useSearchParamsLoader,
 } from "@/components/search-params-loader";
+import { useTranslations } from "next-intl";
 
 export default function LoginForm() {
   const loginMutation = useLoginMutation();
   const router = useRouter();
+  const t = useTranslations("Login");
+  const errorMessageT = useTranslations("ErrorMessage");
   // const searchParams = useSearchParams();
   const { searchParams, setSearchParams } = useSearchParamsLoader();
   const clearToken = searchParams?.get("clearToken");
@@ -90,10 +93,10 @@ export default function LoginForm() {
         <SearchParamsLoader onParamReceived={setSearchParams} />
         <CardHeader className="space-y-1 text-center md:text-center">
           <CardTitle className="text-2xl font-bold tracking-tight">
-            Đăng nhập
+            {t("title")}
           </CardTitle>
           <CardDescription className="text-balance">
-            Nhập email và mật khẩu của bạn để truy cập hệ thống quản lý đặt món
+            {t("description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -109,11 +112,11 @@ export default function LoginForm() {
                 <FormField
                   control={form.control}
                   name="email"
-                  render={({ field }) => (
+                  render={({ field, formState: { errors } }) => (
                     <FormItem>
                       <div className="grid gap-1.5">
                         <Label htmlFor="email" className="text-sm font-medium">
-                          Email
+                          {t("email")}
                         </Label>
                         <Input
                           id="email"
@@ -123,7 +126,10 @@ export default function LoginForm() {
                           autoComplete="email"
                           {...field}
                         />
-                        <FormMessage className="text-xs" />
+                        <FormMessage className="text-xs">
+                          {Boolean(errors.email?.message) &&
+                            errorMessageT(errors.email?.message as any)}
+                        </FormMessage>
                       </div>
                     </FormItem>
                   )}
@@ -132,7 +138,7 @@ export default function LoginForm() {
                 <FormField
                   control={form.control}
                   name="password"
-                  render={({ field }) => (
+                  render={({ field, formState: { errors } }) => (
                     <FormItem>
                       <div className="grid gap-1.5">
                         <div className="flex items-center justify-between">
@@ -140,13 +146,13 @@ export default function LoginForm() {
                             htmlFor="password"
                             className="text-sm font-medium"
                           >
-                            Mật khẩu
+                            {t("password")}
                           </Label>
                           <a
                             href="#"
                             className="text-xs text-primary hover:underline font-medium"
                           >
-                            Quên mật khẩu?
+                            {t("forgotPassword")}
                           </a>
                         </div>
                         <Input
@@ -157,7 +163,10 @@ export default function LoginForm() {
                           autoComplete="current-password"
                           {...field}
                         />
-                        <FormMessage className="text-xs" />
+                        <FormMessage className="text-xs">
+                          {Boolean(errors.password?.message) &&
+                            errorMessageT(errors.password?.message as any)}
+                        </FormMessage>
                       </div>
                     </FormItem>
                   )}
@@ -168,13 +177,13 @@ export default function LoginForm() {
                     type="submit"
                     className="w-full h-10 font-semibold shadow-sm transition-all active:scale-[0.98] cursor-pointer"
                   >
-                    Đăng nhập
+                    {t("signIn")}
                   </Button>
 
                   <div className="relative flex items-center justify-center my-2">
                     <span className="absolute w-full border-t border-muted" />
                     <span className="relative bg-card px-3 text-xs uppercase text-muted-foreground font-medium">
-                      Hoặc tiếp tục với
+                      {t("orContinueWithGoogle")}
                     </span>
                   </div>
                   <Link href={googleOauthUrl}>

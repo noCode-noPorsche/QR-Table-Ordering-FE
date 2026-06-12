@@ -11,9 +11,7 @@ type DishPageProps = {
 
 export default async function DishPage({ params }: DishPageProps) {
   const { slug } = await params;
-  console.log(slug);
   const id = getIdFromSlugUrl(slug);
-  console.log(id);
 
   const data = await wrapServerApi(() => dishApiRequest.getDish(Number(id)));
   const dish = data?.payload.data;

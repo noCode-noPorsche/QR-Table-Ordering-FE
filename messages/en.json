@@ -6,5 +6,21 @@
     "title": "Switch Language",
     "en": "English",
     "vi": "Vietnamese"
+  },
+  "Login": {
+    "title": "Login",
+    "description": "Enter your email and password to access the restaurant's food ordering management system.",
+    "email": "Email",
+    "signIn": "Sign In",
+    "password": "Password",
+    "submit": "Submit",
+    "forgotPassword": "Forgot Password?",
+    "orContinueWithGoogle": "Or continue with Google"
+  },
+  "ErrorMessage": {
+    "required": "This email is required",
+    "invalidEmail": "Please enter a valid email address",
+    "atLeast": "Password must be at least 6 characters",
+    "atMost": "Password must be at most 100 characters"
   }
 }
