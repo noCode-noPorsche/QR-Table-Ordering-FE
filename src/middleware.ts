@@ -1,21 +1,34 @@
 import { Role } from "@/constants/type";
 import { TokenPayload } from "@/types/jwt.types";
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 import jwt from "jsonwebtoken";
+import createMiddleware from "next-intl/middleware";
+import { NextResponse, type NextRequest } from "next/server";
+import { routing } from "@/i18n/routing";
 
 export const decodeToken = (token: string) => {
   return jwt.decode(token) as TokenPayload;
 };
 
-const managePaths = ["/manage"];
-const guestPaths = ["/guest"];
-const onlyOwnerPaths = ["/manage/accounts"];
+const managePaths = ["/vi/manage", "/en/manage"];
+const guestPaths = ["/vi/guest", "/en/guest"];
+const onlyOwnerPaths = ["/vi/manage/accounts", "/en/manage/accounts"];
 const privatePaths = [...managePaths, ...guestPaths];
-const unAuthPaths = ["/login"];
+const unAuthPaths = ["/vi/login", "/en/login"];
 
 export function middleware(request: NextRequest) {
+  const handleI18nRouting = createMiddleware(routing);
+
   const { pathname } = request.nextUrl;
+
+  // Chỉ check cookies trên private paths
+  const needsAuth =
+    privatePaths.some((p) => pathname.includes(p)) ||
+    onlyOwnerPaths.some((p) => pathname.includes(p));
+
+  // Nếu là public path, skip auth check, chỉ handle i18n
+  if (!needsAuth) {
+    return handleI18nRouting(request);
+  }
 
   const accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;
@@ -25,12 +38,19 @@ export function middleware(request: NextRequest) {
     const url = new URL("/login", request.url);
     url.searchParams.set("clearToken", "true");
     return NextResponse.redirect(url);
+    // response.headers.set("x-middleware-rewrite", url.toString());
+    // return response;
   }
   // 2. Đã đăng nhập
   if (refreshToken) {
     // 2.1 Nếu cố tình vào trang login sẽ redirect về trang chủ
     if (unAuthPaths.some((p) => pathname.startsWith(p)) && refreshToken) {
       return NextResponse.redirect(new URL("/", request.nextUrl));
+      // response.headers.set(
+      //   "x-middleware-rewrite",
+      //   new URL("/", request.nextUrl).toString(),
+      // );
+      // return response;
     }
     // 2.2 Đã đăng nhập rồi, nhưng access token lại hết hạn
     if (
@@ -42,6 +62,8 @@ export function middleware(request: NextRequest) {
       url.searchParams.set("refreshToken", String(refreshToken ?? ""));
       url.searchParams.set("redirectPath", pathname);
       return NextResponse.redirect(url);
+      // response.headers.set("x-middleware-rewrite", url.toString());
+      // return response;
     }
     // 2.3 Vào không đúng role, redirect về trang chủ
     const role = decodeToken(refreshToken).role;
@@ -65,12 +87,18 @@ export function middleware(request: NextRequest) {
       isNotOwnerToOwnerPath
     ) {
       return NextResponse.redirect(new URL("/", request.nextUrl));
+      // response.headers.set(
+      //   "x-middleware-rewrite",
+      //   new URL("/", request.nextUrl).toString(),
+      // );
+      // return response;
     }
+    // return response;
   }
 
-  return NextResponse.next();
+  return handleI18nRouting(request);
 }
 
 export const config = {
-  matcher: ["/manage/:path*", "/login", "/guest/:path*"],
+  matcher: "/((?!api|trpc|_next|_vercel|.*\\..*).*)",
 };

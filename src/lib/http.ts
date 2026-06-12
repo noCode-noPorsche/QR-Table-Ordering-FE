@@ -1,4 +1,5 @@
-import envConfig from "@/config";
+import envConfig, { defaultLocale } from "@/config";
+import { redirect } from "@/i18n/navigation";
 import {
   getAccessTokenFromLocalStorage,
   normalizePath,
@@ -7,7 +8,6 @@ import {
   setRefreshTokenToLocalStorage,
 } from "@/lib/utils";
 import { LoginResType } from "@/schemaValidations/auth.schema";
-import { redirect } from "next/navigation";
 
 type CustomOptions = Omit<RequestInit, "method"> & {
   baseURL?: string | undefined;
@@ -150,7 +150,11 @@ const request = async <Response>(
         const accessToken = (options?.headers as any)?.Authorization.split(
           "Bearer ",
         )[1];
-        redirect(`/logout?accessToken=${accessToken}`);
+
+        redirect({
+          href: `/logout?accessToken=${accessToken}`,
+          locale: defaultLocale,
+        });
       }
     } else {
       throw new HttpError(data);
