@@ -21,14 +21,14 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Chỉ check cookies trên private paths
-  const needsAuth =
-    privatePaths.some((p) => pathname.includes(p)) ||
-    onlyOwnerPaths.some((p) => pathname.includes(p));
+  // const needsAuth =
+  //   privatePaths.some((p) => pathname.includes(p)) ||
+  //   onlyOwnerPaths.some((p) => pathname.includes(p));
 
-  // Nếu là public path, skip auth check, chỉ handle i18n
-  if (!needsAuth) {
-    return handleI18nRouting(request);
-  }
+  // // Nếu là public path, skip auth check, chỉ handle i18n
+  // if (!needsAuth) {
+  //   return handleI18nRouting(request);
+  // }
 
   const accessToken = request.cookies.get("accessToken")?.value;
   const refreshToken = request.cookies.get("refreshToken")?.value;

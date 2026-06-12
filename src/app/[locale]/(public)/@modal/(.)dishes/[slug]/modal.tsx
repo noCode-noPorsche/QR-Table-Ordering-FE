@@ -2,7 +2,6 @@
 
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useRouter } from "@/i18n/navigation";
-
 import React, { useState } from "react";
 
 export default function Modal({ children }: { children: React.ReactNode }) {

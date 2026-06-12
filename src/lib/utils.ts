@@ -11,6 +11,7 @@ import { UseFormSetError } from "react-hook-form";
 import { io } from "socket.io-client";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
+import slugify from "slugify";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -231,4 +232,12 @@ export const wrapServerApi = async <T>(fn: () => Promise<T>) => {
     }
   }
   return result;
+};
+
+export const generateSlugUrl = ({ name, id }: { name: string; id: number }) => {
+  return `${slugify(name)}-i.${id}`;
+};
+
+export const getIdFromSlugUrl = (slug: string) => {
+  return Number(slug.split("-i.")[1]);
 };
