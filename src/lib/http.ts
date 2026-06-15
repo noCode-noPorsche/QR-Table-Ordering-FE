@@ -8,6 +8,7 @@ import {
   setRefreshTokenToLocalStorage,
 } from "@/lib/utils";
 import { LoginResType } from "@/schemaValidations/auth.schema";
+import Cookies from "js-cookie";
 
 type CustomOptions = Omit<RequestInit, "method"> & {
   baseURL?: string | undefined;
@@ -124,6 +125,7 @@ const request = async <Response>(
       );
     } else if (res.status === AUTHENTICATION_ERROR_STATUS) {
       if (isClient) {
+        const locale = Cookies.get("NEXT_LOCALE");
         if (!clientLogoutRequest) {
           clientLogoutRequest = fetch(`/api/auth/logout`, {
             method: "POST",
@@ -142,7 +144,7 @@ const request = async <Response>(
             // Redirect về trang login có thể dẫn đến loop vô hạn nếu không bị xử lý đúng cách
             // Vì nếu rơi vào trường hợp tại trang Login, chúng ta gọi các API cần access token
             // Mà access token đã bị xóa thì nó lại nhảy vào đây, và cứ thế sẽ bị lặp
-            location.href = "/login";
+            location.href = `/${locale}/login`;
           }
         }
       } else {
