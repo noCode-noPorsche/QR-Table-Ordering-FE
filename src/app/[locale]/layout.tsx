@@ -14,6 +14,7 @@ import { Inter as FontSans } from "next/font/google";
 import { notFound } from "next/navigation";
 import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
+import Footer from "@/components/footer";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -74,6 +75,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
               disableTransitionOnChange
             >
               {children}
+              <Footer />
               <Toaster position="top-right" />
             </ThemeProvider>
           </AppProvider>

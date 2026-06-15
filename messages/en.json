@@ -76,5 +76,73 @@
       "logoutCancel": "Cancel",
       "logoutDescription": "Signing out may result in loss of your orders"
     }
+  },
+  "PrivacyPolicy": {
+    "title": "Privacy Policy",
+    "description": "Latest updates and a commitment to protecting your privacy at Big Boy restaurant.",
+    "dataCollection": {
+      "title": "Data Collection",
+      "description": "We collect personal information that you provide when creating an account, placing an order, or contacting us. This information may include your name. In addition, we automatically collect certain information when you visit our website, such as your IP address and browser type."
+    },
+    "purpose": {
+      "title": "Purpose of Use",
+      "description": "We use your personal information for the following purposes:",
+      "processOrders": "To process your orders: We use your contact and payment information to confirm and process orders, as well as to send invoices and delivery information.",
+      "customerService": "To provide customer support: We use your contact information to answer questions, resolve issues, and provide technical assistance.",
+      "marketing": "To send marketing communications: With your consent, we may use your email address to send information about new products, services, promotions, and special events.",
+      "improvement": "To improve our services: We use aggregated and anonymized data to analyze trends and improve our services."
+    },
+    "securityCommitment": {
+      "badge": "Privacy Commitment",
+      "title": "Your Data Security Is Our Top Priority",
+      "description": "We implement advanced encryption and security measures to ensure that your personal information and transaction history within our restaurant system remain fully protected against unauthorized access."
+    }
+  },
+  "TermsOfService": {
+    "title": "Terms of Service",
+    "description": "Please carefully read the terms of use for the food ordering service at Big Boy Restaurant.",
+    "introduction": {
+      "title": "Introduction",
+      "description": "Welcome to our Terms of Service page. By using our services, you agree to comply with the terms and conditions outlined below."
+    },
+    "serviceUsage": {
+      "title": "Use of Services",
+      "description": "You agree to use our services only for lawful purposes and in compliance with all applicable laws. You must not use our services to distribute illegal content, cause harm, or violate the privacy rights of others."
+    },
+    "intellectualProperty": {
+      "title": "Intellectual Property",
+      "description": "All content and materials on our website, including text, images, graphics, logos, and software, are owned by us or our licensors and are protected by intellectual property laws."
+    },
+    "changes": {
+      "title": "Changes to Terms",
+      "description": "We reserve the right to modify these Terms of Service at any time without prior notice. Your continued use of our services after any changes are posted will constitute your acceptance of those changes."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "question": "Do you have any questions or concerns about the terms?",
+      "description": "If you have any questions regarding these Terms of Service, please contact us via the email address or phone number provided on our website."
+    }
+  },
+  "About": {
+    "title": "About Big Boy Restaurant",
+    "address": "Address: No. 1 Nguyen Van Linh Street, Da Nang City",
+    "ourStory": {
+      "title": "Our Story",
+      "description": "Big Boy was founded in 2010 with a simple mission: to serve delicious, high-quality food that brings people together. Our passion for exceptional ingredients and creative recipes has made us a beloved local establishment, known for our commitment to creating meals that nourish both the body and soul."
+    },
+    "ourValues": {
+      "title": "Our Values",
+      "description": "At the heart of Big Boy is a deep commitment to sustainability, community, and culinary excellence. We source ingredients from local farmers and producers, ensuring freshness while supporting the local economy. Our team is passionate about creating dishes that not only delight the taste buds but also nourish the body, with a focus on wholesome, minimally processed foods."
+    },
+    "ourCommitment": {
+      "title": "Our Commitment",
+      "description": "We believe that great food has the power to bring people together and create lasting memories. That is why we are committed to providing an exceptional dining experience, from the moment you walk through our doors to the last bite of your meal. Our talented chefs work tirelessly to craft dishes that showcase the very best seasonal, locally sourced ingredients, ensuring that every plate is a celebration of flavor and quality."
+    }
+  },
+  "Footer": {
+    "about": "About",
+    "privacyPolicy": "Privacy Policy",
+    "termOfService": "Term Of Service",
+    "nameRestaurant": "Big Boy Restaurant"
   }
 }
