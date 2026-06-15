@@ -13,6 +13,7 @@ import {
 import { Inter as FontSans } from "next/font/google";
 import { notFound } from "next/navigation";
 import "./globals.css";
+import NextTopLoader from "nextjs-toploader";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -64,6 +65,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
         )}
       >
         <NextIntlClientProvider messages={message}>
+          <NextTopLoader showSpinner={false} color="var(--muted-foreground)" />
           <AppProvider>
             <ThemeProvider
               attribute="class"

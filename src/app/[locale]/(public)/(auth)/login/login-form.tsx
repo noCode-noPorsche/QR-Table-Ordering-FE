@@ -26,6 +26,7 @@ import SearchParamsLoader, {
   useSearchParamsLoader,
 } from "@/components/search-params-loader";
 import { useTranslations } from "next-intl";
+import { LoaderCircle } from "lucide-react";
 
 export default function LoginForm() {
   const loginMutation = useLoginMutation();
@@ -177,9 +178,11 @@ export default function LoginForm() {
                     type="submit"
                     className="w-full h-10 font-semibold shadow-sm transition-all active:scale-[0.98] cursor-pointer"
                   >
+                    {loginMutation.isPending && (
+                      <LoaderCircle className="animate-spin" />
+                    )}
                     {t("signIn")}
                   </Button>
-
                   <div className="relative flex items-center justify-center my-2">
                     <span className="absolute w-full border-t border-muted" />
                     <span className="relative bg-card px-3 text-xs uppercase text-muted-foreground font-medium">
