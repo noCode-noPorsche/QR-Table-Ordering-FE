@@ -1,21 +1,32 @@
 import dishApiRequest from "@/apiRequest/dish";
-import { formatCurrency, generateSlugUrl } from "@/lib/utils";
+import {
+  formatCurrency,
+  generateSlugUrl,
+  htmlToTextForDescription,
+} from "@/lib/utils";
 import { DishListResType } from "@/schemaValidations/dish.schema";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Locale } from "@/config";
+import { Metadata } from "next";
 
-export async function generateMetadata({
-  params: { locale },
-}: {
+type Props = {
   params: { locale: Locale };
-}) {
-  const t = await getTranslations({ locale, namespace: "HomePage" });
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+
+  const t = await getTranslations({
+    locale,
+    namespace: "HomePage",
+  });
 
   return {
     title: t("title"),
-    description: t("description"),
+    description: htmlToTextForDescription(t("description")),
   };
 }
 
