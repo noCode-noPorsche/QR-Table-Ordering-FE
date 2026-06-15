@@ -1,6 +1,13 @@
 {
   "HomePage": {
-    "title": "Nhà hàng Big Boy"
+    "title": "Nhà hàng Big Boy",
+    "description": "Khát khao một trải nghiệm ẩm thực Mỹ cổ điển? Big Boy là lựa chọn hoàn hảo! Thưởng thức chiếc Big Boy burger biểu tượng, thơm ngon và đậm đà, cùng với những ly milkshake béo ngậy và khoai tây chiên giòn tan. Hoàn hảo cho các buổi gặp mặt gia đình và bạn bè!",
+    "slogan": "Vị ngon, trọn khoảnh khắc",
+    "h2": "Đa dạng các món ăn"
+  },
+  "Brand": {
+    "title": "Nhà hàng Big Boy",
+    "defaultTitle": "Big Boy"
   },
   "SwitchLanguage": {
     "title": "Chuyển ngôn ngữ",
@@ -21,5 +28,53 @@
     "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
     "atLeast": "Mật khẩu phải có ít nhất 6 ký tự",
     "atMost": "Mật khẩu phải có nhiều nhất 100 ký tự"
+  },
+  "DishDetail": {
+    "notFound": "Món ăn không tồn tại"
+  },
+  "LoginGuest": {
+    "title": "Đăng nhập để gọi món",
+    "description": "Nhập thông tin đăng nhập để thực hiện gọi món"
+  },
+  "GuestMenu": {
+    "title": "Thực đơn",
+    "description": "Chọn món ăn yêu thích của bạn"
+  },
+  "ManageAccounts": {
+    "title": "Quản lý tài khoản",
+    "description": "Quản lý tài khoản nhân viên"
+  },
+  "Dashboard": {
+    "title": "Bảng điều khiển",
+    "description": "Xem và phân tích dữ liệu bán hàng"
+  },
+  "Dishes": {
+    "title": "Món ăn",
+    "description": "Quản lý món ăn"
+  },
+  "Orders": {
+    "title": "Đơn hàng",
+    "description": "Quản lý đơn hàng"
+  },
+  "Setting": {
+    "title": "Cài đặt",
+    "description": "Quản lý cài đặt tài khoản của bạn"
+  },
+  "Tables": {
+    "title": "Bàn ăn",
+    "description": "Quản lý bàn ăn"
+  },
+  "NavItem": {
+    "home": "Trang chủ",
+    "menu": "Thực đơn",
+    "orders": "Đơn hàng",
+    "login": "Đăng nhập",
+    "logout": "Đăng xuất",
+    "manage": "Quản lý",
+    "logoutDialog": {
+      "logoutQuestion": "Bạn có chắc chắn muốn đăng xuất?",
+      "logoutCancel": "Hủy",
+      "logoutDescription": "Đăng xuất có thể dẫn đến mất dữ liệu đơn hàng của bạn"
+    }
   }
 }

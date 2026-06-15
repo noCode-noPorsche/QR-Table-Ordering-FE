@@ -18,6 +18,7 @@ import { cn, handleErrorApi } from "@/lib/utils";
 import { useLogoutMutation } from "@/queries/useAuth";
 import { useGuestLogoutMutation } from "@/queries/useGuest";
 import { RoleType } from "@/types/jwt.types";
+import { useTranslations } from "next-intl";
 
 const menuItems: {
   title: string;
@@ -26,7 +27,7 @@ const menuItems: {
   hideWhenLogin?: boolean;
 }[] = [
   {
-    title: "Trang chủ",
+    title: "Home",
     href: "/",
   },
   {
@@ -35,17 +36,17 @@ const menuItems: {
     role: [Role.Guest],
   },
   {
-    title: "Đơn hàng",
+    title: "Orders",
     href: "/guest/orders",
     role: [Role.Guest],
   },
   {
-    title: "Đăng nhập",
+    title: "Login",
     href: "/login",
     hideWhenLogin: true,
   },
   {
-    title: "Quản lý",
+    title: "Manage",
     href: "/manage/dashboard",
     role: [Role.Owner, Role.Employee],
   },
@@ -56,6 +57,7 @@ export default function NavItems({ className }: { className?: string }) {
   const role = useAppStore((state) => state.role);
   const disconnectSocket = useAppStore((state) => state.disconnectSocket);
   const router = useRouter();
+  const t = useTranslations("NavItem");
 
   const authLogout = useLogoutMutation();
   const guestLogout = useGuestLogoutMutation();
@@ -87,7 +89,7 @@ export default function NavItems({ className }: { className?: string }) {
         if (isAuth || canShow) {
           return (
             <Link href={item.href} key={item.href} className={className}>
-              {item.title}
+              {t(item.title.toLowerCase() as any)}
             </Link>
           );
         }
@@ -97,18 +99,22 @@ export default function NavItems({ className }: { className?: string }) {
       {role && (
         <AlertDialog>
           <AlertDialogTrigger asChild>
-            <div className={cn(className, "cursor-pointer")}>Đăng xuất</div>
+            <div className={cn(className, "cursor-pointer")}>{t("logout")}</div>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Bạn có muốn đăng xuất không?</AlertDialogTitle>
+              <AlertDialogTitle>
+                {t("logoutDialog.logoutQuestion")}
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                Việc đăng xuất có thể làm mất đi hóa đơn của bạn.
+                {t("logoutDialog.logoutDescription")}
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Thoát</AlertDialogCancel>
-              <AlertDialogAction onClick={logout}>Đồng ý</AlertDialogAction>
+              <AlertDialogCancel>
+                {t("logoutDialog.logoutCancel")}
+              </AlertDialogCancel>
+              <AlertDialogAction onClick={logout}>OK</AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>

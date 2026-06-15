@@ -5,7 +5,11 @@ import { routing, generateStaticParams } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+import {
+  getMessages,
+  getTranslations,
+  setRequestLocale,
+} from "next-intl/server";
 import { Inter as FontSans } from "next/font/google";
 import { notFound } from "next/navigation";
 import "./globals.css";
@@ -14,10 +18,27 @@ const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
-export const metadata: Metadata = {
-  title: "Big Boy Restaurant",
-  description: "The best restaurant in the world",
-};
+
+// export const metadata: Metadata = {
+//   title: "Big Boy Restaurant",
+//   description: "The best restaurant in the world",
+// };
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Brand" });
+
+  return {
+    title: {
+      template: `%s | ${t("title")}`,
+      default: t("defaultTitle"),
+    },
+  };
+}
 
 export { generateStaticParams };
 

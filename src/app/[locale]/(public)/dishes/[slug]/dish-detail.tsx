@@ -23,7 +23,8 @@ export default async function DishDetailPage({ params }: DishPageProps) {
         height={700}
         quality={100}
         alt={dish.name}
-        className="object-cover w-full h-full "
+        className="object-cover w-full h-full"
+        title={dish.name}
       />
       <p>{dish.description}</p>
     </div>
