@@ -8,12 +8,12 @@ import { DishListResType } from "@/schemaValidations/dish.schema";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { Locale } from "@/config";
+import envConfig, { Locale } from "@/config";
 import { Metadata } from "next";
 
 type Props = {
-  params: { locale: Locale };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -23,16 +23,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     locale,
     namespace: "HomePage",
   });
+  const url = envConfig.NEXT_PUBLIC_URL + `/${locale}`;
 
   return {
     title: t("title"),
     description: htmlToTextForDescription(t("description")),
+    alternates: {
+      canonical: url,
+    },
   };
 }
 
 type HomeProps = {
   params: Promise<{
-    locale: string;
+    locale: Locale;
   }>;
 };
 
@@ -64,6 +68,7 @@ export default async function Home({ params }: HomeProps) {
           height={200}
           quality={100}
           alt="Banner"
+          priority
           className="absolute top-0 left-0 w-full h-full object-cover"
         />
         <div className="z-20 relative py-10 md:py-20 px-4 sm:px-10 md:px-20">
@@ -81,7 +86,7 @@ export default async function Home({ params }: HomeProps) {
               key={dish.id}
               href={`/dishes/${generateSlugUrl({ name: dish.name, id: dish.id })}`}
             >
-              <div className="flex gap-4" key={dish.id}>
+              <div className="flex gap-4">
                 <div className="shrink-0">
                   <Image
                     title={dish.name}

@@ -1,7 +1,12 @@
 import dishApiRequest from "@/apiRequest/dish";
 import DishDetailPage from "@/app/[locale]/(public)/dishes/[slug]/dish-detail";
 import envConfig, { Locale } from "@/config";
-import { generateSlugUrl, getIdFromSlugUrl, wrapServerApi } from "@/lib/utils";
+import {
+  generateSlugUrl,
+  getIdFromSlugUrl,
+  // htmlToTextForDescription,
+  wrapServerApi,
+} from "@/lib/utils";
 import { baseOpenGraph } from "@/share-metadata";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
@@ -12,8 +17,8 @@ const getDetail = cache((id: number) =>
 );
 
 type Props = {
-  params: { slug: string; locale: Locale };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ locale: Locale; slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata({
@@ -39,7 +44,7 @@ export async function generateMetadata({
 
   const url =
     envConfig.NEXT_PUBLIC_URL +
-    `/${params.locale}/dishes/${generateSlugUrl({
+    `/${locale}/dishes/${generateSlugUrl({
       name: dish.name,
       id: dish.id,
     })}`;
@@ -69,6 +74,28 @@ type DishPageProps = {
     slug: string;
   }>;
 };
+
+export async function generateStaticParams() {
+  try {
+    const result = await dishApiRequest.getDishList();
+    const dishList = result.payload.data;
+
+    // Trả về danh sách slug để Next.js render sẵn thành file tĩnh ký hiệu chấm tròn đầy (●)
+    return dishList.map((dish) => ({
+      slug: generateSlugUrl({
+        name: dish.name,
+        id: dish.id,
+      }),
+    }));
+  } catch (error) {
+    // Nếu Backend đang tắt, in log cảnh báo nhẹ và trả về mảng rỗng để Next.js vượt qua không bị treo
+    console.warn(
+      "⚠️ Cảnh báo: Không thể kết nối Backend để tạo SSG cho trang chi tiết món ăn.",
+      error,
+    );
+    return [];
+  }
+}
 
 export default async function DishPage({ params }: DishPageProps) {
   const { slug } = await params;

@@ -1,8 +1,10 @@
 import AppProvider from "@/components/app-provider";
+import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { routing, generateStaticParams } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
+import { baseOpenGraph } from "@/share-metadata";
 import type { Metadata } from "next";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import {
@@ -12,9 +14,8 @@ import {
 } from "next-intl/server";
 import { Inter as FontSans } from "next/font/google";
 import { notFound } from "next/navigation";
-import "./globals.css";
 import NextTopLoader from "nextjs-toploader";
-import Footer from "@/components/footer";
+import "./globals.css";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -39,6 +40,9 @@ export async function generateMetadata({
       template: `%s | ${t("title")}`,
       default: t("defaultTitle"),
     },
+    openGraph: {
+      ...baseOpenGraph,
+    },
   };
 }
 
@@ -55,7 +59,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     notFound();
   }
   setRequestLocale(locale);
-  const message = await getMessages();
+  const message = await getMessages({ locale });
 
   return (
     <html lang={locale} suppressHydrationWarning>

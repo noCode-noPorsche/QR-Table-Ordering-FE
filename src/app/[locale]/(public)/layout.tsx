@@ -27,7 +27,6 @@ export default async function Layout({ children, params, modal }: LayoutProps) {
   return (
     <div className="flex min-h-screen w-full flex-col relative">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-        {/* Menu ngang dành cho màn hình lớn (Desktop) */}
         <nav className="hidden flex-col gap-6 text-lg font-medium lg:flex lg:flex-row lg:items-center lg:text-sm lg:gap-6">
           <Link
             href="/"

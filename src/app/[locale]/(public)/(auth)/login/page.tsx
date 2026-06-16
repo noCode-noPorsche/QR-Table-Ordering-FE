@@ -1,6 +1,32 @@
 import LoginForm from "@/app/[locale]/(public)/(auth)/login/login-form";
-import { setRequestLocale } from "next-intl/server";
+import envConfig, { Locale } from "@/config";
+// import { htmlToTextForDescription } from "@/lib/utils";
+import { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
+
+type Props = {
+  params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+
+  const t = await getTranslations({
+    locale,
+    namespace: "Login",
+  });
+  const url = envConfig.NEXT_PUBLIC_URL + `/${locale}`;
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: url,
+    },
+  };
+}
 
 export default function Login({ params }: { params: { locale: string } }) {
   const { locale } = params;

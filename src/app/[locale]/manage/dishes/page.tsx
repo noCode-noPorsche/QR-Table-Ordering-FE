@@ -12,20 +12,22 @@ import { getTranslations } from "next-intl/server";
 import envConfig, { Locale } from "@/config";
 
 type Props = {
-  params: { locale: Locale };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata({
   params,
   // searchParams,
 }: Props): Promise<Metadata> {
+  const { locale } = await params;
+
   const t = await getTranslations({
-    locale: params.locale,
+    locale,
     namespace: "Dishes",
   });
 
-  const url = envConfig.NEXT_PUBLIC_URL + `/${params.locale}/manage/dishes`;
+  const url = envConfig.NEXT_PUBLIC_URL + `/${locale}/manage/dishes`;
 
   return {
     title: t("title"),

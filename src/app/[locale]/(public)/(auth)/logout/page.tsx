@@ -1,14 +1,66 @@
-import Logout from "@/app/[locale]/(public)/(auth)/logout/page";
-import { Metadata } from "next";
+"use client";
+
+// import { Metadata } from "next";
 import { Suspense } from "react";
 
-export const metadata: Metadata = {
-  title: "Logout Redirect",
-  description: "Logout redirect",
-  robots: {
-    index: false,
-  },
-};
+import { useAppStore } from "@/components/app-provider";
+import { useRouter } from "@/i18n/navigation";
+import {
+  getAccessTokenFromLocalStorage,
+  getRefreshTokenFromLocalStorage,
+} from "@/lib/utils";
+import { useLogoutMutation } from "@/queries/useAuth";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useRef } from "react";
+
+function Logout() {
+  const { mutateAsync } = useLogoutMutation();
+  const router = useRouter();
+  const ref = useRef<any>(null);
+  const searchParams = useSearchParams();
+  const refreshTokenFromUrl = searchParams.get("refreshToken");
+  const accessTokenFromUrl = searchParams.get("accessToken");
+  const setRole = useAppStore((state) => state.setRole);
+  const disconnectSocket = useAppStore((state) => state.disconnectSocket);
+
+  useEffect(() => {
+    if (
+      (!ref.current || !refreshTokenFromUrl || !accessTokenFromUrl) &&
+      ((refreshTokenFromUrl &&
+        refreshTokenFromUrl === getRefreshTokenFromLocalStorage()) ||
+        (accessTokenFromUrl &&
+          accessTokenFromUrl === getAccessTokenFromLocalStorage()))
+    ) {
+      ref.current = mutateAsync;
+      mutateAsync().then(() => {
+        setTimeout(() => {
+          ref.current = null;
+        }, 1000);
+        router.push("/login");
+        setRole(undefined);
+        disconnectSocket();
+      });
+    } else {
+      router.push("/");
+    }
+  }, [
+    mutateAsync,
+    router,
+    refreshTokenFromUrl,
+    accessTokenFromUrl,
+    setRole,
+    disconnectSocket,
+  ]);
+  return <div>Logout page</div>;
+}
+
+// export const metadata: Metadata = {
+//   title: "Logout Redirect",
+//   description: "Logout redirect",
+//   robots: {
+//     index: false,
+//   },
+// };
 
 export default function LogoutPage() {
   return (

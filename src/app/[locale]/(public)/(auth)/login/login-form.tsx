@@ -88,7 +88,6 @@ export default function LoginForm() {
   }, [router, setRole, clearToken]);
 
   return (
-    // Toàn bộ vùng chứa bọc ngoài giúp căn giữa form theo cả 2 chiều và tạo background sâu hơn
     <div className="flex min-h-[calc(100vh-4rem)] w-full items-center justify-center p-4 md:p-6  from-background to-muted/20">
       <Card className="w-full max-w-md shadow-xl border-muted/40 backdrop-blur-sm bg-card/90">
         <SearchParamsLoader onParamReceived={setSearchParams} />
