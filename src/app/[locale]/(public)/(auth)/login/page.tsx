@@ -1,6 +1,6 @@
 import LoginForm from "@/app/[locale]/(public)/(auth)/login/login-form";
 import envConfig, { Locale } from "@/config";
-// import { htmlToTextForDescription } from "@/lib/utils";
+import { htmlToTextForDescription } from "@/lib/server-utils";
 import { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: t("title"),
-    description: t("description"),
+    description: htmlToTextForDescription(t("description")),
     alternates: {
       canonical: url,
     },

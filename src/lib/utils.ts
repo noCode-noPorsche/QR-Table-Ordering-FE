@@ -3,16 +3,16 @@ import guestApiRequest from "@/apiRequest/guest";
 import envConfig from "@/config";
 import { DishStatus, OrderStatus, Role, TableStatus } from "@/constants/type";
 import { EntityError } from "@/lib/http";
-import { decodeToken } from "@/middleware";
+import { TokenPayload } from "@/types/jwt.types";
 import { clsx, type ClassValue } from "clsx";
 import { format } from "date-fns";
 import { BookX, CookingPot, HandCoins, Loader, Truck } from "lucide-react";
 import { UseFormSetError } from "react-hook-form";
+import slugify from "slugify";
 import { io } from "socket.io-client";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
-import slugify from "slugify";
-import { convert } from "html-to-text";
+import { jwtDecode } from "jwt-decode";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -118,6 +118,10 @@ export const checkAndRefreshToken = async (params?: {
       console.log("Lỗi khi refresh token:", error);
     }
   }
+};
+
+export const decodeToken = (token: string) => {
+  return jwtDecode(token) as TokenPayload;
 };
 
 export const getVietnameseDishStatus = (
@@ -241,12 +245,4 @@ export const generateSlugUrl = ({ name, id }: { name: string; id: number }) => {
 
 export const getIdFromSlugUrl = (slug: string) => {
   return Number(slug.split("-i.")[1])!;
-};
-
-export const htmlToTextForDescription = (html: string) => {
-  return convert(html, {
-    limits: {
-      maxInputLength: 140,
-    },
-  });
 };

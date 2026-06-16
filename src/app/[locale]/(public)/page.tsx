@@ -1,15 +1,12 @@
 import dishApiRequest from "@/apiRequest/dish";
-import {
-  formatCurrency,
-  generateSlugUrl,
-  htmlToTextForDescription,
-} from "@/lib/utils";
+import { formatCurrency, generateSlugUrl } from "@/lib/utils";
 import { DishListResType } from "@/schemaValidations/dish.schema";
 import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import envConfig, { Locale } from "@/config";
 import { Metadata } from "next";
+import { htmlToTextForDescription } from "@/lib/server-utils";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
