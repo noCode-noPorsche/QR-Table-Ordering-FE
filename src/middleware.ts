@@ -14,11 +14,13 @@ const guestPaths = ["/vi/guest", "/en/guest"];
 const onlyOwnerPaths = ["/vi/manage/accounts", "/en/manage/accounts"];
 const privatePaths = [...managePaths, ...guestPaths];
 const unAuthPaths = ["/vi/login", "/en/login"];
+const loginPaths = ["/vi/login", "/en/login"];
 
 export function middleware(request: NextRequest) {
   const handleI18nRouting = createMiddleware(routing);
 
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
+  const response = handleI18nRouting(request);
 
   // Chỉ check cookies trên private paths
   // const needsAuth =
@@ -45,6 +47,12 @@ export function middleware(request: NextRequest) {
   if (refreshToken) {
     // 2.1 Nếu cố tình vào trang login sẽ redirect về trang chủ
     if (unAuthPaths.some((p) => pathname.startsWith(p)) && refreshToken) {
+      if (
+        loginPaths.some((p) => pathname.startsWith(p)) &&
+        searchParams.get("accessToken")
+      ) {
+        return response;
+      }
       return NextResponse.redirect(new URL("/", request.nextUrl));
       // response.headers.set(
       //   "x-middleware-rewrite",
@@ -96,7 +104,7 @@ export function middleware(request: NextRequest) {
     // return response;
   }
 
-  return handleI18nRouting(request);
+  return response;
 }
 
 export const config = {

@@ -8,9 +8,9 @@ import {
 } from "@/lib/utils";
 import { useLogoutMutation } from "@/queries/useAuth";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 
-export default function Logout() {
+function LogoutMain() {
   const { mutateAsync } = useLogoutMutation();
   const router = useRouter();
   const ref = useRef<any>(null);
@@ -37,7 +37,7 @@ export default function Logout() {
         setRole(undefined);
         disconnectSocket();
       });
-    } else {
+    } else if (accessTokenFromUrl !== getAccessTokenFromLocalStorage()) {
       router.push("/");
     }
   }, [
@@ -48,5 +48,13 @@ export default function Logout() {
     setRole,
     disconnectSocket,
   ]);
-  return <div>Logout page</div>;
+  return null;
+}
+
+export default function Logout() {
+  return (
+    <Suspense>
+      <LogoutMain />
+    </Suspense>
+  );
 }

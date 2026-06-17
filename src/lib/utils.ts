@@ -1,6 +1,6 @@
 import authApiRequest from "@/apiRequest/auth";
 import guestApiRequest from "@/apiRequest/guest";
-import envConfig from "@/config";
+import envConfig, { defaultLocale } from "@/config";
 import { DishStatus, OrderStatus, Role, TableStatus } from "@/constants/type";
 import { EntityError } from "@/lib/http";
 import { TokenPayload } from "@/types/jwt.types";
@@ -182,7 +182,11 @@ export const getTableLink = ({
   tableNumber: number;
 }) => {
   return (
-    envConfig.NEXT_PUBLIC_URL + "/tables/" + tableNumber + "?token=" + token
+    envConfig.NEXT_PUBLIC_URL +
+    `/${defaultLocale}/tables/` +
+    tableNumber +
+    "?token=" +
+    token
   );
 };
 

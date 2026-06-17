@@ -154,7 +154,7 @@ const request = async <Response>(
         )[1];
 
         redirect({
-          href: `/logout?accessToken=${accessToken}`,
+          href: `/login?accessToken=${accessToken}`,
           locale: defaultLocale,
         });
       }

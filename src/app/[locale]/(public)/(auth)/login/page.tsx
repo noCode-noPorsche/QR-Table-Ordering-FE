@@ -1,4 +1,5 @@
 import LoginForm from "@/app/[locale]/(public)/(auth)/login/login-form";
+import Logout from "@/app/[locale]/(public)/(auth)/login/logout";
 import envConfig, { Locale } from "@/config";
 import { htmlToTextForDescription } from "@/lib/server-utils";
 import { Metadata } from "next";
@@ -36,6 +37,7 @@ export default function Login({ params }: { params: { locale: string } }) {
     <div className="min-h-screen flex items-center justify-center">
       <Suspense>
         <LoginForm />
+        <Logout />
       </Suspense>
     </div>
   );
