@@ -16,7 +16,7 @@ const privatePaths = [...managePaths, ...guestPaths];
 const unAuthPaths = ["/vi/login", "/en/login"];
 const loginPaths = ["/vi/login", "/en/login"];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const handleI18nRouting = createMiddleware(routing);
 
   const { pathname, searchParams } = request.nextUrl;

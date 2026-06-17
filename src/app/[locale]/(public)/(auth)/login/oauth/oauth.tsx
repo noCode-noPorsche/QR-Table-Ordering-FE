@@ -3,7 +3,7 @@
 import { useAppStore } from "@/components/app-provider";
 import { useRouter } from "@/i18n/navigation";
 import { generateSocketInstance } from "@/lib/utils";
-import { decodeToken } from "@/middleware";
+import { decodeToken } from "@/proxy";
 import { useSetTokenToCookieMutation } from "@/queries/useAuth";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
