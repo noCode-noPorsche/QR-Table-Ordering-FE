@@ -1,6 +1,11 @@
 "use client";
 
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useRouter } from "@/i18n/navigation";
 import React, { useState } from "react";
 
@@ -39,9 +44,12 @@ export default function Modal({ children }: { children: React.ReactNode }) {
         "
       >
         <div className="px-6 pt-6">
+          <DialogTitle></DialogTitle>
           <DialogTitle className="text-xl font-semibold tracking-tight text-slate-900 dark:text-slate-50">
             Chi tiết món ăn
           </DialogTitle>
+          <DialogDescription></DialogDescription>
+          {/* <DialogContent></DialogContent> */}
         </div>
         {/* Box chứa nội dung có scroll tự động và giấu thanh scroll gốc */}
         <div className="w-full h-full max-h-[90vh] md:max-h-[85vh] overflow-auto p-5 md:p-6 lg:p-8 scrollbar-thin">

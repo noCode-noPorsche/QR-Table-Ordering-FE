@@ -29,8 +29,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function Login({ params }: { params: { locale: string } }) {
-  const { locale } = params;
+export default async function Login({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const { locale } = await params;
   setRequestLocale(locale);
 
   return (
