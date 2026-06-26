@@ -4,7 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useGetTableList = () => {
   return useQuery({
-    queryKey: ["table-list"],
+    queryKey: ["tables-list"],
     queryFn: tableApiRequest.getTableList,
   });
 };
