@@ -1,4 +1,4 @@
-import http from "@/lib/http";
+import http from '@/lib/http'
 import {
   CreateOrdersBodyType,
   CreateOrdersResType,
@@ -7,11 +7,11 @@ import {
   PayGuestOrdersBodyType,
   PayGuestOrdersResType,
   UpdateOrderBodyType,
-  UpdateOrderResType,
-} from "@/schemaValidations/order.schema";
-import queryString from "query-string";
+  UpdateOrderResType
+} from '@/schemaValidations/order.schema'
+import queryString from 'query-string'
 
-const prefix = "orders";
+const prefix = 'orders'
 
 const orderApiRequest = {
   getOrderList: (queryParams: GetOrdersQueryParamsType) =>
@@ -19,17 +19,14 @@ const orderApiRequest = {
       `/${prefix}?` +
         queryString.stringify({
           fromDate: queryParams.fromDate?.toISOString(),
-          toDate: queryParams.toDate?.toISOString(),
-        }),
+          toDate: queryParams.toDate?.toISOString()
+        })
     ),
   updateOrder: (orderId: number, body: UpdateOrderBodyType) =>
     http.put<UpdateOrderResType>(`/${prefix}/${orderId}`, body),
-  getOrderDetail: (orderId: number) =>
-    http.get<GetOrderDetailResType>(`/${prefix}/${orderId}`),
-  payOrder: (body: PayGuestOrdersBodyType) =>
-    http.post<PayGuestOrdersResType>(`/${prefix}/pay`, body),
-  createOrder: (body: CreateOrdersBodyType) =>
-    http.post<CreateOrdersResType>(`/${prefix}`, body),
-};
+  getOrderDetail: (orderId: number) => http.get<GetOrderDetailResType>(`/${prefix}/${orderId}`),
+  payOrder: (body: PayGuestOrdersBodyType) => http.post<PayGuestOrdersResType>(`/${prefix}/pay`, body),
+  createOrder: (body: CreateOrdersBodyType) => http.post<CreateOrdersResType>(`/${prefix}`, body)
+}
 
-export default orderApiRequest;
+export default orderApiRequest

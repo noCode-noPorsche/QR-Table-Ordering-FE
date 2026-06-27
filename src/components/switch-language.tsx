@@ -1,33 +1,26 @@
-"use client";
+'use client'
 
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { locales } from "@/config";
-import { usePathname, useRouter } from "@/i18n/navigation";
-import { useLocale, useTranslations } from "next-intl";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { locales } from '@/config'
+import { usePathname, useRouter } from '@/i18n/navigation'
+import { useLocale, useTranslations } from 'next-intl'
 
 export default function SwitchLanguage() {
-  const t = useTranslations("SwitchLanguage");
-  const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
+  const t = useTranslations('SwitchLanguage')
+  const locale = useLocale()
+  const router = useRouter()
+  const pathname = usePathname()
 
   return (
     <Select
       value={locale}
       onValueChange={(value) => {
-        router.replace(pathname, { locale: value });
-        router.refresh();
+        router.replace(pathname, { locale: value })
+        router.refresh()
       }}
     >
-      <SelectTrigger className="w-30">
-        <SelectValue placeholder={t("title")} />
+      <SelectTrigger className='w-30'>
+        <SelectValue placeholder={t('title')} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
@@ -39,5 +32,5 @@ export default function SwitchLanguage() {
         </SelectGroup>
       </SelectContent>
     </Select>
-  );
+  )
 }

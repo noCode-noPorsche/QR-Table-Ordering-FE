@@ -1,51 +1,36 @@
-"use client";
+'use client'
 
-import { Bar, BarChart, XAxis, YAxis } from "recharts";
+import { Bar, BarChart, XAxis, YAxis } from 'recharts'
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
-import { DashboardIndicatorResType } from "@/schemaValidations/indicator.schema";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { ChartConfig, ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
+import { DashboardIndicatorResType } from '@/schemaValidations/indicator.schema'
 
 const colors = [
-  "#e11d48", // Màu 1 (Đỏ hồng thanh lịch)
-  "#f97316", // Màu 2 (Cam tươi)
-  "#2563eb", // Màu 3 (Xanh dương)
-  "#16a34a", // Màu 4 (Xanh lá)
-  "#db2777", // Màu 5 (Hồng đậm)
-];
+  '#e11d48', // Màu 1 (Đỏ hồng thanh lịch)
+  '#f97316', // Màu 2 (Cam tươi)
+  '#2563eb', // Màu 3 (Xanh dương)
+  '#16a34a', // Màu 4 (Xanh lá)
+  '#db2777' // Màu 5 (Hồng đậm)
+]
 
 const chartConfig = {
   successOrders: {
-    label: "Số lượng đơn",
-  },
-} satisfies ChartConfig;
+    label: 'Số lượng đơn'
+  }
+} satisfies ChartConfig
 
 export function DishBarChart({
-  chartData,
+  chartData
 }: {
-  chartData: Pick<
-    DashboardIndicatorResType["data"]["dishIndicator"][0],
-    "name" | "successOrders"
-  >[];
+  chartData: Pick<DashboardIndicatorResType['data']['dishIndicator'][0], 'name' | 'successOrders'>[]
 }) {
   const chartDataColors = chartData.map((data, index) => {
     return {
       ...data,
-      fill: colors[index] ?? colors[colors.length - 1],
-    };
-  });
+      fill: colors[index] ?? colors[colors.length - 1]
+    }
+  })
 
   return (
     <Card>
@@ -58,26 +43,26 @@ export function DishBarChart({
           <BarChart
             accessibilityLayer
             data={chartDataColors}
-            layout="vertical"
+            layout='vertical'
             margin={{
-              left: 0,
+              left: 0
             }}
           >
             <YAxis
-              dataKey="name"
-              type="category"
+              dataKey='name'
+              type='category'
               tickLine={false}
               tickMargin={2}
               axisLine={false}
               tickFormatter={(value) => {
-                return value;
+                return value
               }}
             />
-            <XAxis dataKey="successOrders" type="number" hide />
+            <XAxis dataKey='successOrders' type='number' hide />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Bar
-              dataKey="successOrders"
-              name={"Đơn thanh toán"}
+              dataKey='successOrders'
+              name={'Đơn thanh toán'}
               // layout="vertical"
               radius={5}
               // fill="fill"
@@ -85,7 +70,7 @@ export function DishBarChart({
           </BarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
+      <CardFooter className='flex-col items-start gap-2 text-sm'>
         {/* <div className='flex gap-2 font-medium leading-none'>
           Trending up by 5.2% this month <TrendingUp className='h-4 w-4' />
         </div> */}
@@ -94,5 +79,5 @@ export function DishBarChart({
         </div> */}
       </CardFooter>
     </Card>
-  );
+  )
 }

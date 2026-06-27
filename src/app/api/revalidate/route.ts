@@ -1,17 +1,17 @@
-import { revalidateTag } from "next/cache";
-import { NextRequest } from "next/server";
+import { revalidateTag } from 'next/cache'
+import { NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
-  const tag = request.nextUrl.searchParams.get("tag");
+  const tag = request.nextUrl.searchParams.get('tag')
 
   if (tag) {
-    revalidateTag(tag, "max");
-    return Response.json({ revalidated: true, now: Date.now() });
+    revalidateTag(tag, 'max')
+    return Response.json({ revalidated: true, now: Date.now() })
   }
 
   return Response.json({
     revalidated: false,
     now: Date.now(),
-    message: "Missing tag to revalidate",
-  });
+    message: 'Missing tag to revalidate'
+  })
 }

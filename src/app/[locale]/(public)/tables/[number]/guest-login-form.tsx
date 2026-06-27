@@ -1,94 +1,91 @@
-"use client";
+'use client'
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  GuestLoginBody,
-  GuestLoginBodyType,
-} from "@/schemaValidations/guest.schema";
-import { useParams, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
-import { useGuestLoginMutation } from "@/queries/useGuest";
-import { useAppStore } from "@/components/app-provider";
-import { generateSocketInstance, handleErrorApi } from "@/lib/utils";
-import { useRouter } from "@/i18n/navigation";
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { useForm } from 'react-hook-form'
+import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { GuestLoginBody, GuestLoginBodyType } from '@/schemaValidations/guest.schema'
+import { useParams, useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
+import { useGuestLoginMutation } from '@/queries/useGuest'
+import { useAppStore } from '@/components/app-provider'
+import { generateSocketInstance, handleErrorApi } from '@/lib/utils'
+import { useRouter } from '@/i18n/navigation'
 
 export default function GuestLoginForm() {
-  const searchParams = useSearchParams();
-  const params = useParams();
-  const router = useRouter();
-  const guestLoginMutation = useGuestLoginMutation();
-  const setRole = useAppStore((state) => state.setRole);
-  const setSocket = useAppStore((state) => state.setSocket);
+  const searchParams = useSearchParams()
+  const params = useParams()
+  const router = useRouter()
+  const guestLoginMutation = useGuestLoginMutation()
+  const setRole = useAppStore((state) => state.setRole)
+  const setSocket = useAppStore((state) => state.setSocket)
 
-  const tableNumber = Number(params.number);
-  const token = searchParams.get("token");
+  const tableNumber = Number(params.number)
+  const token = searchParams.get('token')
 
   const form = useForm<GuestLoginBodyType>({
     resolver: zodResolver(GuestLoginBody),
     defaultValues: {
-      name: "",
-      token: token ?? "",
-      tableNumber,
-    },
-  });
+      name: '',
+      token: token ?? '',
+      tableNumber
+    }
+  })
 
   useEffect(() => {
     if (!token) {
-      router.push("/");
+      router.push('/')
     }
-  }, [token, router]);
+  }, [token, router])
 
   const onSubmit = async (values: GuestLoginBodyType) => {
-    if (guestLoginMutation.isPending) return;
+    if (guestLoginMutation.isPending) return
     try {
-      const result = await guestLoginMutation.mutateAsync(values);
-      setRole(result.payload.data.guest.role);
-      setSocket(generateSocketInstance(result.payload.data.accessToken));
-      router.push("/guest/menu");
+      const result = await guestLoginMutation.mutateAsync(values)
+      setRole(result.payload.data.guest.role)
+      setSocket(generateSocketInstance(result.payload.data.accessToken))
+      router.push('/guest/menu')
     } catch (error) {
       handleErrorApi({
         error,
-        setError: form.setError,
-      });
+        setError: form.setError
+      })
     }
-  };
+  }
 
   return (
-    <Card className="mx-auto max-w-sm">
+    <Card className='mx-auto max-w-sm'>
       <CardHeader>
-        <CardTitle className="text-2xl">Đăng nhập gọi món</CardTitle>
+        <CardTitle className='text-2xl'>Đăng nhập gọi món</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
           <form
-            className="space-y-2 max-w-150 shrink-0 w-full"
+            className='space-y-2 max-w-150 shrink-0 w-full'
             onSubmit={form.handleSubmit(onSubmit, (e) => {
-              console.log(e);
+              console.log(e)
             })}
             noValidate
           >
-            <div className="grid gap-4">
+            <div className='grid gap-4'>
               <FormField
                 control={form.control}
-                name="name"
+                name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <div className="grid gap-2">
-                      <Label htmlFor="name">Tên khách hàng</Label>
-                      <Input id="name" type="text" required {...field} />
+                    <div className='grid gap-2'>
+                      <Label htmlFor='name'>Tên khách hàng</Label>
+                      <Input id='name' type='text' required {...field} />
                       <FormMessage />
                     </div>
                   </FormItem>
                 )}
               />
 
-              <Button type="submit" className="w-full">
+              <Button type='submit' className='w-full'>
                 Đăng nhập
               </Button>
             </div>
@@ -96,5 +93,5 @@ export default function GuestLoginForm() {
         </Form>
       </CardContent>
     </Card>
-  );
+  )
 }

@@ -1,56 +1,50 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import DishTable from "@/app/[locale]/manage/dishes/dish-table";
-import { Suspense } from "react";
-import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
-import envConfig, { Locale } from "@/config";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import DishTable from '@/app/[locale]/manage/dishes/dish-table'
+import { Suspense } from 'react'
+import { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
+import envConfig, { Locale } from '@/config'
 
 type Props = {
-  params: Promise<{ locale: Locale }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
+  params: Promise<{ locale: Locale }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
 export async function generateMetadata({
-  params,
+  params
   // searchParams,
 }: Props): Promise<Metadata> {
-  const { locale } = await params;
+  const { locale } = await params
 
   const t = await getTranslations({
     locale,
-    namespace: "Dishes",
-  });
+    namespace: 'Dishes'
+  })
 
-  const url = envConfig.NEXT_PUBLIC_URL + `/${locale}/manage/dishes`;
+  const url = envConfig.NEXT_PUBLIC_URL + `/${locale}/manage/dishes`
 
   return {
-    title: t("title"),
-    description: t("description"),
+    title: t('title'),
+    description: t('description'),
     alternates: {
-      canonical: url,
+      canonical: url
     },
     robots: {
-      index: false,
-    },
-  };
+      index: false
+    }
+  }
 }
 
 export default async function DishesPage() {
-  const t = await getTranslations("Dishes");
+  const t = await getTranslations('Dishes')
 
   return (
-    <main className="grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8">
-      <div className="space-y-2">
-        <Card x-chunk="dashboard-06-chunk-0">
+    <main className='grid flex-1 items-start gap-4 p-4 sm:px-6 sm:py-0 md:gap-8'>
+      <div className='space-y-2'>
+        <Card x-chunk='dashboard-06-chunk-0'>
           <CardHeader>
-            <CardTitle>{t("title")}</CardTitle>
-            <CardDescription>{t("description")}</CardDescription>
+            <CardTitle>{t('title')}</CardTitle>
+            <CardDescription>{t('description')}</CardDescription>
           </CardHeader>
           <CardContent>
             <Suspense>
@@ -60,5 +54,5 @@ export default async function DishesPage() {
         </Card>
       </div>
     </main>
-  );
+  )
 }

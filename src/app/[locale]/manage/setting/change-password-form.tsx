@@ -1,82 +1,75 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+'use client'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 // import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { useChangePasswordMutation } from "@/queries/useAccount";
-import {
-  ChangePasswordBody,
-  ChangePasswordBodyType,
-} from "@/schemaValidations/account.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import {
-  handleErrorApi,
-  setAccessTokenToLocalStorage,
-  setRefreshTokenToLocalStorage,
-} from "@/lib/utils";
-import { toast } from "sonner";
-import { PasswordField } from "@/app/[locale]/manage/setting/input-password";
+import { Label } from '@/components/ui/label'
+import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { useChangePasswordMutation } from '@/queries/useAccount'
+import { ChangePasswordBody, ChangePasswordBodyType } from '@/schemaValidations/account.schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { handleErrorApi, setAccessTokenToLocalStorage, setRefreshTokenToLocalStorage } from '@/lib/utils'
+import { toast } from 'sonner'
+import { PasswordField } from '@/app/[locale]/manage/setting/input-password'
 
 export default function ChangePasswordForm() {
-  const changePasswordMutation = useChangePasswordMutation();
+  const changePasswordMutation = useChangePasswordMutation()
   const form = useForm<ChangePasswordBodyType>({
     resolver: zodResolver(ChangePasswordBody),
     defaultValues: {
-      oldPassword: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
+      oldPassword: '',
+      password: '',
+      confirmPassword: ''
+    }
+  })
 
   const onSubmit = async (data: ChangePasswordBodyType) => {
-    if (changePasswordMutation.isPending) return;
+    if (changePasswordMutation.isPending) return
     try {
-      const result = await changePasswordMutation.mutateAsync(data);
-      setAccessTokenToLocalStorage(result.payload.data.accessToken);
-      setRefreshTokenToLocalStorage(result.payload.data.refreshToken);
-      toast.success(result.payload.message);
-      form.reset();
+      const result = await changePasswordMutation.mutateAsync(data)
+      setAccessTokenToLocalStorage(result.payload.data.accessToken)
+      setRefreshTokenToLocalStorage(result.payload.data.refreshToken)
+      toast.success(result.payload.message)
+      form.reset()
     } catch (error) {
-      handleErrorApi({ error, setError: form.setError });
+      handleErrorApi({ error, setError: form.setError })
     }
-  };
+  }
 
   const reset = () => {
-    form.reset();
-  };
+    form.reset()
+  }
 
   return (
     <Form {...form}>
       <form
         noValidate
-        className="grid auto-rows-max items-start gap-4 md:gap-8"
+        className='grid auto-rows-max items-start gap-4 md:gap-8'
         onSubmit={form.handleSubmit(onSubmit, (error) => {
-          console.log(error);
+          console.log(error)
         })}
         onReset={reset}
       >
-        <Card className="overflow-hidden" x-chunk="dashboard-07-chunk-4">
+        <Card className='overflow-hidden' x-chunk='dashboard-07-chunk-4'>
           <CardHeader>
             <CardTitle>Đổi mật khẩu</CardTitle>
             {/* <CardDescription>Test</CardDescription> */}
           </CardHeader>
           <CardContent>
-            <div className="grid gap-6">
+            <div className='grid gap-6'>
               <FormField
                 control={form.control}
-                name="oldPassword"
+                name='oldPassword'
                 render={({ field }) => (
                   <FormItem>
-                    <div className="grid gap-3">
-                      <Label htmlFor="oldPassword">Mật khẩu cũ</Label>
+                    <div className='grid gap-3'>
+                      <Label htmlFor='oldPassword'>Mật khẩu cũ</Label>
                       <PasswordField
-                        id="oldPassword"
-                        type="password"
-                        className="w-full"
+                        id='oldPassword'
+                        type='password'
+                        className='w-full'
                         {...field}
-                        autoComplete="current-password"
+                        autoComplete='current-password'
                       />
                       <FormMessage />
                     </div>
@@ -85,17 +78,17 @@ export default function ChangePasswordForm() {
               />
               <FormField
                 control={form.control}
-                name="password"
+                name='password'
                 render={({ field }) => (
                   <FormItem>
-                    <div className="grid gap-3">
-                      <Label htmlFor="password">Mật khẩu mới</Label>
+                    <div className='grid gap-3'>
+                      <Label htmlFor='password'>Mật khẩu mới</Label>
                       <PasswordField
-                        id="password"
-                        type="password"
-                        className="w-full"
+                        id='password'
+                        type='password'
+                        className='w-full'
                         {...field}
-                        autoComplete="new-password"
+                        autoComplete='new-password'
                       />
                       <FormMessage />
                     </div>
@@ -104,30 +97,28 @@ export default function ChangePasswordForm() {
               />
               <FormField
                 control={form.control}
-                name="confirmPassword"
+                name='confirmPassword'
                 render={({ field }) => (
                   <FormItem>
-                    <div className="grid gap-3">
-                      <Label htmlFor="confirmPassword">
-                        Nhập lại mật khẩu mới
-                      </Label>
+                    <div className='grid gap-3'>
+                      <Label htmlFor='confirmPassword'>Nhập lại mật khẩu mới</Label>
                       <PasswordField
-                        id="confirmPassword"
-                        type="password"
-                        className="w-full"
+                        id='confirmPassword'
+                        type='password'
+                        className='w-full'
                         {...field}
-                        autoComplete="new-password"
+                        autoComplete='new-password'
                       />
                       <FormMessage />
                     </div>
                   </FormItem>
                 )}
               />
-              <div className=" items-center gap-2 md:ml-auto flex">
-                <Button variant="outline" size="sm" type="reset">
+              <div className=' items-center gap-2 md:ml-auto flex'>
+                <Button variant='outline' size='sm' type='reset'>
                   Hủy
                 </Button>
-                <Button size="sm" type="submit">
+                <Button size='sm' type='submit'>
                   Lưu thông tin
                 </Button>
               </div>
@@ -136,5 +127,5 @@ export default function ChangePasswordForm() {
         </Card>
       </form>
     </Form>
-  );
+  )
 }

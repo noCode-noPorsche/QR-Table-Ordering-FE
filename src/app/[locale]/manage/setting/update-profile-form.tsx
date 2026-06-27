@@ -1,137 +1,130 @@
-"use client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { handleErrorApi } from "@/lib/utils";
-import { useAccountMe, useUpdateMeMutation } from "@/queries/useAccount";
-import { useUploadMediaMutation } from "@/queries/useMedia";
-import {
-  UpdateMeBody,
-  UpdateMeBodyType,
-} from "@/schemaValidations/account.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Upload } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
-import { toast } from "sonner";
+'use client'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Form, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { handleErrorApi } from '@/lib/utils'
+import { useAccountMe, useUpdateMeMutation } from '@/queries/useAccount'
+import { useUploadMediaMutation } from '@/queries/useMedia'
+import { UpdateMeBody, UpdateMeBodyType } from '@/schemaValidations/account.schema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Upload } from 'lucide-react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
+import { toast } from 'sonner'
 
 export default function UpdateProfileForm() {
-  const avatarInputRef = useRef<HTMLInputElement>(null);
-  const [file, setFile] = useState<File | null>(null);
+  const avatarInputRef = useRef<HTMLInputElement>(null)
+  const [file, setFile] = useState<File | null>(null)
 
   const form = useForm<UpdateMeBodyType>({
     resolver: zodResolver(UpdateMeBody),
     defaultValues: {
-      name: "",
-      avatar: undefined,
-    },
-  });
+      name: '',
+      avatar: undefined
+    }
+  })
 
-  const { data, refetch } = useAccountMe();
-  const updateMeMutation = useUpdateMeMutation();
-  const uploadMediaMutation = useUploadMediaMutation();
+  const { data, refetch } = useAccountMe()
+  const updateMeMutation = useUpdateMeMutation()
+  const uploadMediaMutation = useUploadMediaMutation()
 
   useEffect(() => {
     if (data) {
-      const { name, avatar } = data.payload.data;
+      const { name, avatar } = data.payload.data
       form.reset({
         name,
-        avatar: avatar ?? undefined,
-      });
+        avatar: avatar ?? undefined
+      })
     }
-  }, [data, form]);
+  }, [data, form])
 
-  const avatar = useWatch({ control: form.control, name: "avatar" });
-  const name = useWatch({ control: form.control, name: "name" }) || "";
+  const avatar = useWatch({ control: form.control, name: 'avatar' })
+  const name = useWatch({ control: form.control, name: 'name' }) || ''
   // Nếu dùng Next.js 15 React 19 thì ko cần dùng useMemo chỗ này
   const previewAvatar = useMemo(() => {
     if (file) {
-      return URL.createObjectURL(file);
+      return URL.createObjectURL(file)
     }
-    return avatar;
-  }, [file, avatar]);
+    return avatar
+  }, [file, avatar])
 
   const reset = () => {
-    form.reset();
-    setFile(null);
-  };
+    form.reset()
+    setFile(null)
+  }
 
   const onSubmit = async (values: UpdateMeBodyType) => {
-    if (updateMeMutation.isPending) return;
+    if (updateMeMutation.isPending) return
     try {
-      let body = values;
+      let body = values
       if (file) {
-        const formData = new FormData();
-        formData.append("file", file);
-        const imageUrlResult = await uploadMediaMutation.mutateAsync(formData);
-        const imageUrl = imageUrlResult.payload.data;
+        const formData = new FormData()
+        formData.append('file', file)
+        const imageUrlResult = await uploadMediaMutation.mutateAsync(formData)
+        const imageUrl = imageUrlResult.payload.data
         body = {
           ...values,
-          avatar: imageUrl,
-        };
+          avatar: imageUrl
+        }
       }
-      const result = await updateMeMutation.mutateAsync(body);
-      toast.success(result.payload.message);
-      refetch();
+      const result = await updateMeMutation.mutateAsync(body)
+      toast.success(result.payload.message)
+      refetch()
     } catch (error) {
-      handleErrorApi({ error, setError: form.setError });
+      handleErrorApi({ error, setError: form.setError })
     }
-  };
+  }
 
   return (
     <Form {...form}>
       <form
         noValidate
-        className="grid auto-rows-max items-start gap-4 md:gap-8"
+        className='grid auto-rows-max items-start gap-4 md:gap-8'
         onReset={reset}
         onSubmit={form.handleSubmit(onSubmit, (e) => {
-          console.log(e);
+          console.log(e)
         })}
       >
-        <Card x-chunk="dashboard-07-chunk-0">
+        <Card x-chunk='dashboard-07-chunk-0'>
           <CardHeader>
             <CardTitle>Thông tin cá nhân</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid gap-6">
+            <div className='grid gap-6'>
               <FormField
                 control={form.control}
-                name="avatar"
+                name='avatar'
                 render={({ field }) => (
                   <FormItem>
-                    <div className="flex gap-2 items-start justify-start">
-                      <Avatar className="aspect-square w-25 h-25 rounded-md object-cover">
+                    <div className='flex gap-2 items-start justify-start'>
+                      <Avatar className='aspect-square w-25 h-25 rounded-md object-cover'>
                         <AvatarImage src={previewAvatar} />
-                        <AvatarFallback className="rounded-none">
-                          {name.slice(0, 2)?.toUpperCase()}
-                        </AvatarFallback>
+                        <AvatarFallback className='rounded-none'>{name.slice(0, 2)?.toUpperCase()}</AvatarFallback>
                       </Avatar>
                       <input
-                        type="file"
-                        title="."
-                        accept="image/*"
-                        className="hidden"
+                        type='file'
+                        title='.'
+                        accept='image/*'
+                        className='hidden'
                         ref={avatarInputRef}
                         onChange={(e) => {
-                          const selectedFile = e.target.files?.[0];
+                          const selectedFile = e.target.files?.[0]
                           if (selectedFile) {
-                            setFile(selectedFile);
-                            field.onChange(
-                              "http://localhost:3000/" + field.name,
-                            );
+                            setFile(selectedFile)
+                            field.onChange('http://localhost:3000/' + field.name)
                           }
                         }}
                       />
                       <button
-                        className="flex aspect-square w-25 items-center justify-center rounded-md border border-dashed"
-                        type="button"
+                        className='flex aspect-square w-25 items-center justify-center rounded-md border border-dashed'
+                        type='button'
                         onClick={() => avatarInputRef.current?.click()}
                       >
-                        <Upload className="h-4 w-4 text-muted-foreground" />
-                        <span className="sr-only">Upload</span>
+                        <Upload className='h-4 w-4 text-muted-foreground' />
+                        <span className='sr-only'>Upload</span>
                       </button>
                     </div>
                   </FormItem>
@@ -140,28 +133,23 @@ export default function UpdateProfileForm() {
 
               <FormField
                 control={form.control}
-                name="name"
+                name='name'
                 render={({ field }) => (
                   <FormItem>
-                    <div className="grid gap-3">
-                      <Label htmlFor="name">Tên</Label>
-                      <Input
-                        id="name"
-                        type="text"
-                        className="w-full"
-                        {...field}
-                      />
+                    <div className='grid gap-3'>
+                      <Label htmlFor='name'>Tên</Label>
+                      <Input id='name' type='text' className='w-full' {...field} />
                       <FormMessage />
                     </div>
                   </FormItem>
                 )}
               />
 
-              <div className=" items-center gap-2 md:ml-auto flex">
-                <Button variant="outline" size="sm" type="reset">
+              <div className=' items-center gap-2 md:ml-auto flex'>
+                <Button variant='outline' size='sm' type='reset'>
                   Hủy
                 </Button>
-                <Button size="sm" type="submit">
+                <Button size='sm' type='submit'>
                   Lưu thông tin
                 </Button>
               </div>
@@ -170,5 +158,5 @@ export default function UpdateProfileForm() {
         </Card>
       </form>
     </Form>
-  );
+  )
 }

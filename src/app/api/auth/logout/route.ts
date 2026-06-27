@@ -1,34 +1,28 @@
-import authApiRequest from "@/apiRequest/auth";
-import { cookies } from "next/headers";
+import authApiRequest from '@/apiRequest/auth'
+import { cookies } from 'next/headers'
 
 export async function POST() {
-  const cookieStore = await cookies();
+  const cookieStore = await cookies()
 
-  const accessToken = cookieStore.get("accessToken")?.value;
-  const refreshToken = cookieStore.get("refreshToken")?.value;
+  const accessToken = cookieStore.get('accessToken')?.value
+  const refreshToken = cookieStore.get('refreshToken')?.value
 
-  cookieStore.delete("accessToken");
-  cookieStore.delete("refreshToken");
+  cookieStore.delete('accessToken')
+  cookieStore.delete('refreshToken')
 
   if (!accessToken || !refreshToken) {
-    return Response.json(
-      { message: "Không nhận được access token hoặc refresh token" },
-      { status: 200 },
-    );
+    return Response.json({ message: 'Không nhận được access token hoặc refresh token' }, { status: 200 })
   }
 
   try {
     const result = await authApiRequest.sLogout({
       accessToken,
-      refreshToken,
-    });
+      refreshToken
+    })
 
-    return Response.json(result.payload);
+    return Response.json(result.payload)
   } catch (error) {
-    console.log(error);
-    return Response.json(
-      { message: "Lỗi khi gọi API server BE" },
-      { status: 200 },
-    );
+    console.log(error)
+    return Response.json({ message: 'Lỗi khi gọi API server BE' }, { status: 200 })
   }
 }
