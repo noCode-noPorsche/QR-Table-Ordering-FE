@@ -16,6 +16,7 @@ import { Inter as FontSans } from "next/font/google";
 import { notFound } from "next/navigation";
 import NextTopLoader from "nextjs-toploader";
 import "./globals.css";
+import GoogleTag from "@/components/google-tag";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -84,6 +85,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
             </ThemeProvider>
           </AppProvider>
         </NextIntlClientProvider>
+        <GoogleTag />
       </body>
     </html>
   );
