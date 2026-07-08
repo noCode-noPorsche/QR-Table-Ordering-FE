@@ -122,6 +122,26 @@ export const AccountIdParam = z.object({
 
 export type AccountIdParamType = z.TypeOf<typeof AccountIdParam>
 
+export const GetAccountListPaginationParam = z.object({
+  page: z.coerce.number().positive().lte(10000).default(1),
+  limit: z.coerce.number().positive().lte(10000).default(10)
+})
+
+export type GetAccountListPaginationParamType = z.TypeOf<typeof GetAccountListPaginationParam>
+
+export const GetAccountListPaginationRes = z.object({
+  data: z.object({
+    totalItem: z.number(),
+    totalPage: z.number(),
+    page: z.number(),
+    limit: z.number(),
+    items: z.array(AccountSchema)
+  }),
+  message: z.string()
+})
+
+export type GetAccountListPaginationResType = z.TypeOf<typeof GetAccountListPaginationRes>
+
 export const GetListGuestsRes = z.object({
   data: z.array(
     z.object({

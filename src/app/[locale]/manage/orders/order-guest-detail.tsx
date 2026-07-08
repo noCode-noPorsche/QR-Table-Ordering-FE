@@ -86,6 +86,7 @@ export default function OrderGuestDetail({
                 width={30}
                 height={30}
                 className='h-7.5 w-7.5 rounded object-cover'
+                unoptimized={process.env.NEXT_PUBLIC_PRODUCTION === 'true' ? false : true}
               />
               <span className='truncate w-17.5 sm:w-25' title={order.dishSnapshot.name}>
                 {order.dishSnapshot.name}

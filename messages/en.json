@@ -1,13 +1,13 @@
 {
   "HomePage": {
-    "title": "Big Boy Restaurant",
+    "title": "Dustin Tsan Restaurant",
     "description": "Craving a classic American diner experience? Look no further than Big Boy! Savor our iconic Big Boy burger, juicy and flavorful, paired with creamy milkshakes and crispy fries. Perfect for families and friends!",
     "slogan": "Taste good, every moment",
     "h2": "A variety of dishes"
   },
   "Brand": {
-    "title": "Big Boy Restaurant",
-    "defaultTitle": "Big Boy"
+    "title": "Dustin Tsan Restaurant",
+    "defaultTitle": "Dustin Tsan Restaurant - Taste good, every moment"
   },
   "SwitchLanguage": {
     "title": "Switch Language",
@@ -144,5 +144,10 @@
     "privacyPolicy": "Privacy Policy",
     "termOfService": "Term Of Service",
     "nameRestaurant": "Big Boy Restaurant"
+  },
+  "Role": {
+    "Owner": "Owner",
+    "Employee": "Employee",
+    "Guest": "Guest"
   }
 }

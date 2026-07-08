@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'qr_table_ordering_fe',
+      name: 'QR-Table-Ordering-FE',
       script: './node_modules/next/dist/bin/next', // Trỏ thẳng vào file chạy của Next.js
       args: 'start', // Tham số kích hoạt dự án ở chế độ Production
       watch: false,

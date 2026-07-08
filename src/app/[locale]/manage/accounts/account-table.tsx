@@ -48,6 +48,7 @@ import AutoPagination from '@/components/auto-pagination'
 import { useDeleteAccountMutation, useGetAccountList } from '@/queries/useAccount'
 import { toast } from 'sonner'
 import { handleErrorApi } from '@/lib/utils'
+import AccountSkeleton from '@/app/[locale]/manage/accounts/account-skeleton'
 
 type AccountItem = AccountListResType['data'][0]
 
@@ -63,12 +64,13 @@ const AccountTableContext = createContext<{
   setEmployeeDelete: (value: AccountItem | null) => {}
 })
 
-export const columns: ColumnDef<AccountType>[] = [
+export const getColumns = (page: number): ColumnDef<AccountItem>[] => [
   {
     id: 'stt',
     header: 'STT',
     cell: ({ row }) => {
-      return <div>{row.index + 1}</div>
+      const stt = (page - 1) * PAGE_SIZE + row.index + 1
+      return <div>{stt}</div>
     }
   },
   {
@@ -197,8 +199,15 @@ export default function AccountTable() {
   const [employeeIdEdit, setEmployeeIdEdit] = useState<number | undefined>()
   const [employeeDelete, setEmployeeDelete] = useState<AccountItem | null>(null)
 
-  const accountListQuery = useGetAccountList()
-  const data = accountListQuery.data?.payload.data || []
+  const accountListQuery = useGetAccountList({
+    page,
+    limit: PAGE_SIZE
+  })
+  const data = accountListQuery.data?.payload.data.items || []
+  const totalItem = accountListQuery.data?.payload.data.totalItem || 0
+  const totalPage = accountListQuery.data?.payload.data.totalPage || 1
+
+  const currentRecord = Math.min(page * PAGE_SIZE, totalItem)
 
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
@@ -209,19 +218,23 @@ export default function AccountTable() {
     pageSize: PAGE_SIZE //default page size
   })
 
+  const columns = getColumns(page)
   const table = useReactTable({
     data,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
+    // getPaginationRowModel: getPaginationRowModel(), // (Không dùng pagination client nữa)
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
     onPaginationChange: setPagination,
     autoResetPageIndex: false,
+    // BẬT MANUAL PAGINATION (Báo cho table biết Server sẽ handle việc chia trang)
+    manualPagination: true,
+    rowCount: totalItem, // Cung cấp tổng số item toàn bộ hệ thống để tính toán nút bấm
     state: {
       sorting,
       columnFilters,
@@ -231,12 +244,12 @@ export default function AccountTable() {
     }
   })
 
-  useEffect(() => {
-    table.setPagination({
-      pageIndex,
-      pageSize: PAGE_SIZE
-    })
-  }, [table, pageIndex])
+  // useEffect(() => {
+  //   table.setPagination({
+  //     pageIndex,
+  //     pageSize: PAGE_SIZE
+  //   })
+  // }, [table, pageIndex])
 
   return (
     <AccountTableContext.Provider
@@ -267,53 +280,58 @@ export default function AccountTable() {
             <AddEmployee />
           </div>
         </div>
-        <div className='rounded-md border'>
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
-                      </TableHead>
-                    )
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows?.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell colSpan={columns.length} className='h-24 text-center'>
-                    Không có dữ liệu.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
-        <div className='flex items-center justify-end space-x-2 py-4'>
-          <div className='text-xs text-muted-foreground py-4 flex-1 '>
-            Hiển thị <strong>{table.getPaginationRowModel().rows.length}</strong> trong <strong>{data.length}</strong>{' '}
-            kết quả
-          </div>
-          <div>
-            <AutoPagination
-              page={table.getState().pagination.pageIndex + 1}
-              pageSize={table.getPageCount()}
-              pathname='/manage/accounts'
-            />
-          </div>
-        </div>
+        {accountListQuery.isPending ? (
+          <AccountSkeleton />
+        ) : (
+          <>
+            <div className='rounded-md border'>
+              <Table>
+                <TableHeader>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <TableRow key={headerGroup.id}>
+                      {headerGroup.headers.map((header) => {
+                        return (
+                          <TableHead key={header.id}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(header.column.columnDef.header, header.getContext())}
+                          </TableHead>
+                        )
+                      })}
+                    </TableRow>
+                  ))}
+                </TableHeader>
+                <TableBody>
+                  {table.getRowModel().rows?.length ? (
+                    table.getRowModel().rows.map((row) => (
+                      <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                        {row.getVisibleCells().map((cell) => (
+                          <TableCell key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={columns.length} className='h-24 text-center'>
+                        Không có dữ liệu.
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </div>
+            <div className='flex items-center justify-end space-x-2 py-4'>
+              <div className='text-xs text-muted-foreground py-4 flex-1 '>
+                Hiển thị <strong>{currentRecord}</strong> trong <strong>{totalItem}</strong> kết quả
+              </div>
+              <div>
+                <AutoPagination page={page} pageSize={totalPage} pathname='/manage/accounts' />
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </AccountTableContext.Provider>
   )

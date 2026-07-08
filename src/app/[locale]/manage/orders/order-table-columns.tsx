@@ -80,6 +80,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
               width={50}
               height={50}
               className='rounded-md object-cover w-12.5 h-12.5cursor-pointer'
+              unoptimized={process.env.NEXT_PUBLIC_PRODUCTION === 'true' ? false : true}
             />
           </PopoverTrigger>
           <PopoverContent>
@@ -90,6 +91,7 @@ const orderTableColumns: ColumnDef<OrderItem>[] = [
                 width={100}
                 height={100}
                 className='rounded-md object-cover w-25 h-25'
+                unoptimized={process.env.NEXT_PUBLIC_PRODUCTION === 'true' ? false : true}
               />
               <div className='space-y-1 text-sm'>
                 <h3 className='font-semibold'>{row.original.dishSnapshot.name}</h3>

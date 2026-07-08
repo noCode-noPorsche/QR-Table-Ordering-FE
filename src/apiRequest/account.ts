@@ -1,6 +1,5 @@
 import http from '@/lib/http'
 import {
-  AccountListResType,
   AccountResType,
   ChangePasswordBodyType,
   ChangePasswordV2BodyType,
@@ -8,6 +7,8 @@ import {
   CreateEmployeeAccountBodyType,
   CreateGuestBodyType,
   CreateGuestResType,
+  GetAccountListPaginationParamType,
+  GetAccountListPaginationResType,
   GetGuestListQueryParamsType,
   GetListGuestsResType,
   UpdateEmployeeAccountBodyType,
@@ -37,7 +38,14 @@ const accountApiRequest = {
     http.put<ChangePasswordV2ResType>(`/${prefix}/change-password-v2`, body, {
       baseURL: ''
     }),
-  getEmployeeList: () => http.get<AccountListResType>(`/${prefix}`),
+  getEmployeeList: (queryParams: GetAccountListPaginationParamType) =>
+    http.get<GetAccountListPaginationResType>(
+      `/${prefix}?` +
+        queryString.stringify({
+          page: queryParams.page,
+          limit: queryParams.limit
+        })
+    ),
   addEmployee: (body: CreateEmployeeAccountBodyType) => http.post<AccountResType>(`/${prefix}`, body),
   updateEmployee: (id: number, body: UpdateEmployeeAccountBodyType) =>
     http.put<AccountResType>(`/${prefix}/detail/${id}`, body),

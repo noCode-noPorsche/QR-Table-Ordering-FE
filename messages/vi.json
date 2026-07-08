@@ -1,13 +1,13 @@
 {
   "HomePage": {
-    "title": "Nhà hàng Big Boy",
-    "description": "Khát khao một trải nghiệm ẩm thực Mỹ cổ điển? Big Boy là lựa chọn hoàn hảo! Thưởng thức chiếc Big Boy burger biểu tượng, thơm ngon và đậm đà, cùng với những ly milkshake béo ngậy và khoai tây chiên giòn tan. Hoàn hảo cho các buổi gặp mặt gia đình và bạn bè!",
+    "title": "Nhà hàng Dustin Tsan",
+    "description": "Khát khao một trải nghiệm ẩm thực Mỹ cổ điển? Dustin Tsan là lựa chọn hoàn hảo! Thưởng thức chiếc Dustin Tsan burger biểu tượng, thơm ngon và đậm đà, cùng với những ly milkshake béo ngậy và khoai tây chiên giòn tan. Hoàn hảo cho các buổi gặp mặt gia đình và bạn bè!",
     "slogan": "Vị ngon, trọn khoảnh khắc",
     "h2": "Đa dạng các món ăn"
   },
   "Brand": {
-    "title": "Nhà hàng Big Boy",
-    "defaultTitle": "Big Boy"
+    "title": "Nhà hàng Dustin Tsan",
+    "defaultTitle": "Dustin Tsan Restaurant - Vị ngon, trọn khoảnh khắc"
   },
   "SwitchLanguage": {
     "title": "Chuyển ngôn ngữ",
@@ -144,5 +144,10 @@
     "privacyPolicy": "Chính sách bảo mật",
     "termOfService": "Điều khoản dịch vụ",
     "nameRestaurant": "Nhà hàng Big Boy"
+  },
+  "Role": {
+    "Owner": "Quản lý",
+    "Employee": "Nhân viên",
+    "Guest": "Khách hàng"
   }
 }

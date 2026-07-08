@@ -47,6 +47,8 @@ export const columns: ColumnDef<TableItem>[] = [
 ]
 
 const PAGE_SIZE = 10
+const PAGE = 1
+const LIMIT = 100
 
 export function TablesDialog({ onChoose }: { onChoose: (table: TableItem) => void }) {
   const [open, setOpen] = useState(false)
@@ -59,8 +61,8 @@ export function TablesDialog({ onChoose }: { onChoose: (table: TableItem) => voi
     pageSize: PAGE_SIZE //default page size
   })
 
-  const tableListQuery = useGetTableList()
-  const data = tableListQuery.data?.payload.data ?? []
+  const tableListQuery = useGetTableList({ page: PAGE, limit: LIMIT })
+  const data = tableListQuery.data?.payload.data.items ?? []
 
   const table = useReactTable({
     data,

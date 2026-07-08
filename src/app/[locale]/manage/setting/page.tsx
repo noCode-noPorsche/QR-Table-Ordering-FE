@@ -1,6 +1,6 @@
+import BadgeRole from '@/app/[locale]/manage/setting/badge-role'
 import ChangePasswordForm from '@/app/[locale]/manage/setting/change-password-form'
 import UpdateProfileForm from '@/app/[locale]/manage/setting/update-profile-form'
-import { Badge } from '@/components/ui/badge'
 import envConfig, { Locale } from '@/config'
 import { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server'
@@ -45,9 +45,7 @@ export default async function SettingPage() {
           <h1 className='flex-1 shrink-0 whitespace-nowrap text-xl font-semibold tracking-tight sm:grow-0'>
             {t('title')}
           </h1>
-          <Badge variant='outline' className='ml-auto sm:ml-0'>
-            Owner
-          </Badge>
+          <BadgeRole />
         </div>
         <div className='grid gap-4 md:grid-cols-2 md:gap-8'>
           <UpdateProfileForm />

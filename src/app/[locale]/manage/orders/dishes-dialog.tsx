@@ -36,6 +36,7 @@ export const columns: ColumnDef<DishItem>[] = [
           width={50}
           height={50}
           className='rounded-md object-cover w-12.5 h-12.5'
+          unoptimized={process.env.NEXT_PUBLIC_PRODUCTION === 'true' ? false : true}
         />
         <span>{row.original.name}</span>
       </div>
@@ -62,9 +63,9 @@ const PAGE_SIZE = 10
 export function DishesDialog({ onChoose }: { onChoose: (dish: DishItem) => void }) {
   const [open, setOpen] = useState(false)
 
-  const distListQuery = useGetDishList()
+  const distListQuery = useGetDishList({ page: 1, limit: 1000 })
 
-  const data = distListQuery.data?.payload.data ?? []
+  const data = distListQuery.data?.payload.data.items ?? []
   const [sorting, setSorting] = useState<SortingState>([])
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({})

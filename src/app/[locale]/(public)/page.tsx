@@ -37,6 +37,8 @@ type HomeProps = {
   }>
 }
 
+const PAGE = 1
+const LIMIT = 10000
 export default async function Home({ params }: HomeProps) {
   const { locale } = await params
   setRequestLocale(locale)
@@ -45,11 +47,11 @@ export default async function Home({ params }: HomeProps) {
 
   let dishList: DishListResType['data'] = []
   try {
-    const result = await dishApiRequest.getDishList()
+    const result = await dishApiRequest.getDishList({ page: PAGE, limit: LIMIT })
     const {
       payload: { data }
     } = result
-    dishList = data
+    dishList = data.items
   } catch (e) {
     console.log(e)
     return <div>Something went wrong</div>
@@ -88,6 +90,7 @@ export default async function Home({ params }: HomeProps) {
                     quality={100}
                     className='object-cover w-37.5 h-37.5 rounded-md'
                     alt={dish.name}
+                    unoptimized={process.env.NEXT_PUBLIC_PRODUCTION === 'true' ? false : true}
                   />
                 </div>
                 <div className='space-y-1'>

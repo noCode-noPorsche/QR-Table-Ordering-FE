@@ -42,3 +42,23 @@ export const TableParams = z.object({
   number: z.coerce.number()
 })
 export type TableParamsType = z.TypeOf<typeof TableParams>
+
+export const GetTableListWithPaginationQuery = z.object({
+  page: z.coerce.number().positive().lte(10000).default(1),
+  limit: z.coerce.number().positive().lte(10000).default(10)
+})
+
+export type GetTableListWithPaginationQueryType = z.TypeOf<typeof GetTableListWithPaginationQuery>
+
+export const GetTableListWithPaginationRes = z.object({
+  data: z.object({
+    totalItem: z.number(),
+    totalPage: z.number(),
+    page: z.number(),
+    limit: z.number(),
+    items: z.array(TableSchema)
+  }),
+  message: z.string()
+})
+
+export type GetTableListWithPaginationResType = z.TypeOf<typeof GetTableListWithPaginationRes>

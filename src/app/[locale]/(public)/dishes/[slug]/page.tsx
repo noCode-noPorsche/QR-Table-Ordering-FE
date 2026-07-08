@@ -69,10 +69,12 @@ type DishPageProps = {
   }>
 }
 
+const PAGE = 1
+const LIMIT = 10000
 export async function generateStaticParams() {
   try {
-    const result = await dishApiRequest.getDishList()
-    const dishList = result.payload.data
+    const result = await dishApiRequest.getDishList({ page: PAGE, limit: LIMIT })
+    const dishList = result.payload.data.items
 
     // Trả về danh sách slug để Next.js render sẵn thành file tĩnh ký hiệu chấm tròn đầy (●)
     return dishList.map((dish) => ({

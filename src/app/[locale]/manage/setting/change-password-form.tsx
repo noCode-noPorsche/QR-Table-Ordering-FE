@@ -44,7 +44,7 @@ export default function ChangePasswordForm() {
     <Form {...form}>
       <form
         noValidate
-        className='grid auto-rows-max items-start gap-4 md:gap-8'
+        className='grid h-full auto-rows-max items-start gap-4 md:gap-8'
         onSubmit={form.handleSubmit(onSubmit, (error) => {
           console.log(error)
         })}
@@ -70,6 +70,7 @@ export default function ChangePasswordForm() {
                         className='w-full'
                         {...field}
                         autoComplete='current-password'
+                        placeholder='*********'
                       />
                       <FormMessage />
                     </div>
@@ -89,6 +90,7 @@ export default function ChangePasswordForm() {
                         className='w-full'
                         {...field}
                         autoComplete='new-password'
+                        placeholder='*********'
                       />
                       <FormMessage />
                     </div>
@@ -108,6 +110,7 @@ export default function ChangePasswordForm() {
                         className='w-full'
                         {...field}
                         autoComplete='new-password'
+                        placeholder='*********'
                       />
                       <FormMessage />
                     </div>

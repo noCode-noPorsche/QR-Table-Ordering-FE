@@ -25,6 +25,7 @@ export default async function DishDetailPage({ params }: DishPageProps) {
         alt={dish.name}
         className='object-cover w-full h-full'
         title={dish.name}
+        unoptimized={process.env.NEXT_PUBLIC_PRODUCTION === 'true' ? false : true}
       />
       <p>{dish.description}</p>
     </div>

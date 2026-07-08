@@ -1,11 +1,11 @@
 import tableApiRequest from '@/apiRequest/table'
-import { UpdateTableBodyType } from '@/schemaValidations/table.schema'
+import { GetTableListWithPaginationQueryType, UpdateTableBodyType } from '@/schemaValidations/table.schema'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-export const useGetTableList = () => {
+export const useGetTableList = (queryParams: GetTableListWithPaginationQueryType) => {
   return useQuery({
-    queryKey: ['tables-list'],
-    queryFn: tableApiRequest.getTableList
+    queryKey: ['tables-list', queryParams],
+    queryFn: () => tableApiRequest.getTableList(queryParams)
   })
 }
 

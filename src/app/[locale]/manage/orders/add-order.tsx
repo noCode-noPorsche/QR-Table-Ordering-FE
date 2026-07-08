@@ -24,14 +24,16 @@ import { useMemo, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 import { toast } from 'sonner'
 
+const PAGE = 1
+const LIMIT = 100
 export default function AddOrder() {
   const [open, setOpen] = useState(false)
   const [selectedGuest, setSelectedGuest] = useState<GetListGuestsResType['data'][0] | null>(null)
   const [isNewGuest, setIsNewGuest] = useState(true)
   const [orders, setOrders] = useState<CreateOrdersBodyType['orders']>([])
 
-  const { data } = useGetDishList()
-  const dishes = useMemo(() => data?.payload.data ?? [], [data])
+  const { data } = useGetDishList({ page: PAGE, limit: LIMIT })
+  const dishes = useMemo(() => data?.payload.data.items ?? [], [data])
 
   const totalPrice = useMemo(() => {
     return dishes.reduce((result, dish) => {
@@ -210,6 +212,7 @@ export default function AddOrder() {
                   width={100}
                   quality={100}
                   className='object-cover w-20 h-20 rounded-md'
+                  unoptimized={process.env.NEXT_PUBLIC_PRODUCTION === 'true' ? false : true}
                 />
               </div>
               <div className='space-y-1'>

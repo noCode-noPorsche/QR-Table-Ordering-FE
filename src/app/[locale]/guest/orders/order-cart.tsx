@@ -1,5 +1,6 @@
 'use client'
 
+import { OrderSkeleton } from '@/app/[locale]/guest/orders/order-skeleton'
 import { useAppStore } from '@/components/app-provider'
 import { Badge } from '@/components/ui/badge'
 import { OrderStatus } from '@/constants/type'
@@ -11,7 +12,7 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 export default function OrdersCart() {
-  const { data, refetch } = useGuestGetOrderList()
+  const { data, refetch, isPending } = useGuestGetOrderList()
   const orders = data?.payload.data ?? []
   const disconnectSocket = useAppStore((state) => state.disconnectSocket)
   const socket = useAppStore((state) => state.socket)
@@ -101,45 +102,52 @@ export default function OrdersCart() {
 
   return (
     <>
-      {orders.map((order, index) => (
-        <div key={order.id} className='flex gap-4'>
-          <div className='text-sm font-semibold'>{index + 1}</div>
-          <div className='-shrink-0 relative'>
-            <Image
-              src={order.dishSnapshot.image}
-              alt={order.dishSnapshot.name}
-              height={100}
-              width={100}
-              quality={100}
-              className='object-cover w-20 h-20 rounded-md'
-            />
-          </div>
-          <div className='space-y-1'>
-            <h3 className='text-sm'>{order.dishSnapshot.name}</h3>
-            <p className='text-xs font-semibold'>
-              {formatCurrency(order.dishSnapshot.price)} x <Badge className='px-1.5 py-1.5'>{order.quantity}</Badge>
-            </p>
-          </div>
-          <div className='shrink-0 ml-auto flex justify-center items-center'>
-            <Badge variant='secondary'>{getVietnameseOrderStatus(order.status)}</Badge>
-          </div>
-        </div>
-      ))}
-      {paid.quantity !== 0 && (
-        <div className='sticky bottom-0 flex'>
-          <div className='w-full flex space-x-4 justify-between text-xl font-semibold'>
-            <span>Đơn đã thanh toán: {paid.quantity} món</span>
-            <span>{formatCurrency(paid.price)}</span>
-          </div>
-        </div>
-      )}
+      {isPending ? (
+        <OrderSkeleton />
+      ) : (
+        <>
+          {orders.map((order, index) => (
+            <div key={order.id} className='flex gap-4'>
+              <div className='text-sm font-semibold'>{index + 1}</div>
+              <div className='shrink-0 relative'>
+                <Image
+                  src={order.dishSnapshot.image}
+                  alt={order.dishSnapshot.name}
+                  height={100}
+                  width={100}
+                  quality={100}
+                  className='object-cover w-20 h-20 rounded-md'
+                  unoptimized={process.env.NEXT_PUBLIC_PRODUCTION === 'true' ? false : true}
+                />
+              </div>
+              <div className='space-y-1'>
+                <h3 className='text-sm'>{order.dishSnapshot.name}</h3>
+                <p className='text-xs font-semibold'>
+                  {formatCurrency(order.dishSnapshot.price)} x <Badge className='px-1.5 py-1.5'>{order.quantity}</Badge>
+                </p>
+              </div>
+              <div className='shrink-0 ml-auto flex justify-center items-center'>
+                <Badge variant='secondary'>{getVietnameseOrderStatus(order.status)}</Badge>
+              </div>
+            </div>
+          ))}
+          {paid.quantity !== 0 && (
+            <div className='sticky bottom-0 flex'>
+              <div className='w-full flex space-x-4 justify-between text-xl font-semibold'>
+                <span>Đơn đã thanh toán: {paid.quantity} món</span>
+                <span>{formatCurrency(paid.price)}</span>
+              </div>
+            </div>
+          )}
 
-      <div className='sticky bottom-0 flex'>
-        <div className='w-full flex space-x-4 justify-between text-xl font-semibold'>
-          <span>Đơn chưa thanh toán: {waitingForPaying.quantity} món</span>
-          <span>{formatCurrency(waitingForPaying.price)}</span>
-        </div>
-      </div>
+          <div className='sticky bottom-0 flex'>
+            <div className='w-full flex space-x-4 justify-between text-xl font-semibold'>
+              <span>Đơn chưa thanh toán: {waitingForPaying.quantity} món</span>
+              <span>{formatCurrency(waitingForPaying.price)}</span>
+            </div>
+          </div>
+        </>
+      )}
     </>
   )
 }

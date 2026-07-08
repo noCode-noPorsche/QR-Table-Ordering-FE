@@ -11,10 +11,9 @@ const nextConfig: NextConfig = {
         pathname: '/**'
       },
       {
-        protocol: 'https',
-        hostname: 'api-bigboy.duthanhduoc.com',
-        port: '',
-        pathname: '/**'
+        protocol: 'http',
+        hostname: 'localhost',
+        port: '4000'
       },
       {
         hostname: 'via.placeholder.com',

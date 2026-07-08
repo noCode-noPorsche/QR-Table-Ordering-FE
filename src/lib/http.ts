@@ -62,14 +62,23 @@ const request = async <Response>(
     body = JSON.stringify(options.body)
   }
 
-  const baseHeaders: {
-    [key: string]: string
-  } =
-    body instanceof FormData
-      ? {}
-      : {
-          'Content-Type': 'application/json'
-        }
+  // const baseHeaders: {
+  //   [key: string]: string
+  // } =
+  //   body instanceof FormData
+  //     ? {}
+  //     : {
+  //         'Content-Type': 'application/json'
+  //       }
+
+  const baseHeaders: { [key: string]: string } = {}
+
+  // Chỉ gán Content-Type là application/json khi THỰC SỰ CÓ dữ liệu body
+  // và dữ liệu đó không phải là FormData
+  if (options?.body && !(options.body instanceof FormData)) {
+    baseHeaders['Content-Type'] = 'application/json'
+  }
+
   if (isClient) {
     const accessToken = getAccessTokenFromLocalStorage()
     if (accessToken) {

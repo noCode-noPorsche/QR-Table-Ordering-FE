@@ -7,8 +7,13 @@ const configSchema = z.object({
   NEXT_PUBLIC_GOOGLE_AUTHORIZED_REDIRECT_URI: z.string()
 })
 
+const isProduction = process.env.NEXT_PUBLIC_PRODUCTION === 'true'
+const apiEndpoint = isProduction
+  ? (process.env.NEXT_PUBLIC_API_ENDPOINT_PROD as string)
+  : (process.env.NEXT_PUBLIC_API_ENDPOINT_LOCAL as string)
+
 const configProject = configSchema.safeParse({
-  NEXT_PUBLIC_API_ENDPOINT: process.env.NEXT_PUBLIC_API_ENDPOINT,
+  NEXT_PUBLIC_API_ENDPOINT: apiEndpoint,
   NEXT_PUBLIC_URL: process.env.NEXT_PUBLIC_URL,
   NEXT_PUBLIC_GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
   NEXT_PUBLIC_GOOGLE_AUTHORIZED_REDIRECT_URI: process.env.NEXT_PUBLIC_GOOGLE_AUTHORIZED_REDIRECT_URI

@@ -82,13 +82,13 @@ export default function UpdateProfileForm() {
     <Form {...form}>
       <form
         noValidate
-        className='grid auto-rows-max items-start gap-4 md:gap-8'
+        className='flex flex-col h-full items-stretch gap-4 md:gap-8'
         onReset={reset}
         onSubmit={form.handleSubmit(onSubmit, (e) => {
           console.log(e)
         })}
       >
-        <Card x-chunk='dashboard-07-chunk-0'>
+        <Card x-chunk='dashboard-07-chunk-0' className='h-full'>
           <CardHeader>
             <CardTitle>Thông tin cá nhân</CardTitle>
           </CardHeader>
@@ -145,7 +145,7 @@ export default function UpdateProfileForm() {
                 )}
               />
 
-              <div className=' items-center gap-2 md:ml-auto flex'>
+              <div className='items-center gap-2 md:ml-auto flex'>
                 <Button variant='outline' size='sm' type='reset'>
                   Hủy
                 </Button>

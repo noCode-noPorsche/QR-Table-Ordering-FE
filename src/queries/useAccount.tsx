@@ -1,6 +1,7 @@
 import accountApiRequest from '@/apiRequest/account'
 import {
   CreateGuestBodyType,
+  GetAccountListPaginationParamType,
   GetGuestListQueryParamsType,
   UpdateEmployeeAccountBodyType
 } from '@/schemaValidations/account.schema'
@@ -25,10 +26,10 @@ export const useChangePasswordMutation = () => {
   })
 }
 
-export const useGetAccountList = () => {
+export const useGetAccountList = (queryParams: GetAccountListPaginationParamType) => {
   return useQuery({
-    queryKey: ['accounts-list'],
-    queryFn: accountApiRequest.getEmployeeList
+    queryKey: ['accounts-list', queryParams],
+    queryFn: () => accountApiRequest.getEmployeeList(queryParams)
   })
 }
 
