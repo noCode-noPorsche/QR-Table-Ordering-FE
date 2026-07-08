@@ -20,7 +20,7 @@ const fontSans = FontSans({
 })
 
 // export const metadata: Metadata = {
-//   title: "Big Boy Restaurant",
+//   title: "Dustin Tsan Restaurant",
 //   description: "The best restaurant in the world",
 // };
 

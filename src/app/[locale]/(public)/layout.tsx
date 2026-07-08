@@ -30,7 +30,7 @@ export default async function Layout({ children, params, modal }: LayoutProps) {
         <nav className='hidden flex-col gap-6 text-lg font-medium lg:flex lg:flex-row lg:items-center lg:text-sm lg:gap-6'>
           <Link href='/' className='flex items-center gap-2 text-lg font-semibold md:text-base'>
             <Package2 className='h-6 w-6' />
-            <span className='sr-only'>Big boy</span>
+            <span className='sr-only'>Dustin Tsan</span>
           </Link>
           <NavItems className='text-muted-foreground transition-colors hover:text-foreground shrink-0' />
         </nav>
@@ -47,7 +47,7 @@ export default async function Layout({ children, params, modal }: LayoutProps) {
             <nav className='grid gap-6 text-lg font-medium'>
               <Link href='/' className='flex items-center gap-2 text-lg font-semibold'>
                 <Package2 className='h-6 w-6' />
-                <span className='sr-only'>Big boy</span>
+                <span className='sr-only'>Dustin Tsan</span>
               </Link>
               <NavItems className='text-muted-foreground transition-colors hover:text-foreground' />
             </nav>

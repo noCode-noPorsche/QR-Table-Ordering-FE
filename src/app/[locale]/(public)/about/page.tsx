@@ -9,7 +9,7 @@ export default async function AboutPage() {
       <section className='relative overflow-hidden rounded-2xl bg-slate-50 dark:bg-zinc-900/50 py-20 px-6 sm:px-12 md:px-20 text-center border border-slate-100 dark:border-zinc-800'>
         <div className='relative z-10 max-w-3xl mx-auto space-y-4'>
           <span className='inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-zinc-400 bg-slate-200/60 dark:bg-zinc-800 rounded-full'>
-            Big Boy Restaurant
+            Dustin Tsan Restaurant
           </span>
           <h1 className='text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-slate-900 dark:text-slate-50'>
             {t('title')}
