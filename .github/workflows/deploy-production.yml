@@ -40,4 +40,4 @@ jobs:
             echo "${{secrets.ENV_PRODUCTION}}" > .env
             npm i --force
             npm run build
-            pm2 restart qr_table_ordering_fe
+            pm2 restart QR-Table-Ordering-FE

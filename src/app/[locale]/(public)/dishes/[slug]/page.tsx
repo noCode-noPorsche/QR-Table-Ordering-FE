@@ -75,8 +75,6 @@ export async function generateStaticParams() {
   try {
     const result = await dishApiRequest.getDishList({ page: PAGE, limit: LIMIT })
     const dishList = result.payload.data.items
-    console.log(result)
-    console.log(dishList)
 
     // Trả về danh sách slug để Next.js render sẵn thành file tĩnh ký hiệu chấm tròn đầy (●)
     return dishList.map((dish) => ({
