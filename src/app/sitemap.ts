@@ -1,6 +1,7 @@
 import dishApiRequest from '@/apiRequest/dish'
 import envConfig, { locales } from '@/config'
 import { generateSlugUrl } from '@/lib/utils'
+import { DishListResType } from '@/schemaValidations/dish.schema'
 import type { MetadataRoute } from 'next'
 
 const staticRoutes: MetadataRoute.Sitemap = [
@@ -19,12 +20,16 @@ const staticRoutes: MetadataRoute.Sitemap = [
 const PAGE = 1
 const LIMIT = 1000
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const result = await dishApiRequest.getDishList({
-    page: PAGE,
-    limit: LIMIT
-  })
-
-  const dishList = result.payload.data.items
+  let dishList: DishListResType['data'] = []
+  try {
+    const result = await dishApiRequest.getDishList({
+      page: PAGE,
+      limit: LIMIT
+    })
+    dishList = result.payload.data.items ?? []
+  } catch (error) {
+    console.warn('⚠️ Cảnh báo: Không thể kết nối Backend để lấy danh sách món ăn cho sitemap lúc build.', error)
+  }
 
   const localizeStaticSiteMap = locales.reduce((acc, locale) => {
     return [
